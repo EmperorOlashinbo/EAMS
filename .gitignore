@@ -1,0 +1,24 @@
+# Visual Studio / .NET artifacts
+.vs/
+[Bb]in/
+[Oo]bj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# NuGet
+packages/
+*.nupkg
+
+# Rider / JetBrains
+.idea/
+*.DotSettings.user
+
+# VS Code
+.vscode/
+
+# Publish / build outputs
+*.Publish.xml
+*.cache
+*.log
