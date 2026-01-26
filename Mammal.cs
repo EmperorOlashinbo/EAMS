@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace EAMS
 {
     /// <summary>
-    /// Derived class for mammals, adding category-specific properties.
+    /// Derived class for mammals, adding category-specific properties. Inherits from Animal.
     /// </summary>
     public class Mammal : Animal
     {
