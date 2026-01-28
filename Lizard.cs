@@ -30,5 +30,16 @@ namespace EAMS
             _color = string.Empty;
             _canClimb = false;
         }
+        public string Color { get => _color; set => _color = value; }
+        public bool CanClimb { get => _canClimb; set => _canClimb = value; }
+        
+        /// <summary>
+        /// returns a string representation of the Lizard object.
+        /// </summary>
+        /// <returns>String with lizard data</returns>
+        public override string ToString()
+        {
+            return base.ToString() + $"\nColor: {Color}\nCan Climb: {CanClimb}";
+        }
     }
 }
