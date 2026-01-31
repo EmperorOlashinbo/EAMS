@@ -56,12 +56,15 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="GenderType.cs" />
+    <Compile Include="Lizard.cs" />
     <Compile Include="Mammal.cs" />
+    <Compile Include="MammalFactory.cs" />
     <Compile Include="MammalSpecies.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reptile.cs" />
     <Compile Include="ReptileSpecies.cs" />
+    <Compile Include="Turtle.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
