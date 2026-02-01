@@ -104,7 +104,46 @@ namespace EAMS
             grpCategory.Controls.Add(lblAgg);
             grpCategory.Controls.Add(numAggressiveness);
 
-            
+            // Species group
+            GroupBox grpSpecies = new GroupBox { Text = $"{_species} Data", Location = new Point(10, 400), Size = new Size(360, 80) };
+            Controls.Add(grpSpecies);
+
+            if (_species == ReptileSpecies.Turtle)
+            {
+                Label lblHardness = new Label { Text = "Shell Hardness:", Location = new Point(10, 20) };
+                numShellHardnessOrNothing = new NumericUpDown { Location = new Point(100, 20), Maximum = 10 };
+                grpSpecies.Controls.Add(lblHardness);
+                grpSpecies.Controls.Add(numShellHardnessOrNothing);
+
+                Label lblWidth = new Label { Text = "Shell Width:", Location = new Point(10, 50) };
+                numShellWidth = new NumericUpDown { Location = new Point(100, 50), DecimalPlaces = 2, Maximum = 100 };
+                grpSpecies.Controls.Add(lblWidth);
+                grpSpecies.Controls.Add(numShellWidth);
+            }
+            else if (_species == ReptileSpecies.Lizard)
+            {
+                Label lblColor = new Label { Text = "Color:", Location = new Point(10, 20) };
+                txtColor = new TextBox { Location = new Point(100, 20) };
+                grpSpecies.Controls.Add(lblColor);
+                grpSpecies.Controls.Add(txtColor);
+
+                Label lblClimb = new Label { Text = "Can Climb:", Location = new Point(10, 50) };
+                chkCanClimb = new CheckBox { Location = new Point(100, 50) };
+                grpSpecies.Controls.Add(lblClimb);
+                grpSpecies.Controls.Add(chkCanClimb);
+            }
+
+            btnOK = new Button { Text = "OK", Location = new Point(150, 490), DialogResult = DialogResult.OK };
+            btnOK.Click += BtnOK_Click;
+            Controls.Add(btnOK);
+
+            btnCancel = new Button { Text = "Cancel", Location = new Point(250, 490), DialogResult = DialogResult.Cancel };
+            Controls.Add(btnCancel);
+
+            this.AcceptButton = btnOK;
+            this.CancelButton = btnCancel;
         }
+
+        
     }
 }
