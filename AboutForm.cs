@@ -24,5 +24,8 @@ namespace EAMS
             Controls.Add(lblInfo);
 
         }
+        private void AboutForm_Load(object sender, EventArgs e)
+        {
+        }
     }
 }

@@ -1,6 +1,8 @@
-﻿namespace EAMS
+﻿using System;
+
+namespace EAMS
 {
-    partial class ReptileForm
+    public partial class ReptileForm
     {
         /// <summary>
         /// Required designer variable.
@@ -41,7 +43,9 @@
             this.ResumeLayout(false);
 
         }
-
         #endregion
+        private void ReptileForm_Load(object sender, EventArgs e)
+        {
+        }
     }
 }
