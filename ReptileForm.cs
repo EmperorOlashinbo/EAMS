@@ -74,6 +74,17 @@ namespace EAMS
             grpGeneral.Controls.Add(lblGender);
             grpGeneral.Controls.Add(cmbGender);
 
+            // Image
+            Label lblImage = new Label { Text = "Image Path:", Location = new Point(10, 170) };
+            txtImagePath = new TextBox { Location = new Point(100, 170), Width = 200 };
+            btnLoadImage = new Button { Text = "Load", Location = new Point(310, 170) };
+            btnLoadImage.Click += BtnLoadImage_Click;
+            picImage = new PictureBox { Location = new Point(10, 200), Size = new Size(100, 100), BorderStyle = BorderStyle.FixedSingle };
+            Controls.Add(lblImage);
+            Controls.Add(txtImagePath);
+            Controls.Add(btnLoadImage);
+            Controls.Add(picImage);
+
             
         }
     }
