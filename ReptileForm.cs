@@ -13,7 +13,7 @@ namespace EAMS
     /// <summary>
     /// Form for entering reptile data.
     /// </summary>
-    public class ReptileForm : Form
+    public partial class ReptileForm : Form
     {
         private ReptileSpecies _species;
         public Animal Animal { get; private set; }
