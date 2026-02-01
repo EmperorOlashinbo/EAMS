@@ -144,6 +144,23 @@ namespace EAMS
             this.CancelButton = btnCancel;
         }
 
+        private void BtnLoadImage_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog { Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp" };
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                txtImagePath.Text = ofd.FileName;
+                try
+                {
+                    picImage.Image = Image.FromFile(ofd.FileName);
+                }
+                catch
+                {
+                    MessageBox.Show("Invalid image file.");
+                }
+            }
+        }
+
         
     }
 }
