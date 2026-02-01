@@ -61,6 +61,7 @@ namespace EAMS
             btnAbout = new Button { Text = "About", Location = new Point(10, 300) };
             btnAbout.Click += BtnAbout_Click;
             Controls.Add(btnAbout);
+
         }
 
         private void ChkListAll_CheckedChanged(object sender, EventArgs e)
@@ -176,8 +177,5 @@ namespace EAMS
             AboutForm about = new AboutForm();
             about.ShowDialog();
         }
-
-        [System.ComponentModel.DesignerCategory("")]
-        private void InitializeComponent() { } 
     }
 }
