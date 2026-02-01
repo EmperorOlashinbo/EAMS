@@ -161,6 +161,34 @@ namespace EAMS
             }
         }
 
-        
+        private void BtnOK_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtName.Text) || cmbGender.SelectedItem == null)
+            {
+                MessageBox.Show("Please fill required fields.");
+                this.DialogResult = DialogResult.None;
+                return;
+            }
+
+            Reptile reptile = ReptileFactory.CreateReptile(_species, (double)numBodyLength.Value, chkLivesInWater.Checked, (int)numAggressiveness.Value);
+            reptile.Name = txtName.Text;
+            reptile.Age = (int)numAge.Value;
+            reptile.Weight = (double)numWeight.Value;
+            reptile.Gender = (GenderType)cmbGender.SelectedItem;
+            reptile.ImagePath = txtImagePath.Text;
+
+            if (_species == ReptileSpecies.Turtle)
+            {
+                ((Turtle)reptile).ShellHardness = (int)numShellHardnessOrNothing.Value;
+                ((Turtle)reptile).ShellWidth = (double)numShellWidth.Value;
+            }
+            else if (_species == ReptileSpecies.Lizard)
+            {
+                ((Lizard)reptile).Color = txtColor.Text;
+                ((Lizard)reptile).CanClimb = chkCanClimb.Checked;
+            }
+
+            Animal = reptile;
+        }
     }
 }
