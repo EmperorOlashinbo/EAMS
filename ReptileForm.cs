@@ -85,6 +85,25 @@ namespace EAMS
             Controls.Add(btnLoadImage);
             Controls.Add(picImage);
 
+            // Category group
+            GroupBox grpCategory = new GroupBox { Text = "Reptile Data", Location = new Point(10, 310), Size = new Size(360, 80) };
+            Controls.Add(grpCategory);
+
+            Label lblBodyLength = new Label { Text = "Body Length:", Location = new Point(10, 20) };
+            numBodyLength = new NumericUpDown { Location = new Point(100, 20), DecimalPlaces = 2, Maximum = 500 };
+            grpCategory.Controls.Add(lblBodyLength);
+            grpCategory.Controls.Add(numBodyLength);
+
+            Label lblWater = new Label { Text = "Lives in Water:", Location = new Point(200, 20) };
+            chkLivesInWater = new CheckBox { Location = new Point(300, 20) };
+            grpCategory.Controls.Add(lblWater);
+            grpCategory.Controls.Add(chkLivesInWater);
+
+            Label lblAgg = new Label { Text = "Aggressiveness (0-10):", Location = new Point(10, 50) };
+            numAggressiveness = new NumericUpDown { Location = new Point(150, 50), Maximum = 10 };
+            grpCategory.Controls.Add(lblAgg);
+            grpCategory.Controls.Add(numAggressiveness);
+
             
         }
     }
