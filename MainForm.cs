@@ -101,6 +101,23 @@ namespace EAMS
             }
         }
 
+        private void LstAllAnimals_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lstAllAnimals.SelectedItem != null)
+            {
+                string sp = lstAllAnimals.SelectedItem.ToString();
+                string cat = GetCategoryFromSpecies(sp);
+                cmbCategory.Text = cat;
+                cmbSpecies.Text = sp;
+            }
+        }
+
+        private string GetCategoryFromSpecies(string species)
+        {
+            if (species == "Dog" || species == "Cat") return "Mammal";
+            return "Reptile";
+        }
+
         
     }
 }
