@@ -63,6 +63,44 @@ namespace EAMS
             Controls.Add(btnAbout);
         }
 
+        private void ChkListAll_CheckedChanged(object sender, EventArgs e)
+        {
+            bool isChecked = chkListAll.Checked;
+            cmbCategory.Enabled = !isChecked;
+            cmbSpecies.Enabled = !isChecked;
+            lstAllAnimals.Visible = isChecked;
+            if (isChecked)
+            {
+                cmbCategory.SelectedIndex = -1;
+                cmbSpecies.Items.Clear();
+                cmbSpecies.Text = string.Empty;
+            }
+            else
+            {
+                lstAllAnimals.SelectedIndex = -1;
+            }
+        }
+
+        private void CmbCategory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cmbSpecies.Items.Clear();
+            string cat = cmbCategory.SelectedItem?.ToString();
+            if (cat == "Mammal")
+            {
+                foreach (MammalSpecies sp in Enum.GetValues(typeof(MammalSpecies)))
+                {
+                    cmbSpecies.Items.Add(sp);
+                }
+            }
+            else if (cat == "Reptile")
+            {
+                foreach (ReptileSpecies sp in Enum.GetValues(typeof(ReptileSpecies)))
+                {
+                    cmbSpecies.Items.Add(sp);
+                }
+            }
+        }
+
         
     }
 }
