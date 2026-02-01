@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EAMS
 {
-    internal class Animal
+    public class Animal
     {
         private string _id;
         private string _name;
