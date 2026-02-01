@@ -13,7 +13,7 @@ namespace EAMS
     /// <summary>
     /// Form for entering mammal data.
     /// </summary>
-    public class MammalForm : Form
+    public partial class MammalForm : Form
     {
         private MammalSpecies _species;
         public Animal Animal { get; private set; }
