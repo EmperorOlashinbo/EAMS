@@ -46,25 +46,53 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Animal.cs" />
     <Compile Include="Cat.cs" />
     <Compile Include="Dog.cs" />
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="GenderType.cs" />
     <Compile Include="Lizard.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Mammal.cs" />
     <Compile Include="MammalFactory.cs" />
+    <Compile Include="MammalForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MammalForm.Designer.cs">
+      <DependentUpon>MammalForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MammalSpecies.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reptile.cs" />
+    <Compile Include="ReptileFactory.cs" />
+    <Compile Include="ReptileForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReptileForm.Designer.cs">
+      <DependentUpon>ReptileForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ReptileSpecies.cs" />
     <Compile Include="Turtle.cs" />
+    <EmbeddedResource Include="AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MammalForm.resx">
+      <DependentUpon>MammalForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -74,6 +102,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ReptileForm.resx">
+      <DependentUpon>ReptileForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

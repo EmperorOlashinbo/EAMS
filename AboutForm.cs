@@ -13,7 +13,7 @@ namespace EAMS
     /// <summary>
     /// About box form.
     /// </summary>
-    public class AboutForm : Form
+    public partial class AboutForm : Form
     {
         public AboutForm()
         {
