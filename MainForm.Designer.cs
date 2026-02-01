@@ -43,5 +43,10 @@
         }
 
         #endregion
+
+        // Event handler required by the designer. Implemented here to resolve CS1061.
+        private void MainForm_Load(object sender, System.EventArgs e)
+        {
+        }
     }
 }
