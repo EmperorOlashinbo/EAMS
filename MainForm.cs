@@ -118,6 +118,66 @@ namespace EAMS
             return "Reptile";
         }
 
-        
+        private void BtnCreate_Click(object sender, EventArgs e)
+        {
+            string category, speciesStr;
+            if (!chkListAll.Checked)
+            {
+                category = cmbCategory.Text;
+                speciesStr = cmbSpecies.Text;
+            }
+            else
+            {
+                speciesStr = lstAllAnimals.SelectedItem?.ToString();
+                if (speciesStr == null) return;
+                category = GetCategoryFromSpecies(speciesStr);
+            }
+
+            if (string.IsNullOrEmpty(category) || string.IsNullOrEmpty(speciesStr))
+            {
+                MessageBox.Show("Please select a category and species.");
+                return;
+            }
+
+            Form form = null;
+            if (category == "Mammal")
+            {
+                MammalSpecies sp;
+                if (Enum.TryParse(speciesStr, out sp))
+                {
+                    form = new MammalForm(sp);
+                }
+            }
+            else if (category == "Reptile")
+            {
+                ReptileSpecies sp;
+                if (Enum.TryParse(speciesStr, out sp))
+                {
+                    form = new ReptileForm(sp);
+                }
+            }
+
+            if (form != null && form.ShowDialog() == DialogResult.OK)
+            {
+                if (category == "Mammal")
+                {
+                    currentAnimal = ((MammalForm)form).Animal;
+                }
+                else
+                {
+                    currentAnimal = ((ReptileForm)form).Animal;
+                }
+                txtOutput.Text = currentAnimal.ToString();
+            }
+        }
+
+        private void BtnAbout_Click(object sender, EventArgs e)
+        {
+            AboutForm about = new AboutForm();
+            about.ShowDialog();
+        }
+
+        [System.ComponentModel.DesignerCategory("")]
+        private void InitializeComponent() { } 
     }
 }
