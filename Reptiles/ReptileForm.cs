@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EAMS.Reptiles.Species;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -30,14 +31,14 @@ namespace EAMS
         private CheckBox chkLivesInWater;
         private NumericUpDown numAggressiveness;
 
-        // Species-specific
-        private NumericUpDown numShellHardnessOrNothing;
-        private TextBox txtColor;
-        private NumericUpDown numShellWidth;
-        private CheckBox chkCanClimb;
+        // Species-specific controls
+        private NumericUpDown numSpeciesNumeric1;
+        private NumericUpDown numSpeciesNumeric2;
+        private TextBox txtSpeciesText;
+        private CheckBox chkSpeciesBool;
 
         private Button btnOK;
-        private Button btnCancel; 
+        private Button btnCancel;
 
         public ReptileForm(ReptileSpecies species)
         {
@@ -70,7 +71,7 @@ namespace EAMS
             {
                 cmbGender.Items.Add(g);
             }
-            cmbGender.SelectedIndex = 2; 
+            cmbGender.SelectedIndex = 2; // Unknown
             grpGeneral.Controls.Add(lblGender);
             grpGeneral.Controls.Add(cmbGender);
 
@@ -108,29 +109,41 @@ namespace EAMS
             GroupBox grpSpecies = new GroupBox { Text = $"{_species} Data", Location = new Point(10, 400), Size = new Size(360, 80) };
             Controls.Add(grpSpecies);
 
-            if (_species == ReptileSpecies.Turtle)
+            switch (_species)
             {
-                Label lblHardness = new Label { Text = "Shell Hardness:", Location = new Point(10, 20) };
-                numShellHardnessOrNothing = new NumericUpDown { Location = new Point(100, 20), Maximum = 10 };
-                grpSpecies.Controls.Add(lblHardness);
-                grpSpecies.Controls.Add(numShellHardnessOrNothing);
+                case ReptileSpecies.Turtle:
+                    Label lblHardness = new Label { Text = "Shell Hardness:", Location = new Point(10, 20) };
+                    numSpeciesNumeric1 = new NumericUpDown { Location = new Point(100, 20), Maximum = 10 };
+                    grpSpecies.Controls.Add(lblHardness);
+                    grpSpecies.Controls.Add(numSpeciesNumeric1);
 
-                Label lblWidth = new Label { Text = "Shell Width:", Location = new Point(10, 50) };
-                numShellWidth = new NumericUpDown { Location = new Point(100, 50), DecimalPlaces = 2, Maximum = 100 };
-                grpSpecies.Controls.Add(lblWidth);
-                grpSpecies.Controls.Add(numShellWidth);
-            }
-            else if (_species == ReptileSpecies.Lizard)
-            {
-                Label lblColor = new Label { Text = "Color:", Location = new Point(10, 20) };
-                txtColor = new TextBox { Location = new Point(100, 20) };
-                grpSpecies.Controls.Add(lblColor);
-                grpSpecies.Controls.Add(txtColor);
+                    Label lblWidth = new Label { Text = "Shell Width:", Location = new Point(10, 50) };
+                    numSpeciesNumeric2 = new NumericUpDown { Location = new Point(100, 50), DecimalPlaces = 2, Maximum = 100 };
+                    grpSpecies.Controls.Add(lblWidth);
+                    grpSpecies.Controls.Add(numSpeciesNumeric2);
+                    break;
+                case ReptileSpecies.Lizard:
+                    Label lblColor = new Label { Text = "Color:", Location = new Point(10, 20) };
+                    txtSpeciesText = new TextBox { Location = new Point(100, 20) };
+                    grpSpecies.Controls.Add(lblColor);
+                    grpSpecies.Controls.Add(txtSpeciesText);
 
-                Label lblClimb = new Label { Text = "Can Climb:", Location = new Point(10, 50) };
-                chkCanClimb = new CheckBox { Location = new Point(100, 50) };
-                grpSpecies.Controls.Add(lblClimb);
-                grpSpecies.Controls.Add(chkCanClimb);
+                    Label lblClimb = new Label { Text = "Can Climb:", Location = new Point(10, 50) };
+                    chkSpeciesBool = new CheckBox { Location = new Point(100, 50) };
+                    grpSpecies.Controls.Add(lblClimb);
+                    grpSpecies.Controls.Add(chkSpeciesBool);
+                    break;
+                case ReptileSpecies.Snake:
+                    Label lblLength = new Label { Text = "Length:", Location = new Point(10, 20) };
+                    numSpeciesNumeric1 = new NumericUpDown { Location = new Point(100, 20), DecimalPlaces = 2, Maximum = 500 };
+                    grpSpecies.Controls.Add(lblLength);
+                    grpSpecies.Controls.Add(numSpeciesNumeric1);
+
+                    Label lblVenomous = new Label { Text = "Is Venomous:", Location = new Point(10, 50) };
+                    chkSpeciesBool = new CheckBox { Location = new Point(100, 50) };
+                    grpSpecies.Controls.Add(lblVenomous);
+                    grpSpecies.Controls.Add(chkSpeciesBool);
+                    break;
             }
 
             btnOK = new Button { Text = "OK", Location = new Point(150, 490), DialogResult = DialogResult.OK };
@@ -177,15 +190,26 @@ namespace EAMS
             reptile.Gender = (GenderType)cmbGender.SelectedItem;
             reptile.ImagePath = txtImagePath.Text;
 
-            if (_species == ReptileSpecies.Turtle)
+            switch (_species)
             {
-                ((Turtle)reptile).ShellHardness = (int)numShellHardnessOrNothing.Value;
-                ((Turtle)reptile).ShellWidth = (double)numShellWidth.Value;
-            }
-            else if (_species == ReptileSpecies.Lizard)
-            {
-                ((Lizard)reptile).Color = txtColor.Text;
-                ((Lizard)reptile).CanClimb = chkCanClimb.Checked;
+                case ReptileSpecies.Turtle:
+                    ((Turtle)reptile).ShellHardness = (int)numSpeciesNumeric1.Value;
+                    ((Turtle)reptile).ShellWidth = (double)numSpeciesNumeric2.Value;
+                    break;
+                case ReptileSpecies.Lizard:
+                    if (string.IsNullOrEmpty(txtSpeciesText.Text))
+                    {
+                        MessageBox.Show("Please enter color.");
+                        this.DialogResult = DialogResult.None;
+                        return;
+                    }
+                    ((Lizard)reptile).Color = txtSpeciesText.Text;
+                    ((Lizard)reptile).CanClimb = chkSpeciesBool.Checked;
+                    break;
+                case ReptileSpecies.Snake:
+                    ((Snake)reptile).Length = (double)numSpeciesNumeric1.Value;
+                    ((Snake)reptile).IsVenomous = chkSpeciesBool.Checked;
+                    break;
             }
 
             Animal = reptile;
