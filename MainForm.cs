@@ -46,8 +46,11 @@ namespace EAMS
             lstAllAnimals = new ListBox { Location = new Point(10, 40), Size = new Size(300, 20), Visible = false };
             lstAllAnimals.Items.Add("Dog");
             lstAllAnimals.Items.Add("Cat");
+            lstAllAnimals.Items.Add("Cow");
+            lstAllAnimals.Items.Add("Horse");
             lstAllAnimals.Items.Add("Turtle");
             lstAllAnimals.Items.Add("Lizard");
+            lstAllAnimals.Items.Add("Snake");
             lstAllAnimals.SelectedIndexChanged += LstAllAnimals_SelectedIndexChanged;
             Controls.Add(lstAllAnimals);
 
@@ -115,8 +118,9 @@ namespace EAMS
 
         private string GetCategoryFromSpecies(string species)
         {
-            if (species == "Dog" || species == "Cat") return "Mammal";
-            return "Reptile";
+            if (species == "Dog" || species == "Cat" || species == "Cow" || species == "Horse") return "Mammal";
+            if (species == "Turtle" || species == "Lizard" || species == "Snake") return "Reptile";
+            return string.Empty;
         }
 
         private void BtnCreate_Click(object sender, EventArgs e)
@@ -143,16 +147,14 @@ namespace EAMS
             Form form = null;
             if (category == "Mammal")
             {
-                MammalSpecies sp;
-                if (Enum.TryParse(speciesStr, out sp))
+                if (Enum.TryParse<MammalSpecies>(speciesStr, out MammalSpecies sp))
                 {
                     form = new MammalForm(sp);
                 }
             }
             else if (category == "Reptile")
             {
-                ReptileSpecies sp;
-                if (Enum.TryParse(speciesStr, out sp))
+                if (Enum.TryParse<ReptileSpecies>(speciesStr, out ReptileSpecies sp))
                 {
                     form = new ReptileForm(sp);
                 }
