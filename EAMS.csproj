@@ -52,45 +52,49 @@
     <Compile Include="AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Animal.cs" />
-    <Compile Include="Cat.cs" />
-    <Compile Include="Dog.cs" />
-    <Compile Include="GenderType.cs" />
-    <Compile Include="Lizard.cs" />
+    <Compile Include="AnimalsGen\Animal.cs" />
+    <Compile Include="Mammals\Species\Cat.cs" />
+    <Compile Include="Mammals\Species\Cow.cs" />
+    <Compile Include="Mammals\Species\Dog.cs" />
+    <Compile Include="AnimalsGen\GenderType.cs" />
+    <Compile Include="Mammals\Species\Horse.cs" />
+    <Compile Include="NumericUtility.cs" />
+    <Compile Include="Reptiles\Species\Lizard.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Mammal.cs" />
-    <Compile Include="MammalFactory.cs" />
-    <Compile Include="MammalForm.cs">
+    <Compile Include="Mammals\Mammal.cs" />
+    <Compile Include="Mammals\MammalFactory.cs" />
+    <Compile Include="Mammals\MammalForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MammalForm.Designer.cs">
+    <Compile Include="Mammals\MammalForm.Designer.cs">
       <DependentUpon>MammalForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MammalSpecies.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reptile.cs" />
-    <Compile Include="ReptileFactory.cs" />
-    <Compile Include="ReptileForm.cs">
+    <Compile Include="Reptiles\Reptile.cs" />
+    <Compile Include="Reptiles\ReptileFactory.cs" />
+    <Compile Include="Reptiles\ReptileForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ReptileForm.Designer.cs">
+    <Compile Include="Reptiles\ReptileForm.Designer.cs">
       <DependentUpon>ReptileForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ReptileSpecies.cs" />
-    <Compile Include="Turtle.cs" />
+    <Compile Include="Reptiles\Species\Snake.cs" />
+    <Compile Include="Reptiles\Species\Turtle.cs" />
     <EmbeddedResource Include="AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MammalForm.resx">
+    <EmbeddedResource Include="Mammals\MammalForm.resx">
       <DependentUpon>MammalForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -102,7 +106,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="ReptileForm.resx">
+    <EmbeddedResource Include="Reptiles\ReptileForm.resx">
       <DependentUpon>ReptileForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
@@ -120,6 +124,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Birds\" />
+    <Folder Include="Insects\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

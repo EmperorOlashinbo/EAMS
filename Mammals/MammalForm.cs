@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EAMS.Mammals.Species;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -29,9 +30,10 @@ namespace EAMS
         private NumericUpDown numTeeth;
         private NumericUpDown numTailLength;
 
-        // Species-specific
-        private TextBox txtBreedOrColor;
-        private CheckBox chkTrainedOrIndoor;
+        // Species-specific controls
+        private TextBox txtSpeciesText;
+        private NumericUpDown numSpeciesNumeric;
+        private CheckBox chkSpeciesBool;
 
         private Button btnOK;
         private Button btnCancel;
@@ -67,7 +69,7 @@ namespace EAMS
             {
                 cmbGender.Items.Add(g);
             }
-            cmbGender.SelectedIndex = 2;
+            cmbGender.SelectedIndex = 2; // Unknown
             grpGeneral.Controls.Add(lblGender);
             grpGeneral.Controls.Add(cmbGender);
 
@@ -100,29 +102,47 @@ namespace EAMS
             GroupBox grpSpecies = new GroupBox { Text = $"{_species} Data", Location = new Point(10, 400), Size = new Size(360, 80) };
             Controls.Add(grpSpecies);
 
-            if (_species == MammalSpecies.Dog)
+            switch (_species)
             {
-                Label lblBreed = new Label { Text = "Breed:", Location = new Point(10, 20) };
-                txtBreedOrColor = new TextBox { Location = new Point(100, 20) };
-                grpSpecies.Controls.Add(lblBreed);
-                grpSpecies.Controls.Add(txtBreedOrColor);
+                case MammalSpecies.Dog:
+                    Label lblBreed = new Label { Text = "Breed:", Location = new Point(10, 20) };
+                    txtSpeciesText = new TextBox { Location = new Point(100, 20) };
+                    grpSpecies.Controls.Add(lblBreed);
+                    grpSpecies.Controls.Add(txtSpeciesText);
 
-                Label lblTrained = new Label { Text = "Trained:", Location = new Point(10, 50) };
-                chkTrainedOrIndoor = new CheckBox { Location = new Point(100, 50) };
-                grpSpecies.Controls.Add(lblTrained);
-                grpSpecies.Controls.Add(chkTrainedOrIndoor);
-            }
-            else if (_species == MammalSpecies.Cat)
-            {
-                Label lblColor = new Label { Text = "Fur Color:", Location = new Point(10, 20) };
-                txtBreedOrColor = new TextBox { Location = new Point(100, 20) };
-                grpSpecies.Controls.Add(lblColor);
-                grpSpecies.Controls.Add(txtBreedOrColor);
+                    Label lblTrained = new Label { Text = "Trained:", Location = new Point(10, 50) };
+                    chkSpeciesBool = new CheckBox { Location = new Point(100, 50) };
+                    grpSpecies.Controls.Add(lblTrained);
+                    grpSpecies.Controls.Add(chkSpeciesBool);
+                    break;
+                case MammalSpecies.Cat:
+                    Label lblColor = new Label { Text = "Fur Color:", Location = new Point(10, 20) };
+                    txtSpeciesText = new TextBox { Location = new Point(100, 20) };
+                    grpSpecies.Controls.Add(lblColor);
+                    grpSpecies.Controls.Add(txtSpeciesText);
 
-                Label lblIndoor = new Label { Text = "Indoor:", Location = new Point(10, 50) };
-                chkTrainedOrIndoor = new CheckBox { Location = new Point(100, 50) };
-                grpSpecies.Controls.Add(lblIndoor);
-                grpSpecies.Controls.Add(chkTrainedOrIndoor);
+                    Label lblIndoor = new Label { Text = "Indoor:", Location = new Point(10, 50) };
+                    chkSpeciesBool = new CheckBox { Location = new Point(100, 50) };
+                    grpSpecies.Controls.Add(lblIndoor);
+                    grpSpecies.Controls.Add(chkSpeciesBool);
+                    break;
+                case MammalSpecies.Cow:
+                    Label lblMilk = new Label { Text = "Milk Production:", Location = new Point(10, 20) };
+                    numSpeciesNumeric = new NumericUpDown { Location = new Point(120, 20), DecimalPlaces = 2, Maximum = 100 };
+                    grpSpecies.Controls.Add(lblMilk);
+                    grpSpecies.Controls.Add(numSpeciesNumeric);
+                    break;
+                case MammalSpecies.Horse:
+                    Label lblHorseBreed = new Label { Text = "Breed:", Location = new Point(10, 20) };
+                    txtSpeciesText = new TextBox { Location = new Point(100, 20) };
+                    grpSpecies.Controls.Add(lblHorseBreed);
+                    grpSpecies.Controls.Add(txtSpeciesText);
+
+                    Label lblRacing = new Label { Text = "Is Racing:", Location = new Point(10, 50) };
+                    chkSpeciesBool = new CheckBox { Location = new Point(100, 50) };
+                    grpSpecies.Controls.Add(lblRacing);
+                    grpSpecies.Controls.Add(chkSpeciesBool);
+                    break;
             }
 
             btnOK = new Button { Text = "OK", Location = new Point(150, 490), DialogResult = DialogResult.OK };
@@ -169,15 +189,41 @@ namespace EAMS
             mammal.Gender = (GenderType)cmbGender.SelectedItem;
             mammal.ImagePath = txtImagePath.Text;
 
-            if (_species == MammalSpecies.Dog)
+            switch (_species)
             {
-                ((Dog)mammal).Breed = txtBreedOrColor.Text;
-                ((Dog)mammal).IsTrained = chkTrainedOrIndoor.Checked;
-            }
-            else if (_species == MammalSpecies.Cat)
-            {
-                ((Cat)mammal).FurColor = txtBreedOrColor.Text;
-                ((Cat)mammal).IsIndoor = chkTrainedOrIndoor.Checked;
+                case MammalSpecies.Dog:
+                    if (string.IsNullOrEmpty(txtSpeciesText.Text))
+                    {
+                        MessageBox.Show("Please enter breed.");
+                        this.DialogResult = DialogResult.None;
+                        return;
+                    }
+                    ((Dog)mammal).Breed = txtSpeciesText.Text;
+                    ((Dog)mammal).IsTrained = chkSpeciesBool.Checked;
+                    break;
+                case MammalSpecies.Cat:
+                    if (string.IsNullOrEmpty(txtSpeciesText.Text))
+                    {
+                        MessageBox.Show("Please enter fur color.");
+                        this.DialogResult = DialogResult.None;
+                        return;
+                    }
+                    ((Cat)mammal).FurColor = txtSpeciesText.Text;
+                    ((Cat)mammal).IsIndoor = chkSpeciesBool.Checked;
+                    break;
+                case MammalSpecies.Cow:
+                    ((Cow)mammal).MilkProduction = (double)numSpeciesNumeric.Value;
+                    break;
+                case MammalSpecies.Horse:
+                    if (string.IsNullOrEmpty(txtSpeciesText.Text))
+                    {
+                        MessageBox.Show("Please enter breed.");
+                        this.DialogResult = DialogResult.None;
+                        return;
+                    }
+                    ((Horse)mammal).Breed = txtSpeciesText.Text;
+                    ((Horse)mammal).IsRacing = chkSpeciesBool.Checked;
+                    break;
             }
 
             Animal = mammal;
