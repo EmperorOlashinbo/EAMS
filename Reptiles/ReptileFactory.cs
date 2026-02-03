@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EAMS.Reptiles.Species;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,6 +28,8 @@ namespace EAMS
                     return new Turtle(bodyLength, livesInWater, aggressivenessLevel);
                 case ReptileSpecies.Lizard:
                     return new Lizard(bodyLength, livesInWater, aggressivenessLevel);
+                case ReptileSpecies.Snake:
+                    return new Snake(bodyLength, livesInWater, aggressivenessLevel);
                 default:
                     throw new ArgumentException("Invalid species.");
             }
