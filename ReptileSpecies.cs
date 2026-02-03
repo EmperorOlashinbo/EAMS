@@ -9,6 +9,7 @@ namespace EAMS
     public enum ReptileSpecies
     {
         Turtle,
-        Lizard
+        Lizard,
+        Snake
     }
 }

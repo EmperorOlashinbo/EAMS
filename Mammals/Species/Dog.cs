@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace EAMS
 {
     /// <summary>
-    /// Concrete class for dogs, inheriting from Mammal.
+    /// Concrete species class for dogs, inheriting from Mammal.
     /// </summary>
     public class Dog : Mammal
     {

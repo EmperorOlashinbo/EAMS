@@ -9,6 +9,8 @@ namespace EAMS
     public enum MammalSpecies
     {
         Dog,
-        Cat
+        Cat,
+        Cow,
+        Horse
     }
 }
