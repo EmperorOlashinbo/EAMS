@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EAMS.Birds;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -51,6 +52,8 @@ namespace EAMS
             lstAllAnimals.Items.Add("Turtle");
             lstAllAnimals.Items.Add("Lizard");
             lstAllAnimals.Items.Add("Snake");
+            lstAllAnimals.Items.Add("Eagle");
+            lstAllAnimals.Items.Add("Dove");
             lstAllAnimals.SelectedIndexChanged += LstAllAnimals_SelectedIndexChanged;
             Controls.Add(lstAllAnimals);
 
@@ -103,6 +106,13 @@ namespace EAMS
                     cmbSpecies.Items.Add(sp);
                 }
             }
+            else if (cat == "Bird")
+            {
+                foreach (BirdSpecies sp in Enum.GetValues(typeof(BirdSpecies)))
+                {
+                    cmbSpecies.Items.Add(sp);
+                }
+            }
         }
 
         private void LstAllAnimals_SelectedIndexChanged(object sender, EventArgs e)
@@ -120,6 +130,7 @@ namespace EAMS
         {
             if (species == "Dog" || species == "Cat" || species == "Cow" || species == "Horse") return "Mammal";
             if (species == "Turtle" || species == "Lizard" || species == "Snake") return "Reptile";
+            if (species == "Eagle" || species == "Dove") return "Bird";
             return string.Empty;
         }
 
@@ -157,6 +168,13 @@ namespace EAMS
                 if (Enum.TryParse<ReptileSpecies>(speciesStr, out ReptileSpecies sp))
                 {
                     form = new ReptileForm(sp);
+                }
+            }
+            else if (category == "Bird")
+            {
+                if (Enum.TryParse<BirdSpecies>(speciesStr, out BirdSpecies sp))
+                {
+                    form = new BirdForm(sp);
                 }
             }
 
