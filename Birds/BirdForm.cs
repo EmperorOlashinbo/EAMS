@@ -101,7 +101,19 @@ namespace EAMS.Birds
                 grpSpecies.Controls.Add(lblColor); grpSpecies.Controls.Add(txtFeatherColor);
             }
 
-            
+            // Buttons
+            btnOK = new Button { Text = "OK", Location = new Point(150, 470), DialogResult = DialogResult.OK };
+            btnOK.Click += BtnOK_Click;
+            Controls.Add(btnOK);
+
+            btnCancel = new Button { Text = "Cancel", Location = new Point(250, 470), DialogResult = DialogResult.Cancel };
+            Controls.Add(btnCancel);
+
+            this.AcceptButton = btnOK;
+            this.CancelButton = btnCancel;
+        }
+
+        
         }
     }
 }
