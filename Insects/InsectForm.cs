@@ -64,13 +64,25 @@ namespace EAMS.Insects
             cmbGender.SelectedIndex = 2;
             grpGeneral.Controls.Add(lblGender); grpGeneral.Controls.Add(cmbGender);
 
-            // Image section (same)
+            // Image section
             Label lblImage = new Label { Text = "Image Path:", Location = new Point(10, 170) };
             txtImagePath = new TextBox { Location = new Point(100, 170), Width = 200 };
             btnLoadImage = new Button { Text = "Load", Location = new Point(310, 170) };
             btnLoadImage.Click += BtnLoadImage_Click;
             picImage = new PictureBox { Location = new Point(10, 200), Size = new Size(100, 100), BorderStyle = BorderStyle.FixedSingle };
             Controls.Add(lblImage); Controls.Add(txtImagePath); Controls.Add(btnLoadImage); Controls.Add(picImage);
+
+            // Category group
+            GroupBox grpCategory = new GroupBox { Text = "Insect Data", Location = new Point(10, 310), Size = new Size(360, 80) };
+            Controls.Add(grpCategory);
+
+            Label lblWings = new Label { Text = "Number of Wings:", Location = new Point(10, 20) };
+            numWings = new NumericUpDown { Location = new Point(120, 20), Maximum = 4 };
+            grpCategory.Controls.Add(lblWings); grpCategory.Controls.Add(numWings);
+
+            Label lblAntenna = new Label { Text = "Antenna Length (mm):", Location = new Point(10, 50) };
+            numAntennaLength = new NumericUpDown { Location = new Point(150, 50), DecimalPlaces = 1, Maximum = 50 };
+            grpCategory.Controls.Add(lblAntenna); grpCategory.Controls.Add(numAntennaLength);
 
             
         }
