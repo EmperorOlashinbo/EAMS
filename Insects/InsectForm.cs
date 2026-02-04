@@ -42,7 +42,7 @@ namespace EAMS.Insects
             this.Text = $"Enter {_species} Data";
             this.Size = new Size(400, 500);
 
-            // General group
+            // General group 
             GroupBox grpGeneral = new GroupBox { Text = "General Data", Location = new Point(10, 10), Size = new Size(360, 150) };
             Controls.Add(grpGeneral);
 
@@ -63,6 +63,14 @@ namespace EAMS.Insects
             foreach (GenderType g in Enum.GetValues(typeof(GenderType))) cmbGender.Items.Add(g);
             cmbGender.SelectedIndex = 2;
             grpGeneral.Controls.Add(lblGender); grpGeneral.Controls.Add(cmbGender);
+
+            // Image section (same)
+            Label lblImage = new Label { Text = "Image Path:", Location = new Point(10, 170) };
+            txtImagePath = new TextBox { Location = new Point(100, 170), Width = 200 };
+            btnLoadImage = new Button { Text = "Load", Location = new Point(310, 170) };
+            btnLoadImage.Click += BtnLoadImage_Click;
+            picImage = new PictureBox { Location = new Point(10, 200), Size = new Size(100, 100), BorderStyle = BorderStyle.FixedSingle };
+            Controls.Add(lblImage); Controls.Add(txtImagePath); Controls.Add(btnLoadImage); Controls.Add(picImage);
 
             
         }
