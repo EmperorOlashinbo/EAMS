@@ -84,7 +84,46 @@ namespace EAMS.Insects
             numAntennaLength = new NumericUpDown { Location = new Point(150, 50), DecimalPlaces = 1, Maximum = 50 };
             grpCategory.Controls.Add(lblAntenna); grpCategory.Controls.Add(numAntennaLength);
 
-            
+            // Species group
+            GroupBox grpSpecies = new GroupBox { Text = $"{_species} Data", Location = new Point(10, 400), Size = new Size(360, 60) };
+            Controls.Add(grpSpecies);
+
+            switch (_species)
+            {
+                case InsectSpecies.Butterfly:
+                    Label lblPattern = new Label { Text = "Wing Pattern:", Location = new Point(10, 20) };
+                    txtWingPattern = new TextBox { Location = new Point(100, 20), Width = 200 };
+                    grpSpecies.Controls.Add(lblPattern); grpSpecies.Controls.Add(txtWingPattern);
+                    break;
+                case InsectSpecies.Bee:
+                    Label lblSting = new Label { Text = "Can Sting:", Location = new Point(10, 20) };
+                    chkCanSting = new CheckBox { Location = new Point(100, 20) };
+                    chkCanSting.Checked = true;
+                    grpSpecies.Controls.Add(lblSting); grpSpecies.Controls.Add(chkCanSting);
+
+                    // Honey prod as extra (could be in separate line if form bigger)
+                    Label lblHoney = new Label { Text = "Honey (g/day):", Location = new Point(10, 40) };
+                    numHoneyProd = new NumericUpDown { Location = new Point(100, 40), DecimalPlaces = 2, Maximum = 10 };
+                    grpSpecies.Controls.Add(lblHoney); grpSpecies.Controls.Add(numHoneyProd);
+                    break;
+                case InsectSpecies.Ant:
+                    Label lblWorker = new Label { Text = "Is Worker:", Location = new Point(10, 20) };
+                    chkIsWorker = new CheckBox { Location = new Point(100, 20) };
+                    chkIsWorker.Checked = true;
+                    grpSpecies.Controls.Add(lblWorker); grpSpecies.Controls.Add(chkIsWorker);
+                    break;
+            }
+
+            btnOK = new Button { Text = "OK", Location = new Point(150, 470), DialogResult = DialogResult.OK };
+            btnOK.Click += BtnOK_Click;
+            Controls.Add(btnOK);
+
+            btnCancel = new Button { Text = "Cancel", Location = new Point(250, 470), DialogResult = DialogResult.Cancel };
+            Controls.Add(btnCancel);
+
+            this.AcceptButton = btnOK;
+            this.CancelButton = btnCancel;
+        
         }
     }
 }
