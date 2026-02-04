@@ -124,9 +124,41 @@ namespace EAMS.Birds
                     catch { MessageBox.Show("Invalid image file."); }
                 }
             }
-        
+        }
 
-       
+        private void BtnOK_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtName.Text) || cmbGender.SelectedItem == null)
+            {
+                MessageBox.Show("Please fill required fields (Name & Gender).");
+                this.DialogResult = DialogResult.None;
+                return;
+            }
+
+            Bird bird = BirdFactory.CreateBird(_species, (double)numWingspan.Value, (double)numTailLength.Value);
+
+            bird.Name = txtName.Text;
+            bird.Age = (int)numAge.Value;
+            bird.Weight = (double)numWeight.Value;
+            bird.Gender = (GenderType)cmbGender.SelectedItem;
+            bird.ImagePath = txtImagePath.Text;
+
+            if (_species == BirdSpecies.Eagle)
+            {
+                ((Eagle)bird).IsBald = chkIsBald.Checked;
+            }
+            else if (_species == BirdSpecies.Dove)
+            {
+                if (string.IsNullOrWhiteSpace(txtFeatherColor.Text))
+                {
+                    MessageBox.Show("Please enter feather color for Dove.");
+                    this.DialogResult = DialogResult.None;
+                    return;
+                }
+                ((Dove)bird).FeatherColor = txtFeatherColor.Text;
+            }
+
+            Animal = bird;
         }
     }
 }
