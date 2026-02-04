@@ -138,6 +138,44 @@ namespace EAMS.Insects
             }
         }
 
-        
+        private void BtnOK_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtName.Text) || cmbGender.SelectedItem == null)
+            {
+                MessageBox.Show("Please fill required fields (Name & Gender).");
+                this.DialogResult = DialogResult.None;
+                return;
+            }
+
+            Insect insect = InsectFactory.CreateInsect(_species, (int)numWings.Value, (double)numAntennaLength.Value);
+
+            insect.Name = txtName.Text;
+            insect.Age = (int)numAge.Value;
+            insect.Weight = (double)numWeight.Value;
+            insect.Gender = (GenderType)cmbGender.SelectedItem;
+            insect.ImagePath = txtImagePath.Text;
+
+            switch (_species)
+            {
+                case InsectSpecies.Butterfly:
+                    if (string.IsNullOrWhiteSpace(txtWingPattern.Text))
+                    {
+                        MessageBox.Show("Please enter wing pattern for Butterfly.");
+                        this.DialogResult = DialogResult.None;
+                        return;
+                    }
+                    ((Butterfly)insect).WingPattern = txtWingPattern.Text;
+                    break;
+                case InsectSpecies.Bee:
+                    ((Bee)insect).CanSting = chkCanSting.Checked;
+                    ((Bee)insect).HoneyProductionPerDay = (double)numHoneyProd.Value;
+                    break;
+                case InsectSpecies.Ant:
+                    ((Ant)insect).IsWorker = chkIsWorker.Checked;
+                    break;
+            }
+
+            Animal = insect;
+        }
     }
 }
