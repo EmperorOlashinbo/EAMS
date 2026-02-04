@@ -72,6 +72,18 @@ namespace EAMS.Birds
             picImage = new PictureBox { Location = new Point(10, 200), Size = new Size(100, 100), BorderStyle = BorderStyle.FixedSingle };
             Controls.Add(lblImage); Controls.Add(txtImagePath); Controls.Add(btnLoadImage); Controls.Add(picImage);
 
+            // Category group
+            GroupBox grpCategory = new GroupBox { Text = "Bird Data", Location = new Point(10, 310), Size = new Size(360, 80) };
+            Controls.Add(grpCategory);
+
+            Label lblWingspan = new Label { Text = "Wingspan (cm):", Location = new Point(10, 20) };
+            numWingspan = new NumericUpDown { Location = new Point(100, 20), DecimalPlaces = 1, Maximum = 300 };
+            grpCategory.Controls.Add(lblWingspan); grpCategory.Controls.Add(numWingspan);
+
+            Label lblTail = new Label { Text = "Tail Length (cm):", Location = new Point(10, 50) };
+            numTailLength = new NumericUpDown { Location = new Point(100, 50), DecimalPlaces = 1, Maximum = 100 };
+            grpCategory.Controls.Add(lblTail); grpCategory.Controls.Add(numTailLength);
+
             
         }
     }
