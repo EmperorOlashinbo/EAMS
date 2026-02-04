@@ -1,4 +1,5 @@
 ﻿using EAMS.Birds;
+using EAMS.Insects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -38,6 +39,8 @@ namespace EAMS
             cmbCategory = new ComboBox { Location = new Point(10, 40), DropDownStyle = ComboBoxStyle.DropDownList };
             cmbCategory.Items.Add("Mammal");
             cmbCategory.Items.Add("Reptile");
+            cmbCategory.Items.Add("Bird");
+            cmbCategory.Items.Add("Insect");
             cmbCategory.SelectedIndexChanged += CmbCategory_SelectedIndexChanged;
             Controls.Add(cmbCategory);
 
@@ -54,6 +57,9 @@ namespace EAMS
             lstAllAnimals.Items.Add("Snake");
             lstAllAnimals.Items.Add("Eagle");
             lstAllAnimals.Items.Add("Dove");
+            lstAllAnimals.Items.Add("Butterfly");
+            lstAllAnimals.Items.Add("Bee");
+            lstAllAnimals.Items.Add("Ant");
             lstAllAnimals.SelectedIndexChanged += LstAllAnimals_SelectedIndexChanged;
             Controls.Add(lstAllAnimals);
 
@@ -113,6 +119,13 @@ namespace EAMS
                     cmbSpecies.Items.Add(sp);
                 }
             }
+            else if (cat == "Insect")
+            {
+                foreach (InsectSpecies sp in Enum.GetValues(typeof(InsectSpecies)))
+                {
+                    cmbSpecies.Items.Add(sp);
+                }
+            }
         }
 
         private void LstAllAnimals_SelectedIndexChanged(object sender, EventArgs e)
@@ -131,6 +144,7 @@ namespace EAMS
             if (species == "Dog" || species == "Cat" || species == "Cow" || species == "Horse") return "Mammal";
             if (species == "Turtle" || species == "Lizard" || species == "Snake") return "Reptile";
             if (species == "Eagle" || species == "Dove") return "Bird";
+            if (species == "Butterfly" || species == "Bee" || species == "Ant") return "Insect";
             return string.Empty;
         }
 
@@ -175,6 +189,13 @@ namespace EAMS
                 if (Enum.TryParse<BirdSpecies>(speciesStr, out BirdSpecies sp))
                 {
                     form = new BirdForm(sp);
+                }
+            }
+            else if (category == "Insect")
+            {
+                if (Enum.TryParse<InsectSpecies>(speciesStr, out InsectSpecies sp))
+                {
+                    form = new InsectForm(sp);
                 }
             }
 
