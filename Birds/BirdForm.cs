@@ -84,6 +84,23 @@ namespace EAMS.Birds
             numTailLength = new NumericUpDown { Location = new Point(100, 50), DecimalPlaces = 1, Maximum = 100 };
             grpCategory.Controls.Add(lblTail); grpCategory.Controls.Add(numTailLength);
 
+            // Species group 
+            GroupBox grpSpecies = new GroupBox { Text = $"{_species} Data", Location = new Point(10, 400), Size = new Size(360, 60) };
+            Controls.Add(grpSpecies);
+
+            if (_species == BirdSpecies.Eagle)
+            {
+                Label lblBald = new Label { Text = "Is Bald Eagle:", Location = new Point(10, 20) };
+                chkIsBald = new CheckBox { Location = new Point(100, 20) };
+                grpSpecies.Controls.Add(lblBald); grpSpecies.Controls.Add(chkIsBald);
+            }
+            else if (_species == BirdSpecies.Dove)
+            {
+                Label lblColor = new Label { Text = "Feather Color:", Location = new Point(10, 20) };
+                txtFeatherColor = new TextBox { Location = new Point(100, 20), Width = 200 };
+                grpSpecies.Controls.Add(lblColor); grpSpecies.Controls.Add(txtFeatherColor);
+            }
+
             
         }
     }
