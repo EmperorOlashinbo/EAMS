@@ -35,7 +35,11 @@ namespace EAMS
 
         private Button btnOK;
         private Button btnCancel;
-        // Constructor takes the species to determine which specific fields to show
+        /// <summary>
+        /// Initializes a new instance of the ReptileForm class for the specified reptile species, setting up input
+        /// controls for general, image, category, and species specific data.
+        /// </summary>
+        /// <param name="species">The reptile species to configure the form for.</param>
         public ReptileForm(ReptileSpecies species)
         {
             _species = species;
