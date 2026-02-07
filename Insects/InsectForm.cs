@@ -33,7 +33,11 @@ namespace EAMS.Insects
 
         private Button btnOK;
         private Button btnCancel;
-
+        /// <summary>
+        /// Initializes a new instance of the InsectForm class, configuring input controls for general, image, category,
+        /// and species specific insect data.
+        /// </summary>
+        /// <param name="species">The insect species to be used for species-specific controls and labeling.</param>
         public InsectForm(InsectSpecies species)
         {
             _species = species;
