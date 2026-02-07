@@ -163,7 +163,12 @@ namespace EAMS
             this.AcceptButton = btnOK;
             this.CancelButton = btnCancel;
         }
-        // Load image button click handler
+        /// <summary>
+        /// Handles the image loading process by opening a file dialog, updating the image path textbox, and displaying
+        /// the selected image in the picture box.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
         private void BtnLoadImage_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog { Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp" };
@@ -181,7 +186,12 @@ namespace EAMS
                 }
             }
         }
-        // OK button click handler validate input and create the appropriate reptile object
+        /// <summary>
+        /// Handles the OK button click event, validates input fields, creates a reptile object with specified
+        /// properties, and assigns it to the Animal field.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
         private void BtnOK_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(txtName.Text) || cmbGender.SelectedItem == null)
