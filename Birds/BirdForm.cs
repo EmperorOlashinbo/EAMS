@@ -32,7 +32,10 @@ namespace EAMS.Birds
 
         private Button btnOK;
         private Button btnCancel;
-
+        /// <summary>
+        /// Initializes a new instance of the BirdForm class for entering data specific to the given bird species.
+        /// </summary>
+        /// <param name="species">The bird species for which the form is created.</param>
         public BirdForm(BirdSpecies species)
         {
             _species = species;
