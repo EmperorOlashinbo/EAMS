@@ -23,8 +23,7 @@
         #region Windows Form Designer generated code
 
         /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
+        /// Required method for Designer support.
         /// </summary>
         private void InitializeComponent()
         {
@@ -43,5 +42,13 @@
         }
 
         #endregion
+
+        /// <summary>
+        /// Handles the Load event of the BirdForm control.
+        /// </summary>
+        private void BirdForm_Load(object sender, System.EventArgs e)
+        {
+            
+        }
     }
 }

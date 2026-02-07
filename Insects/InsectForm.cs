@@ -177,5 +177,8 @@ namespace EAMS.Insects
 
             Animal = insect;
         }
+        private void InsectForm_Load(object sender, EventArgs e)
+        {
+        }
     }
 }
