@@ -77,8 +77,8 @@ namespace EAMS
             Controls.Add(grpImage);
 
             Label lblImage = new Label { Text = "Image Path:", Location = new Point(12, 24), AutoSize = true };
-            txtImagePath = new TextBox { Location = new Point(110, 20), Width = 180 };
-            btnLoadImage = new Button { Text = "Load", Location = new Point(300, 18), Width = 44 };
+            txtImagePath = new TextBox { Location = new Point(110, 20), Width = 200 };
+            btnLoadImage = new Button { Text = "Load", Location = new Point(320, 18), Width = 44 };
             btnLoadImage.Click += BtnLoadImage_Click;
             picImage = new PictureBox { Location = new Point(12, 52), Size = new Size(120, 90), BorderStyle = BorderStyle.FixedSingle, SizeMode = PictureBoxSizeMode.Zoom };
 
