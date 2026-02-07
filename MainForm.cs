@@ -38,7 +38,10 @@ namespace EAMS
         private Button btnAdd;
 
         private Button btnLoadImage;
-
+        /// <summary>
+        /// Initializes the main form for the EcoPark Animal Management System, setting up UI components for animal
+        /// creation, data entry, image preview, and output display.
+        /// </summary>
         public MainForm()
         {
             InitializeComponent();
@@ -151,7 +154,12 @@ namespace EAMS
             btnAbout.Click += BtnAbout_Click;
             Controls.Add(btnAbout);
         }
-        // Event handlers for UI interactions
+        /// <summary>
+        /// Handles the image loading process when the Load Image button is clicked, updating the preview and storing
+        /// the image path for the current animal.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">Event data associated with the click event.</param>
         private void BtnLoadImage_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog dlg = new OpenFileDialog { Filter = "Images|*.png;*.jpg;*.jpeg;*.bmp;*.gif" })
@@ -169,7 +177,12 @@ namespace EAMS
                 }
             }
         }
-        // Event handler for "List all animal species" checkbox
+        /// <summary>
+        /// Handles the CheckedChanged event for the chkListAll control, toggling the enabled state and visibility of
+        /// related list controls and clearing selections as appropriate.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">Event data.</param>
         private void ChkListAll_CheckedChanged(object sender, EventArgs e)
         {
             bool isChecked = chkListAll.Checked;
@@ -186,7 +199,11 @@ namespace EAMS
                 lstAllAnimals.ClearSelected();
             }
         }
-        // Event handler for category selection change
+        /// <summary>
+        /// Updates the species list based on the selected category in the category list.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">Event data.</param>
         private void LstCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
             lstSpecies.Items.Clear();
@@ -207,7 +224,12 @@ namespace EAMS
                     break;
             }
         }
-        // Event handler for selecting a species from the "List all animal species" list
+        /// <summary>
+        /// Handles the selection change in the animal list, updating the category and species lists based on the
+        /// selected animal.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">Event data.</param>
         private void LstAllAnimals_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lstAllAnimals.SelectedItem is string sp && !string.IsNullOrEmpty(sp))
@@ -220,7 +242,12 @@ namespace EAMS
                 }
             }
         }
-        // Helper method to determine category based on species name
+        /// <summary>
+        /// Determines the animal category based on the provided species name.
+        /// </summary>
+        /// <param name="species">The name of the species to categorize.</param>
+        /// <returns>The category of the animal, such as Mammal, Reptile, Bird, or Insect; returns an empty string if the species
+        /// is not recognized.</returns>
         private string GetCategoryFromSpecies(string species)
         {
             if (species == "Dog" || species == "Cat" || species == "Cow" || species == "Horse")
@@ -233,7 +260,12 @@ namespace EAMS
                 return "Insect";
             return "";
         }
-        // Event handler for the "Create Animal" button click
+        /// <summary>
+        /// Handles the creation of a new animal by displaying a species-specific form based on user selection, and
+        /// updates the UI with the created animal's details and image.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the Create button.</param>
+        /// <param name="e">Event data associated with the button click.</param>
         private void BtnCreate_Click(object sender, EventArgs e)
         {
             // Determine the selected category and species based on the current UI state
@@ -306,7 +338,11 @@ namespace EAMS
                 }
             }
         }
-        // Event handler for the "About" menu item click
+        /// <summary>
+        /// Opens the About dialog as a modal window.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
         private void BtnAbout_Click(object sender, EventArgs e)
         {
             using (var about = new AboutForm())
