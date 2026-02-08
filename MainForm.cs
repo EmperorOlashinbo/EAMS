@@ -45,7 +45,7 @@ namespace EAMS
         public MainForm()
         {
             InitializeComponent();
-            this.Text = "EcoPark Animal Management System";
+            this.Text = "EcoPark Animal Management System by Ibrahim";
             this.Size = new Size(760, 540);
             this.StartPosition = FormStartPosition.CenterScreen;
 
