@@ -32,11 +32,17 @@ namespace EAMS
             _breed = string.Empty;
             _isTrained = false;
         }
+        /// <summary>
+        /// Gets or sets the breed of the dog.
+        /// </summary>
         public string Breed
         {
             get => _breed;
             set => _breed = value;
         }
+        /// <summary>
+        /// Gets or sets whether the dog is trained.
+        /// </summary>
         public bool IsTrained
         {
             get => _isTrained;

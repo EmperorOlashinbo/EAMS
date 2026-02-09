@@ -33,7 +33,10 @@ namespace EAMS.Mammals.Species
             _breed = string.Empty;
             _isRacing = false;
         }
-
+        /// <summary>
+        /// Gets or sets the breed of the horse. The breed is represented as a string, 
+        /// which can describe the specific breed of the horse.
+        /// </summary>
         public string Breed { get => _breed; set => _breed = value; }
         public bool IsRacing { get => _isRacing; set => _isRacing = value; }
 

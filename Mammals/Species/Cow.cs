@@ -30,7 +30,9 @@ namespace EAMS.Mammals.Species
         {
             _milkProduction = 0.0;
         }
-
+        /// <summary>
+        /// Gets or sets the milk production of the cow in liters per day.
+        /// </summary>
         public double MilkProduction { get => _milkProduction; set => _milkProduction = value >= 0 ? value : 0.0; }
 
         /// <summary>

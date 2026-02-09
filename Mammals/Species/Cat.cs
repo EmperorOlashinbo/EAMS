@@ -32,11 +32,19 @@ namespace EAMS
             _furColor = string.Empty;
             _isIndoor = false;
         }
+        /// <summary>
+        /// Gets or sets the fur color of the cat. 
+        /// The fur color is represented as a string, 
+        /// which can describe the color of the cat's fur.
+        /// </summary>
         public string FurColor
         {
             get => _furColor;
             set => _furColor = value;
         }
+        /// <summary>
+        /// Gets or sets whether the cat is an indoor cat.
+        /// </summary>
         public bool IsIndoor
         {
             get => _isIndoor;
