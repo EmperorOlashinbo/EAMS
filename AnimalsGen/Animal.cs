@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace EAMS
 {
+    /// <summary>
+    /// Represents an animal with properties for identification, name, gender, age, weight, and image path.
+    /// </summary>
     public class Animal
     {
         private string _id;
@@ -27,6 +30,9 @@ namespace EAMS
             _weight = 0.0;
             _imagePath = string.Empty;
         }
+        /// <summary>
+        /// Gets the unique identifier.
+        /// </summary>
         public string Id => _id;
         public string Name { get => _name; set => _name = value; }
         public GenderType Gender { get => _gender; set => _gender = value; }

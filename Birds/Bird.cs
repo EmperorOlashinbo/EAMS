@@ -31,13 +31,17 @@ namespace EAMS.Birds
             Wingspan = wingspan;
             TailLength = tailLength;
         }
-
+        /// <summary>
+        /// Gets or sets the wingspan value, ensuring it is non-negative.
+        /// </summary>
         public double Wingspan
         {
             get => _wingspan;
             set => _wingspan = value >= 0 ? value : 0.0;
         }
-
+        /// <summary>
+        /// Gets or sets the length of the tail. Value is constrained to be non-negative.
+        /// </summary>
         public double TailLength
         {
             get => _tailLength;

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace EAMS.Birds
 {
+    /// <summary>
+    /// Represents different species of birds.
+    /// </summary>
     public enum BirdSpecies
     {
         Eagle,

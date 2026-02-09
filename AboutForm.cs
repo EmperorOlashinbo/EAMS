@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace EAMS
 {
     /// <summary>
-    /// About box form.
+    /// This form provides information about the EcoPark Animal Management System application, including the developer's name and version number.
     /// </summary>
     public partial class AboutForm : Form
     {
@@ -24,6 +24,11 @@ namespace EAMS
             Controls.Add(lblInfo);
 
         }
+        /// <summary>
+        /// Handles the AboutForm load event.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
         private void AboutForm_Load(object sender, EventArgs e)
         {
          }
