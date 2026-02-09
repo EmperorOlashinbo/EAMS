@@ -23,7 +23,7 @@ namespace EAMS
         private TextBox txtOutput;
         private Button btnAbout;
         private Button btnClear;
-        private PictureBox picPreview; 
+        private PictureBox picPreview;
 
         // General data controls
         private GroupBox grpGeneral;
@@ -39,7 +39,8 @@ namespace EAMS
 
         private Button btnLoadImage;
         /// <summary>
-        /// Initializes the main form for the EcoPark Animal Management System, setting up UI components for animal
+        /// Initializes the main form for the EcoPark Animal Management System, 
+        /// setting up UI components for animal
         /// creation, data entry, image preview, and output display.
         /// </summary>
         public MainForm()
@@ -127,7 +128,7 @@ namespace EAMS
             grpGeneral.Controls.Add(cmbGender);
 
             btnAdd = new Button { Text = "Add", Location = new Point(240, 108), Width = 90, Enabled = false };
-            btnAdd.Click += (s, e) => MessageBox.Show("Use the Create Animal workflow (species forms) to add animals.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            btnAdd.Click += BtnAdd_Click;
             grpGeneral.Controls.Add(btnAdd);
 
             Controls.Add(grpGeneral);
@@ -147,7 +148,17 @@ namespace EAMS
 
             // Bottom buttons
             btnClear = new Button { Text = "Clear Output", Location = new Point(540, 500 - 40), Width = 190 };
-            btnClear.Click += (s, e) => { txtOutput.Clear(); currentAnimal = null; if (picPreview.Image != null) { picPreview.Image.Dispose(); picPreview.Image = null; } };
+            btnClear.Click += (s, e) =>
+            {
+                txtOutput.Clear();
+                currentAnimal = null;
+                btnAdd.Enabled = false;
+                txtName.Clear();
+                txtAge.Clear();
+                txtWeight.Clear();
+                cmbGender.SelectedItem = null;
+                if (picPreview.Image != null) { picPreview.Image.Dispose(); picPreview.Image = null; }
+            };
             Controls.Add(btnClear);
 
             btnAbout = new Button { Text = "About", Location = new Point(10, 500 - 40), Width = 100 };
@@ -155,7 +166,8 @@ namespace EAMS
             Controls.Add(btnAbout);
         }
         /// <summary>
-        /// Handles the image loading process when the Load Image button is clicked, updating the preview and storing
+        /// Handles the image loading process when the Load Image button is clicked, 
+        /// updating the preview and storing
         /// the image path for the current animal.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -178,7 +190,8 @@ namespace EAMS
             }
         }
         /// <summary>
-        /// Handles the CheckedChanged event for the chkListAll control, toggling the enabled state and visibility of
+        /// Handles the CheckedChanged event for the chkListAll control, 
+        /// toggling the enabled state and visibility of
         /// related list controls and clearing selections as appropriate.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -225,8 +238,8 @@ namespace EAMS
             }
         }
         /// <summary>
-        /// Handles the selection change in the animal list, updating the category and species lists based on the
-        /// selected animal.
+        /// Handles the selection change in the animal list, 
+        /// updating the category and species lists based on the selected animal.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">Event data.</param>
@@ -246,8 +259,8 @@ namespace EAMS
         /// Determines the animal category based on the provided species name.
         /// </summary>
         /// <param name="species">The name of the species to categorize.</param>
-        /// <returns>The category of the animal, such as Mammal, Reptile, Bird, or Insect; returns an empty string if the species
-        /// is not recognized.</returns>
+        /// <returns>The category of the animal, such as Mammal, Reptile, Bird, or Insect; 
+        /// returns an empty string if the species is not recognized.</returns>
         private string GetCategoryFromSpecies(string species)
         {
             if (species == "Dog" || species == "Cat" || species == "Cow" || species == "Horse")
@@ -261,7 +274,7 @@ namespace EAMS
             return "";
         }
         /// <summary>
-        /// Handles the creation of a new animal by displaying a species-specific form based on user selection, and
+        /// Handles the creation of a new animal by displaying a species specific form based on user selection, and
         /// updates the UI with the created animal's details and image.
         /// </summary>
         /// <param name="sender">The source of the event, typically the Create button.</param>
@@ -295,7 +308,7 @@ namespace EAMS
                 MessageBox.Show($"Error creating form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            // Show the species-specific form and create the animal
+            // Show the species specific form and create the animal
             if (form != null && form.ShowDialog() == DialogResult.OK)
             {
                 if (category == "Mammal")
@@ -322,6 +335,22 @@ namespace EAMS
                 if (currentAnimal != null)
                 {
                     txtOutput.Text = currentAnimal.ToString();
+
+                    // Populate general controls so user can edit/apply
+                    txtName.Text = currentAnimal.Name ?? string.Empty;
+                    txtAge.Text = currentAnimal.Age.ToString();
+                    txtWeight.Text = currentAnimal.Weight.ToString();
+                    try
+                    {
+                        cmbGender.SelectedItem = currentAnimal.Gender.ToString();
+                    }
+                    catch
+                    {
+                        cmbGender.SelectedItem = null;
+                    }
+
+                    btnAdd.Enabled = true;
+
                     if (!string.IsNullOrEmpty(currentAnimal.ImagePath))
                     {
                         try
@@ -336,8 +365,64 @@ namespace EAMS
                         picPreview.Image = null;
                     }
                 }
+                else
+                {
+                    btnAdd.Enabled = false;
+                }
             }
         }
+
+        /// <summary>
+        /// Applies the values from the "General Data" fields to the currently created animal.
+        /// </summary>
+        private void BtnAdd_Click(object sender, EventArgs e)
+        {
+            if (currentAnimal == null)
+            {
+                MessageBox.Show("No animal to add. Create an animal first.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                btnAdd.Enabled = false;
+                return;
+            }
+
+            // validate inputs
+            if (string.IsNullOrWhiteSpace(txtName.Text) || string.IsNullOrWhiteSpace(txtAge.Text) || string.IsNullOrWhiteSpace(txtWeight.Text) || cmbGender.SelectedItem == null)
+            {
+                MessageBox.Show("Please fill general data fields (Name, Age, Weight, Gender).", "Input required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (!int.TryParse(txtAge.Text, out int age) || age < 0)
+            {
+                MessageBox.Show("Enter a valid non-negative integer for Age.", "Invalid input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (!double.TryParse(txtWeight.Text, out double weight) || weight < 0)
+            {
+                MessageBox.Show("Enter a valid non-negative number for Weight.", "Invalid input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // apply general data to current animal
+            currentAnimal.Name = txtName.Text;
+            currentAnimal.Age = age;
+            currentAnimal.Weight = weight;
+
+            // parse gender
+            string genderStr = cmbGender.SelectedItem?.ToString() ?? string.Empty;
+            if (Enum.TryParse<GenderType>(genderStr, true, out var g))
+            {
+                currentAnimal.Gender = g;
+            }
+            else
+            {
+                currentAnimal.Gender = GenderType.Unknown;
+            }
+
+            txtOutput.Text = currentAnimal.ToString();
+            MessageBox.Show("General data applied to the current animal.", "Updated", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
         /// <summary>
         /// Opens the About dialog as a modal window.
         /// </summary>

@@ -32,6 +32,10 @@ namespace EAMS
             _numberOfTeeth = numberOfTeeth >= 0 ? numberOfTeeth: 0;
             _tailLength = tailLength >= 0 ? tailLength : 0.0;
         }
+        /// <summary>
+        /// Gets or sets the number of teeth the mammal has. 
+        /// The number of teeth is represented as an integer,
+        /// </summary>
         public int NumberOfTeeth
         {
             get => _numberOfTeeth;
@@ -41,6 +45,9 @@ namespace EAMS
                     _numberOfTeeth = value;
             }
         }
+        /// <summary>
+        /// Gets or sets the length of the mammal's tail in centimeters.
+        /// </summary>
         public double TailLength
         {
             get => _tailLength;
