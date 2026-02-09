@@ -36,6 +36,9 @@ namespace EAMS
             _livesInWater = livesInWater;
             _aggressivenessLevel = (aggressivenessLevel >= 0 && aggressivenessLevel <= 10) ? aggressivenessLevel : 0;
         }
+        /// <summary>
+        /// Gets or sets the body length of the reptile in centimeters.
+        /// </summary>
         public double BodyLength
         {
             get => _bodyLength;
@@ -45,11 +48,20 @@ namespace EAMS
                     _bodyLength = value;
             }
         }
+        /// <summary>
+        /// Gets or sets whether the reptile lives in water. 
+        /// This is a boolean property that indicates if the reptile is aquatic or not.
+        /// </summary>
         public bool LivesInWater
         {
             get => _livesInWater;
             set => _livesInWater = value;
         }
+        /// <summary>
+        /// Gets or sets the aggressiveness level of the reptile. 
+        /// The aggressiveness level is represented as an integer, 
+        /// where 0 means not aggressive at all and 10 means extremely aggressive.
+        /// </summary>
         public int AggressivenessLevel
         {
             get => _aggressivenessLevel;

@@ -34,8 +34,13 @@ namespace EAMS.Reptiles.Species
             _length = 0.0;
             _isVenomous = false;
         }
-
+        /// <summary>
+        /// Gets or sets the length of the snake in centimeters. The length is represented as a double,
+        /// </summary>
         public double Length { get => _length; set => _length = value >= 0 ? value : 0.0; }
+        /// <summary>
+        /// Gets or sets whether the snake is venomous. The property is represented as a boolean,
+        /// </summary>
         public bool IsVenomous { get => _isVenomous; set => _isVenomous = value; }
 
         /// <summary>

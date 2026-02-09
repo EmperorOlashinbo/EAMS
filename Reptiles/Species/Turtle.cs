@@ -33,7 +33,13 @@ namespace EAMS
             _shellHardness = 0;
             _shellWidth = 0.0;
         }
+        /// <summary>
+        /// Gets or sets the hardness of the turtle's shell. The hardness is represented as an integer,
+        /// </summary>
         public int ShellHardness { get => _shellHardness; set { if (value >= 0) _shellHardness = value; } }
+        /// <summary>
+        /// Gets or sets the width of the turtle's shell in centimeters. The shell width is represented as a double,
+        /// </summary>
         public double ShellWidth { get => _shellWidth; set { if (value >= 0) _shellWidth = value; } }
 
         /// <summary>

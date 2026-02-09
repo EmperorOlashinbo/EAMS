@@ -30,7 +30,14 @@ namespace EAMS
             _color = string.Empty;
             _canClimb = false;
         }
+        /// <summary>
+        /// Gets or sets the color of the lizard. The color is represented as a string, 
+        /// which can describe the color of the lizard's skin.
+        /// </summary>
         public string Color { get => _color; set => _color = value; }
+        /// <summary>
+        /// Gets or sets whether the lizard can climb. This property indicates if the lizard has the ability to climb surfaces,
+        /// </summary>
         public bool CanClimb { get => _canClimb; set => _canClimb = value; }
         
         /// <summary>
