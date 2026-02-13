@@ -30,6 +30,8 @@ namespace EAMS.Insects
         private CheckBox chkCanSting;
         private NumericUpDown numHoneyProd;
         private CheckBox chkIsWorker;
+        private NumericUpDown numFlightSpeed;
+        private NumericUpDown numSpotCount;
 
         private Button btnOK;
         private Button btnCancel;
@@ -131,6 +133,18 @@ namespace EAMS.Insects
                     grpSpecies.Controls.Add(lblWorker);
                     grpSpecies.Controls.Add(chkIsWorker);
                     break;
+                case InsectSpecies.Dragonfly:
+                    Label lblFlight = new Label { Text = "Flight Speed (km/h):", Location = new Point(12, 24), AutoSize = true };
+                    numFlightSpeed = new NumericUpDown { Location = new Point(160, 22), DecimalPlaces = 1, Maximum = 200, Width = 100 };
+                    grpSpecies.Controls.Add(lblFlight);
+                    grpSpecies.Controls.Add(numFlightSpeed);
+                    break;
+                case InsectSpecies.Ladybug:
+                    Label lblSpots = new Label { Text = "Spot Count:", Location = new Point(12, 24), AutoSize = true };
+                    numSpotCount = new NumericUpDown { Location = new Point(120, 22), Maximum = 50, Width = 80 };
+                    grpSpecies.Controls.Add(lblSpots);
+                    grpSpecies.Controls.Add(numSpotCount);
+                    break;
             }
 
             btnOK = new Button { Text = "OK", Location = new Point(150, 530), DialogResult = DialogResult.OK };
@@ -205,6 +219,12 @@ namespace EAMS.Insects
                     break;
                 case InsectSpecies.Ant:
                     ((Ant)insect).IsWorker = chkIsWorker != null && chkIsWorker.Checked;
+                    break;
+                case InsectSpecies.Dragonfly:
+                    ((Dragonfly)insect).FlightSpeed = numFlightSpeed != null ? (double)numFlightSpeed.Value : 0.0;
+                    break;
+                case InsectSpecies.Ladybug:
+                    ((Ladybug)insect).SpotCount = numSpotCount != null ? (int)numSpotCount.Value : 0;
                     break;
             }
 
