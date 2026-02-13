@@ -71,6 +71,8 @@
     <Compile Include="Birds\BirdSpecies.cs" />
     <Compile Include="Birds\Species\Dove.cs" />
     <Compile Include="Birds\Species\Eagle.cs" />
+    <Compile Include="Birds\Species\Falcon.cs" />
+    <Compile Include="Birds\Species\Peacock.cs" />
     <Compile Include="Insects\Insect.cs" />
     <Compile Include="Insects\InsectFactory.cs" />
     <Compile Include="Insects\InsectForm.cs">

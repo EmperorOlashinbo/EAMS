@@ -13,6 +13,8 @@ namespace EAMS.Insects
     {
         Butterfly,
         Bee,
-        Ant
+        Ant,
+        Dragonfly,
+        Ladybug
     }
 }
