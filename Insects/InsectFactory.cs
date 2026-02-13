@@ -30,6 +30,10 @@ namespace EAMS.Insects
                     return new Bee(numberOfWings, antennaLength);
                 case InsectSpecies.Ant:
                     return new Ant(numberOfWings, antennaLength);
+                case InsectSpecies.Dragonfly:
+                    return new Dragonfly(numberOfWings, antennaLength);
+                case InsectSpecies.Ladybug:
+                    return new Ladybug(numberOfWings, antennaLength);
                 default:
                     throw new ArgumentException("Invalid insect species.");
             }
