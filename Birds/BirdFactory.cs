@@ -24,6 +24,10 @@ namespace EAMS.Birds
                     return new Eagle(wingspan, tailLength);
                 case BirdSpecies.Dove:
                     return new Dove(wingspan, tailLength);
+                case BirdSpecies.Falcon:
+                    return new Falcon(wingspan, tailLength);
+                case BirdSpecies.Peacock:
+                    return new Peacock(wingspan, tailLength);
                 default:
                     throw new ArgumentException("Invalid bird species.");
             }
