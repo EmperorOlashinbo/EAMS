@@ -29,6 +29,8 @@ namespace EAMS.Birds
         // Species specific
         private CheckBox chkIsBald;
         private TextBox txtFeatherColor;
+        private NumericUpDown numBeakLength;
+        private TextBox txtPlumeColor;
 
         private Button btnOK;
         private Button btnCancel;
@@ -116,6 +118,20 @@ namespace EAMS.Birds
                 grpSpecies.Controls.Add(lblColor);
                 grpSpecies.Controls.Add(txtFeatherColor);
             }
+            else if (_species == BirdSpecies.Falcon)
+            {
+                Label lblBeak = new Label { Text = "Beak Length (cm):", Location = new Point(12, 24), AutoSize = true };
+                numBeakLength = new NumericUpDown { Location = new Point(140, 22), DecimalPlaces = 1, Maximum = 50, Width = 80 };
+                grpSpecies.Controls.Add(lblBeak);
+                grpSpecies.Controls.Add(numBeakLength);
+            }
+            else if (_species == BirdSpecies.Peacock)
+            {
+                Label lblPlume = new Label { Text = "Plume Color:", Location = new Point(12, 24), AutoSize = true };
+                txtPlumeColor = new TextBox { Location = new Point(120, 20), Width = 250 };
+                grpSpecies.Controls.Add(lblPlume);
+                grpSpecies.Controls.Add(txtPlumeColor);
+            }
 
             // Buttons
             btnOK = new Button { Text = "OK", Location = new Point(150, 520), DialogResult = DialogResult.OK };
@@ -189,6 +205,20 @@ namespace EAMS.Birds
                     return;
                 }
                 ((Dove)bird).FeatherColor = txtFeatherColor.Text;
+            }
+            else if (_species == BirdSpecies.Falcon)
+            {
+                ((Falcon)bird).BeakLength = (double)numBeakLength.Value;
+            }
+            else if (_species == BirdSpecies.Peacock)
+            {
+                if (string.IsNullOrWhiteSpace(txtPlumeColor.Text))
+                {
+                    MessageBox.Show("Please enter plume color for Peacock.");
+                    this.DialogResult = DialogResult.None;
+                    return;
+                }
+                ((Peacock)bird).PlumeColor = txtPlumeColor.Text;
             }
 
             Animal = bird;
