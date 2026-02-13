@@ -30,6 +30,8 @@ namespace EAMS
                     return new Lizard(bodyLength, livesInWater, aggressivenessLevel);
                 case ReptileSpecies.Snake:
                     return new Snake(bodyLength, livesInWater, aggressivenessLevel);
+                case ReptileSpecies.Crocodile:
+                    return new Crocodile(bodyLength, livesInWater, aggressivenessLevel);
                 default:
                     throw new ArgumentException("Invalid species.");
             }

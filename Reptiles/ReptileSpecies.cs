@@ -13,6 +13,7 @@ namespace EAMS
     {
         Turtle,
         Lizard,
-        Snake
+        Snake,
+        Crocodile
     }
 }

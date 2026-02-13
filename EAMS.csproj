@@ -85,6 +85,8 @@
     <Compile Include="Insects\Species\Ant.cs" />
     <Compile Include="Insects\Species\Bee.cs" />
     <Compile Include="Insects\Species\Butterfly.cs" />
+    <Compile Include="Insects\Species\Dragonfly.cs" />
+    <Compile Include="Insects\Species\Ladybug.cs" />
     <Compile Include="Mammals\Species\Cat.cs" />
     <Compile Include="Mammals\Species\Cow.cs" />
     <Compile Include="Mammals\Species\Dog.cs" />
