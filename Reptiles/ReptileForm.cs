@@ -155,6 +155,17 @@ namespace EAMS
                     grpSpecies.Controls.Add(lblVenomous);
                     grpSpecies.Controls.Add(chkSpeciesBool);
                     break;
+                case ReptileSpecies.Crocodile:
+                    Label lblJaw = new Label { Text = "Jaw Strength (0-100):", Location = new Point(12, 24), AutoSize = true };
+                    numSpeciesNumeric1 = new NumericUpDown { Location = new Point(150, 22), Maximum = 100, Width = 80 };
+                    grpSpecies.Controls.Add(lblJaw);
+                    grpSpecies.Controls.Add(numSpeciesNumeric1);
+
+                    Label lblSalt = new Label { Text = "Is Saltwater:", Location = new Point(12, 54), AutoSize = true };
+                    chkSpeciesBool = new CheckBox { Location = new Point(110, 52) };
+                    grpSpecies.Controls.Add(lblSalt);
+                    grpSpecies.Controls.Add(chkSpeciesBool);
+                    break;
             }
             // OK and Cancel buttons
             btnOK = new Button { Text = "OK", Location = new Point(150, 580), DialogResult = DialogResult.OK };
@@ -234,6 +245,10 @@ namespace EAMS
                 case ReptileSpecies.Snake:
                     ((Snake)reptile).Length = (double)numSpeciesNumeric1.Value;
                     ((Snake)reptile).IsVenomous = chkSpeciesBool.Checked;
+                    break;
+                case ReptileSpecies.Crocodile:
+                    ((Crocodile)reptile).JawStrength = (int)numSpeciesNumeric1.Value;
+                    ((Crocodile)reptile).IsSaltwater = chkSpeciesBool.Checked;
                     break;
             }
 

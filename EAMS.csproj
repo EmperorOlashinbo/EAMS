@@ -93,6 +93,7 @@
     <Compile Include="AnimalsGen\GenderType.cs" />
     <Compile Include="Mammals\Species\Horse.cs" />
     <Compile Include="NumericUtility.cs" />
+    <Compile Include="Reptiles\Species\Crocodile.cs" />
     <Compile Include="Reptiles\Species\Lizard.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
