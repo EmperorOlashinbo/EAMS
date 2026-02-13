@@ -12,6 +12,8 @@ namespace EAMS.Birds
     public enum BirdSpecies
     {
         Eagle,
-        Dove
+        Dove,
+        Falcon,
+        Peacock
     }
 }
