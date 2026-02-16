@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace EAMS
 {
     /// <summary>
-    /// Derived class for mammals, adding category-specific properties. Inherits from Animal.
+    /// Derived class for mammals, adding category specific properties. Inherits from Animal.
     /// </summary>
     public abstract class Mammal : Animal
     {
@@ -56,6 +56,33 @@ namespace EAMS
                 if (value >= 0)
                     _tailLength = value;
             }
+        }
+        /// <summary>
+        /// Virtual method for sleep time.
+        /// Can be overridden in species classes.
+        /// </summary>
+        public virtual void SetSleepTime()
+        {
+            // Default sleep for mammals is 8 hours
+            Console.WriteLine($"{GetType().Name} sleeps 8 hours per day.");
+        }
+
+        /// <summary>
+        /// Abstract method for average lifespan.
+        /// </summary>
+        public abstract int GetAverageLifeSpan();
+
+        /// <summary>
+        /// Abstract method for daily food requirement.
+        /// </summary>
+        public abstract Dictionary<string, string> DailyFoodRequirement();
+
+        /// <summary>
+        /// Summary for list display.
+        /// </summary>
+        public string ToStringSummary()
+        {
+            return $"{Id,-8} {Name,-12} {Age,6} {Weight,6:F1} {Gender} | Teeth: {NumberOfTeeth}, Tail: {TailLength}cm";
         }
         /// <summary>
         /// Returns a string representation of the mammal.
