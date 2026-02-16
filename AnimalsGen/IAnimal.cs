@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EAMS.AnimalsGen
+namespace EAMS
 {
     /// <summary>
     /// Defines the interface for an animal, which includes properties
