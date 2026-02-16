@@ -13,37 +13,44 @@ namespace EAMS.Mammals.Species
     {
         private string _breed;
         private bool _isRacing;
-
         /// <summary>
-        /// Default constructor.
+        /// Default constructor for Horse, initializing properties to default values.
         /// </summary>
-        public Horse() : base()
-        {
-            _breed = string.Empty;
-            _isRacing = false;
-        }
-
+        public Horse() : base() { }
         /// <summary>
-        /// Parameterized constructor passing to base.
+        /// Initializes a new instance of the Horse class with the specified number of teeth and tail length.
         /// </summary>
-        /// <param name="numberOfTeeth">Number of teeth.</param>
-        /// <param name="tailLength">Tail length.</param>
-        public Horse(int numberOfTeeth, double tailLength) : base(numberOfTeeth, tailLength)
-        {
-            _breed = string.Empty;
-            _isRacing = false;
-        }
+        /// <param name="teeth"></param>
+        /// <param name="tail"></param>
+        public Horse(int teeth, double tail) : base(teeth, tail) { }
         /// <summary>
-        /// Gets or sets the breed of the horse. The breed is represented as a string, 
-        /// which can describe the specific breed of the horse.
+        /// Gets or sets the breed of the horse. The breed is represented as a string,
         /// </summary>
-        public string Breed { get => _breed; set => _breed = value; }
+        public string Breed { get => _breed; set => _breed = value ?? ""; }
+        /// <summary>
+        /// Gets or sets whether the horse is a racing horse. The racing status is represented as a boolean,
+        /// </summary>
         public bool IsRacing { get => _isRacing; set => _isRacing = value; }
-
         /// <summary>
-        /// Returns a string representation including base and horse data.
+        /// Returns the average lifespan of a horse in years.
         /// </summary>
-        /// <returns>String with horse data.</returns>
+        /// <returns></returns>
+        public override int GetAverageLifeSpan() => 25;
+        /// <summary>
+        /// Returns the daily food requirement for a horse as a dictionary with meal times as keys and food descriptions as values.
+        /// </summary>
+        /// <returns></returns>
+        public override Dictionary<string, string> DailyFoodRequirement() =>
+            new Dictionary<string, string>
+            {
+                ["Morning"] = "6kg hay",
+                ["Evening"] = "4kg grain + 3kg hay"
+            };
+        /// <summary>
+        /// Returns a string representation of the horse, 
+        /// including base animal info and horse specific properties.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return base.ToString() + $"\nBreed: {Breed}\nIs Racing: {IsRacing}";
