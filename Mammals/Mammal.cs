@@ -9,7 +9,7 @@ namespace EAMS
     /// <summary>
     /// Derived class for mammals, adding category-specific properties. Inherits from Animal.
     /// </summary>
-    public class Mammal : Animal
+    public abstract class Mammal : Animal
     {
         private int _numberOfTeeth;
         private double _tailLength;

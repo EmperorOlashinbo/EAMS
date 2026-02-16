@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EAMS
+namespace EAMS.Mammals.Species
 {
     /// <summary>
     /// Concrete class for cats, inheriting from Mammal.
