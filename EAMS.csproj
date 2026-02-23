@@ -60,6 +60,8 @@
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
     <Compile Include="AnimalsGen\Animal.cs" />
+    <Compile Include="AnimalsGen\AnimalManager.cs" />
+    <Compile Include="AnimalsGen\IAnimal.cs" />
     <Compile Include="Birds\Bird.cs" />
     <Compile Include="Birds\BirdFactory.cs" />
     <Compile Include="Birds\BirdForm.cs">
@@ -73,6 +75,8 @@
     <Compile Include="Birds\Species\Eagle.cs" />
     <Compile Include="Birds\Species\Falcon.cs" />
     <Compile Include="Birds\Species\Peacock.cs" />
+    <Compile Include="GenericList\IListManager.cs" />
+    <Compile Include="GenericList\ListManager.cs" />
     <Compile Include="Insects\Insect.cs" />
     <Compile Include="Insects\InsectFactory.cs" />
     <Compile Include="Insects\InsectForm.cs">

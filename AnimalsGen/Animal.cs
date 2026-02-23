@@ -9,7 +9,7 @@ namespace EAMS
     /// <summary>
     /// Represents an animal with properties for identification, name, gender, age, weight, and image path.
     /// </summary>
-    public class Animal
+    public abstract class Animal : IAnimal
     {
         private string _id;
         private string _name;
@@ -21,7 +21,7 @@ namespace EAMS
         /// <summary>
         /// Default constructor. Generates a unique ID for the animal.
         /// </summary>
-        public Animal()
+        protected Animal()
         {
             _id = Guid.NewGuid().ToString();
             _name = string.Empty;
