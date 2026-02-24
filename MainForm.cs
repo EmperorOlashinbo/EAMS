@@ -38,7 +38,8 @@ namespace EAMS
         private Button btnLoadImage;
 
         /// <summary>
-        /// Initializes the main form, sets up the UI components, and configures event handlers for user interactions.
+        /// Initializes the main form, sets up the UI components, 
+        /// and configures event handlers for user interactions.
         /// </summary>
         public MainForm()
         {
@@ -76,7 +77,7 @@ namespace EAMS
             Controls.Add(chkListAll);
 
             lstAllAnimals = new ListBox { Location = new Point(10, 205), Size = new Size(250, 120), Visible = false };
-            lstAllAnimals.Items.AddRange(new[] { "Dog", "Cat", "Cow", "Horse", "Turtle", "Lizard", "Snake", "Eagle", "Dove", "Butterfly", "Bee", "Ant" });
+            lstAllAnimals.Items.AddRange(new[] { "Dog", "Cat", "Cow", "Horse", "Crocodile", "Turtle", "Lizard", "Snake", "Eagle", "Dove", "Falcon", "Peacock","Butterfly", "Bee", "Ant", "Dragonfly", "Ladybug" });
             lstAllAnimals.SelectedIndexChanged += LstAllAnimals_SelectedIndexChanged;
             Controls.Add(lstAllAnimals);
 
@@ -310,7 +311,7 @@ namespace EAMS
 
                 if (currentAnimal != null)
                 {
-                    // Immediately load image preview (this fixes your issue)
+                    // Immediately load image preview
                     if (!string.IsNullOrEmpty(currentAnimal.ImagePath) && File.Exists(currentAnimal.ImagePath))
                     {
                         try
@@ -331,7 +332,7 @@ namespace EAMS
                     // Display full details
                     txtOutput.Text = currentAnimal.ToString();
 
-                    // Pre-fill general fields for possible edit before Add
+                    // Prefill general fields for possible edit before Add
                     txtName.Text = currentAnimal.Name ?? string.Empty;
                     txtAge.Text = currentAnimal.Age.ToString();
                     txtWeight.Text = currentAnimal.Weight.ToString("F1");
@@ -408,7 +409,7 @@ namespace EAMS
                 about.ShowDialog();
             }
         }
-        
+
         /// <summary>
         /// Handles the "Clear" button click event to reset the form and clear the current animal data.
         /// </summary>
