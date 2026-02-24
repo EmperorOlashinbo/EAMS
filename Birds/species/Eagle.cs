@@ -12,21 +12,21 @@ namespace EAMS.Birds.species
     public class Eagle : Bird
     {
         private bool _isBald;
+
         /// <summary>
-        /// Default constructor. Initializes the eagle as a non-bald eagle by default.
+        /// Default constructor.
         /// </summary>
         public Eagle() : base() { _isBald = false; }
+
         /// <summary>
-        /// Parameterized constructor for eagle specific data, including wingspan, tail length, and bald status.
+        /// Parameterized constructor.
         /// </summary>
-        /// <param name="wingspan"></param>
-        /// <param name="tailLength"></param>
         public Eagle(double wingspan, double tailLength) : base(wingspan, tailLength)
         {
             _isBald = false;
         }
         /// <summary>
-        /// Gets or sets the bald status of the eagle. By default, eagles are considered non-bald, but this can be changed if needed.
+        /// Gets or sets a value indicating whether the eagle is a bald eagle.
         /// </summary>
         public bool IsBald
         {
@@ -34,9 +34,24 @@ namespace EAMS.Birds.species
             set => _isBald = value;
         }
         /// <summary>
-        /// Returns a string representation including base bird data and bald status.
+        /// Gets the average lifespan of the eagle in years.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The average lifespan of the eagle in years.</returns>
+        public override int GetAverageLifeSpan() => 30;
+        /// <summary>
+        /// Gets the daily food requirements of the eagle.
+        /// </summary>
+        /// <returns>A dictionary containing the daily food requirements of the eagle.</returns>
+        public override Dictionary<string, string> DailyFoodRequirement() =>
+            new Dictionary<string, string>
+            {
+                ["Morning"] = "Small mammals or fish",
+                ["Evening"] = "Birds or carrion"
+            };
+        /// <summary>
+        /// Returns a string representation of the eagle, including bald eagle status.
+        /// </summary>
+        /// <returns>A string representation of the eagle.</returns>
         public override string ToString()
         {
             return base.ToString() + $"\nIs Bald Eagle: {IsBald}";
