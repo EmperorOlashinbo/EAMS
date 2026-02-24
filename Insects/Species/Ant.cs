@@ -13,30 +13,51 @@ namespace EAMS.Insects.Species
     {
         private bool _isWorker;
         /// <summary>
-        /// Default constructor. Initializes the ant as a worker by default.
+        /// Default constructor. Initializes an ant with default values, 
+        /// setting it as a worker by default.
         /// </summary>
         public Ant() : base() { _isWorker = true; }
+        
         /// <summary>
-        /// Parameterized constructor for ant specific data, including worker status.
+        /// Parameterized constructor for ant specific data.
         /// </summary>
-        /// <param name="numberOfWings"></param>
-        /// <param name="antennaLength"></param>
+        /// <param name="numberOfWings">The number of wings of the ant.</param>
+        /// <param name="antennaLength">The length of the antenna of the ant in millimeters.</param>
         public Ant(int numberOfWings, double antennaLength) : base(numberOfWings, antennaLength)
         {
             _isWorker = true;
         }
+        
         /// <summary>
-        /// Gets or sets the worker status of the ant. By default, ants are considered workers, but this can be changed if needed.
+        /// Gets or sets the worker status of the ant. By default, 
+        /// ants are considered workers, but this can be changed if needed.
         /// </summary>
         public bool IsWorker
         {
             get => _isWorker;
             set => _isWorker = value;
         }
+        
         /// <summary>
-        /// Returns a string representation including base insect data and worker status.
+        /// Gets the average lifespan of the ant in years.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The average lifespan of the ant in years.</returns>
+        public override int GetAverageLifeSpan() => 3;   // Worker ants live 1-3 years
+        
+        /// <summary>
+        /// Gets the daily food requirements of the ant.
+        /// </summary>
+        /// <returns>A dictionary containing the daily food requirements of the ant.</returns>
+        public override Dictionary<string, string> DailyFoodRequirement() =>
+            new Dictionary<string, string>
+            {
+                ["All day"] = "Seeds, insects, and honeydew"
+            };
+        
+        /// <summary>
+        /// Returns a string representation of the ant, including worker status.
+        /// </summary>
+        /// <returns>A string representation of the ant.</returns>
         public override string ToString()
         {
             return base.ToString() + $"\nIs Worker: {IsWorker}";
