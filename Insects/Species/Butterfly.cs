@@ -13,34 +13,47 @@ namespace EAMS.Insects.Species
     {
         private string _wingPattern;
         /// <summary>
-        /// Default constructor. Initializes the butterfly with an empty wing pattern.
+        /// Default constructor. Initializes a butterfly with default values.
         /// </summary>
         public Butterfly() : base() { _wingPattern = string.Empty; }
         /// <summary>
-        /// Parameterized constructor for butterfly specific data, including wing pattern.
+        /// Parameterized constructor for butterfly specific data.
         /// </summary>
-        /// <param name="numberOfWings"></param>
-        /// <param name="antennaLength"></param>
+        /// <param name="numberOfWings">The number of wings of the butterfly.</param>
+        /// <param name="antennaLength">The length of the antenna of the butterfly in millimeters.</param>
         public Butterfly(int numberOfWings, double antennaLength) : base(numberOfWings, antennaLength)
         {
             _wingPattern = string.Empty;
         }
         /// <summary>
-        /// Gets or sets the wing pattern of the butterfly. 
-        /// The wing pattern is represented as a string, 
-        /// which can describe the colors and shapes found on the butterfly's wings. 
-        /// If a null value is assigned, 
-        /// it defaults to an empty string to ensure that the property always contains a valid string value.
+        /// Gets or sets the pattern of the wing.
         /// </summary>
         public string WingPattern
         {
             get => _wingPattern;
             set => _wingPattern = value ?? string.Empty;
         }
+        
         /// <summary>
-        /// Returns a string representation including base insect data and wing pattern.
+        /// Gets the average lifespan of the butterfly in weeks.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The average lifespan of the butterfly in weeks.</returns>
+        public override int GetAverageLifeSpan() => 4;   // Typical butterfly lifespan in weeks/months
+        
+        /// <summary>
+        /// Gets the daily food requirements of the butterfly.
+        /// </summary>
+        /// <returns>A dictionary containing the daily food requirements of the butterfly.</returns>
+        public override Dictionary<string, string> DailyFoodRequirement() =>
+            new Dictionary<string, string>
+            {
+                ["All day"] = "Nectar from flowers"
+            };
+        
+        /// <summary>
+        /// Returns a string representation of the butterfly, including wing pattern.
+        /// </summary>
+        /// <returns>A string representation of the butterfly.</returns>
         public override string ToString()
         {
             return base.ToString() + $"\nWing Pattern: {WingPattern}";
