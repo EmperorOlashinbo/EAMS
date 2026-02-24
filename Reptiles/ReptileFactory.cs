@@ -33,7 +33,7 @@ namespace EAMS
                 case ReptileSpecies.Crocodile:
                     return new Crocodile(bodyLength, livesInWater, aggressivenessLevel);
                 default:
-                    throw new ArgumentException("Invalid species.");
+                    throw new ArgumentException("Invalid reptile species.");
             }
         }
     }
