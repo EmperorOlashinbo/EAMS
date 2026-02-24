@@ -9,51 +9,77 @@ namespace EAMS.Insects
     /// <summary>
     /// Insect class inheriting from Animal.
     /// </summary>
-    public class Insect : Animal
+    public abstract class Insect : Animal
     {
         private int _numberOfWings;
         private double _antennaLength;
+
         /// <summary>
-        /// Default constructor. Initializes the insect with default values for number of wings and antenna length.
+        /// Default constructor.
         /// </summary>
-        public Insect() : base()
+        protected Insect() : base()
         {
             _numberOfWings = 0;
             _antennaLength = 0.0;
         }
+
         /// <summary>
-        /// Parameterized constructor for insect specific data, including number of wings and antenna length.
+        /// Parameterized constructor.
         /// </summary>
-        /// <param name="numberOfWings"></param>
-        /// <param name="antennaLength"></param>
-        public Insect(int numberOfWings, double antennaLength) : base()
+        protected Insect(int numberOfWings, double antennaLength) : base()
         {
             NumberOfWings = numberOfWings;
             AntennaLength = antennaLength;
         }
+
         /// <summary>
-        /// Gets or sets the number of wings. Value is constrained to be non-negative. If a negative value is assigned, it defaults to 0.
+        /// Gets or sets the number of wings. Value is constrained to be non-negative.
         /// </summary>
         public int NumberOfWings
         {
             get => _numberOfWings;
             set => _numberOfWings = value >= 0 ? value : 0;
         }
+
         /// <summary>
         /// Gets or sets the length of the antenna in millimeters. 
-        /// Value is constrained to be non-negative. 
-        /// If a negative value is assigned, it defaults to 0.0.
+        /// Value is constrained to be non-negative.
         /// </summary>
         public double AntennaLength
         {
             get => _antennaLength;
             set => _antennaLength = value >= 0 ? value : 0.0;
         }
+
         /// <summary>
-        /// Returns a string representation of the insect, 
-        /// including base animal data and insect-specific properties such as number of wings and antenna length.
+        /// Virtual method for sleep time.
         /// </summary>
-        /// <returns></returns>
+        public virtual void SetSleepTime()
+        {
+            Console.WriteLine($"{GetType().Name} rests 6-10 hours per day.");
+        }
+
+        /// <summary>
+        /// Abstract method: average lifespan.
+        /// </summary>
+        public abstract int GetAverageLifeSpan();
+
+        /// <summary>
+        /// Abstract method: daily food requirement.
+        /// </summary>
+        public abstract Dictionary<string, string> DailyFoodRequirement();
+
+        /// <summary>
+        /// Summary for list display.
+        /// </summary>
+        public virtual string ToStringSummary()
+        {
+            return $"{Id,-8} {Name,-12} {Age,6} {Weight,6:F1} {Gender} | Wings: {NumberOfWings}, Antenna: {AntennaLength}mm";
+        }
+
+        /// <summary>
+        /// Returns a string representation of the insect.
+        /// </summary>
         public override string ToString()
         {
             return base.ToString() +
