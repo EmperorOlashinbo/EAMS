@@ -2,8 +2,10 @@
 using EAMS.Birds.species;
 using EAMS.Insects;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace EAMS
@@ -15,6 +17,8 @@ namespace EAMS
     public partial class MainForm : Form
     {
         private Animal currentAnimal;
+        private readonly List<Animal> animals = new List<Animal>();
+
         private CheckBox chkListAll;
         private ListBox lstCategory;
         private ListBox lstSpecies;
@@ -37,6 +41,13 @@ namespace EAMS
         private Button btnAdd;
         private Button btnLoadImage;
 
+        // New controls to match V2 layout
+        private ListView lstAnimals;
+        private Button btnChange;
+        private Button btnDelete;
+        private TextBox txtSpecInfo;
+        private TextBox txtHabitat;
+
         /// <summary>
         /// Initializes the main form, sets up the UI components, 
         /// and configures event handlers for user interactions.
@@ -45,7 +56,7 @@ namespace EAMS
         {
             InitializeComponent();
             this.Text = "EcoPark Animal Management System by Ibrahim";
-            this.Size = new Size(760, 540);
+            this.Size = new Size(920, 620);
             this.StartPosition = FormStartPosition.CenterScreen;
 
             // Menu bar
@@ -77,7 +88,7 @@ namespace EAMS
             Controls.Add(chkListAll);
 
             lstAllAnimals = new ListBox { Location = new Point(10, 205), Size = new Size(250, 120), Visible = false };
-            lstAllAnimals.Items.AddRange(new[] { "Dog", "Cat", "Cow", "Horse", "Crocodile", "Turtle", "Lizard", "Snake", "Eagle", "Dove", "Falcon", "Peacock","Butterfly", "Bee", "Ant", "Dragonfly", "Ladybug" });
+            lstAllAnimals.Items.AddRange(new[] { "Dog", "Cat", "Cow", "Horse", "Crocodile", "Turtle", "Lizard", "Snake", "Eagle", "Dove", "Falcon", "Peacock", "Butterfly", "Bee", "Ant", "Dragonfly", "Ladybug" });
             lstAllAnimals.SelectedIndexChanged += LstAllAnimals_SelectedIndexChanged;
             Controls.Add(lstAllAnimals);
 
@@ -85,21 +96,21 @@ namespace EAMS
             btnCreate.Click += BtnCreate_Click;
             Controls.Add(btnCreate);
 
-            // Image preview and load image button
+            // Image preview and load image button (moved to top-right with larger size)
             picPreview = new PictureBox
             {
-                Location = new Point(410, 55),
-                Size = new Size(200, 150),
+                Location = new Point(600, 55),
+                Size = new Size(240, 180),
                 SizeMode = PictureBoxSizeMode.Zoom,
                 BorderStyle = BorderStyle.FixedSingle
             };
             Controls.Add(picPreview);
 
-            btnLoadImage = new Button { Text = "Load Image", Location = new Point(410, 210), Width = 200 };
+            btnLoadImage = new Button { Text = "Load Image", Location = new Point(600, 245), Width = 240 };
             btnLoadImage.Click += BtnLoadImage_Click;
             Controls.Add(btnLoadImage);
 
-            // General data group
+            // General data group (kept left-center)
             grpGeneral = new GroupBox { Text = "General Data", Location = new Point(10, 340), Size = new Size(360, 150) };
             lblName = new Label { Text = "Name", Location = new Point(10, 20), AutoSize = true };
             grpGeneral.Controls.Add(lblName);
@@ -127,8 +138,8 @@ namespace EAMS
             grpGeneral.Controls.Add(btnAdd);
             Controls.Add(grpGeneral);
 
-            // Output box
-            GroupBox grpOutput = new GroupBox { Text = "Animal Details", Location = new Point(410, 260), Size = new Size(320, 230) };
+            // Output box (kept to the right of the image area)
+            GroupBox grpOutput = new GroupBox { Text = "Animal Details", Location = new Point(600, 290), Size = new Size(240, 260) };
             txtOutput = new TextBox
             {
                 Multiline = true,
@@ -140,21 +151,65 @@ namespace EAMS
             grpOutput.Controls.Add(txtOutput);
             Controls.Add(grpOutput);
 
-            // Bottom buttons
-            btnClear = new Button { Text = "Clear Output", Location = new Point(540, 500 - 40), Width = 190 };
+            // New: ListView for created animals (bottom-left), plus Change/Delete buttons
+            lstAnimals = new ListView
+            {
+                Location = new Point(10, 500 - 160),
+                Size = new Size(360, 140),
+                View = View.Details,
+                FullRowSelect = true,
+                GridLines = true
+            };
+            lstAnimals.Columns.Add("Species", 80);
+            lstAnimals.Columns.Add("Id", 80);
+            lstAnimals.Columns.Add("Name", 80);
+            lstAnimals.Columns.Add("Age", 40);
+            lstAnimals.Columns.Add("Weight", 60);
+            lstAnimals.Columns.Add("Gender", 60);
+            lstAnimals.SelectedIndexChanged += LstAnimals_SelectedIndexChanged;
+            Controls.Add(lstAnimals);
+
+            btnChange = new Button { Text = "Change", Location = new Point(10, lstAnimals.Bottom + 6), Size = new Size(120, 28) };
+            btnChange.Click += BtnChange_Click;
+            Controls.Add(btnChange);
+
+            btnDelete = new Button { Text = "Delete", Location = new Point(140, lstAnimals.Bottom + 6), Size = new Size(120, 28) };
+            btnDelete.Click += BtnDelete_Click;
+            Controls.Add(btnDelete);
+
+            // New: animal-specific info panels to the right of the ListView (two textboxes)
+            txtSpecInfo = new TextBox
+            {
+                Location = new Point(380, lstAnimals.Top),
+                Size = new Size(200, 140),
+                Multiline = true,
+                ReadOnly = true,
+                ScrollBars = ScrollBars.Vertical,
+                Font = new Font("Consolas", 10)
+            };
+            Controls.Add(txtSpecInfo);
+
+            txtHabitat = new TextBox
+            {
+                Location = new Point(590, lstAnimals.Top),
+                Size = new Size(240, 140),
+                Multiline = true,
+                ReadOnly = true,
+                ScrollBars = ScrollBars.Vertical,
+                Font = new Font("Consolas", 10)
+            };
+            Controls.Add(txtHabitat);
+
+            // Bottom buttons (moved slightly)
+            btnClear = new Button { Text = "Clear Output", Location = new Point(600, 560), Width = 240 };
             btnClear.Click += BtnClear_Click;
             Controls.Add(btnClear);
 
-            btnAbout = new Button { Text = "About", Location = new Point(10, 500 - 40), Width = 100 };
+            btnAbout = new Button { Text = "About", Location = new Point(10, 560), Width = 100 };
             btnAbout.Click += BtnAbout_Click;
             Controls.Add(btnAbout);
         }
-        /// <summary>
-        /// Handles the image loading process by displaying an open file dialog, updating the preview image, and setting
-        /// the current animal's image path.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The event data.</param>
+
         private void BtnLoadImage_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog dlg = new OpenFileDialog { Filter = "Images|*.png;*.jpg;*.jpeg;*.bmp;*.gif" })
@@ -172,13 +227,7 @@ namespace EAMS
                 }
             }
         }
-        /// <summary>
-        /// Toggles between listing all animal species and filtering by category. When "List all animal species" is checked,
-        /// the category and species lists are disabled, and the all animals list is shown. When unchecked, the category
-        /// and species lists are enabled, and the all animals list is hidden.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
         private void ChkListAll_CheckedChanged(object sender, EventArgs e)
         {
             bool isChecked = chkListAll.Checked;
@@ -195,12 +244,7 @@ namespace EAMS
                 lstAllAnimals.ClearSelected();
             }
         }
-        /// <summary>
-        /// Updates the species list based on the selected category. When a category is selected, 
-        /// the corresponding species are loaded into the species list.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
         private void LstCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
             lstSpecies.Items.Clear();
@@ -221,13 +265,7 @@ namespace EAMS
                     break;
             }
         }
-        /// <summary>
-        /// When a species is selected from the "List all animal species" list, 
-        /// this event handler determines the category of the selected species,
-        /// and updates the category and species lists accordingly.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
         private void LstAllAnimals_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lstAllAnimals.SelectedItem is string sp && !string.IsNullOrEmpty(sp))
@@ -240,13 +278,7 @@ namespace EAMS
                 }
             }
         }
-        /// <summary>
-        /// Determines the category of an animal based on its species name. 
-        /// This method is used to map a selected species
-        /// to its corresponding category.
-        /// </summary>
-        /// <param name="species">The species name of the animal.</param>
-        /// <returns>The category of the animal.</returns>
+
         private string GetCategoryFromSpecies(string species)
         {
             if (species == "Dog" || species == "Cat" || species == "Cow" || species == "Horse")
@@ -259,13 +291,7 @@ namespace EAMS
                 return "Insect";
             return "";
         }
-        /// <summary>
-        /// Handles the creation of a new animal based on the selected category and species. 
-        /// It opens the corresponding form for the selected species,
-        /// and assigns the created animal to the currentAnimal variable.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
         private void BtnCreate_Click(object sender, EventArgs e)
         {
             string category = chkListAll.Checked ? GetCategoryFromSpecies(lstAllAnimals.SelectedItem?.ToString() ?? "") : lstCategory.SelectedItem?.ToString() ?? "";
@@ -353,11 +379,7 @@ namespace EAMS
                 }
             }
         }
-        /// <summary>
-        /// Handles the "Add" button click event to validate and apply general data (name, age, weight, gender) to the current animal.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The event data.</param>
+
         private void BtnAdd_Click(object sender, EventArgs e)
         {
             if (currentAnimal == null)
@@ -393,15 +415,139 @@ namespace EAMS
             string genderStr = cmbGender.SelectedItem.ToString();
             currentAnimal.Gender = Enum.TryParse<GenderType>(genderStr, true, out var g) ? g : GenderType.Unknown;
 
+            // Update or add to collection and ListView
+            Animal existing = animals.FirstOrDefault(a => a.Id == currentAnimal.Id);
+            if (existing == null)
+            {
+                animals.Add(currentAnimal);
+                AddAnimalToListView(currentAnimal);
+            }
+            else
+            {
+                // copy updated fields into existing reference
+                existing.Name = currentAnimal.Name;
+                existing.Age = currentAnimal.Age;
+                existing.Weight = currentAnimal.Weight;
+                existing.Gender = currentAnimal.Gender;
+                existing.ImagePath = currentAnimal.ImagePath;
+                RefreshListViewForAnimal(existing);
+            }
+
             txtOutput.Text = currentAnimal.ToString();
             MessageBox.Show("Animal data updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-        /// <summary>
-        /// Handles the "About" menu item click event to display the AboutForm, 
-        /// which contains information about the application and its developer.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The event data.</param>
+
+        private void AddAnimalToListView(Animal a)
+        {
+            var item = new ListViewItem(new[]
+            {
+                a.GetType().Name, // species class name may be more descriptive
+                a.Id,
+                a.Name ?? "",
+                a.Age.ToString(),
+                a.Weight.ToString("F1"),
+                a.Gender.ToString()
+            })
+            {
+                Tag = a.Id
+            };
+            lstAnimals.Items.Add(item);
+        }
+
+        private void RefreshListViewForAnimal(Animal a)
+        {
+            foreach (ListViewItem it in lstAnimals.Items)
+            {
+                if (it.Tag is string id && id == a.Id)
+                {
+                    it.SubItems[2].Text = a.Name ?? "";
+                    it.SubItems[3].Text = a.Age.ToString();
+                    it.SubItems[4].Text = a.Weight.ToString("F1");
+                    it.SubItems[5].Text = a.Gender.ToString();
+                    break;
+                }
+            }
+        }
+
+        private void LstAnimals_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lstAnimals.SelectedItems.Count == 0)
+            {
+                txtSpecInfo.Clear();
+                txtHabitat.Clear();
+                return;
+            }
+
+            var sel = lstAnimals.SelectedItems[0];
+            string id = sel.Tag as string;
+            Animal a = animals.FirstOrDefault(x => x.Id == id);
+            if (a != null)
+            {
+                // Show class ToString() as animal-specific info; adjust if more detailed formatting available per subclass
+                txtSpecInfo.Text = a.ToString() ?? "";
+                // Example: show preferred habitat / notes in the habitat box if properties exist
+                txtHabitat.Text = "Preferred Habitat / Notes:\r\n";
+                // Attempt to show some subclass-specific info via reflection-safe checks (non-invasive)
+                try
+                {
+                    var type = a.GetType();
+                    var prop = type.GetProperty("PreferredHabitat");
+                    if (prop != null)
+                    {
+                        var val = prop.GetValue(a);
+                        if (val != null) txtHabitat.AppendText(val.ToString());
+                    }
+                }
+                catch { /* ignore */ }
+            }
+            else
+            {
+                txtSpecInfo.Clear();
+                txtHabitat.Clear();
+            }
+        }
+
+        private void BtnChange_Click(object sender, EventArgs e)
+        {
+            if (lstAnimals.SelectedItems.Count == 0) return;
+            string id = lstAnimals.SelectedItems[0].Tag as string;
+            Animal a = animals.FirstOrDefault(x => x.Id == id);
+            if (a == null) return;
+
+            // load selected animal into currentAnimal for editing
+            currentAnimal = a;
+            txtName.Text = a.Name ?? "";
+            txtAge.Text = a.Age.ToString();
+            txtWeight.Text = a.Weight.ToString("F1");
+            cmbGender.SelectedItem = a.Gender.ToString();
+            if (!string.IsNullOrEmpty(a.ImagePath) && File.Exists(a.ImagePath))
+            {
+                try
+                {
+                    picPreview.Image?.Dispose();
+                    picPreview.Image = Image.FromFile(a.ImagePath);
+                }
+                catch { picPreview.Image = null; }
+            }
+            else
+            {
+                picPreview.Image = null;
+            }
+            btnAdd.Enabled = true;
+        }
+
+        private void BtnDelete_Click(object sender, EventArgs e)
+        {
+            if (lstAnimals.SelectedItems.Count == 0) return;
+            var item = lstAnimals.SelectedItems[0];
+            string id = item.Tag as string;
+            lstAnimals.Items.Remove(item);
+            Animal toRemove = animals.FirstOrDefault(x => x.Id == id);
+            if (toRemove != null) animals.Remove(toRemove);
+            txtSpecInfo.Clear();
+            txtHabitat.Clear();
+        }
+
         private void BtnAbout_Click(object sender, EventArgs e)
         {
             using (var about = new AboutForm())
@@ -410,11 +556,6 @@ namespace EAMS
             }
         }
 
-        /// <summary>
-        /// Handles the "Clear" button click event to reset the form and clear the current animal data.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The event data.</param>
         private void BtnClear_Click(object sender, EventArgs e)
         {
             txtOutput.Clear();

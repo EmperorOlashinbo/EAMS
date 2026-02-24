@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EAMS
 {
     /// <summary>
-    /// Derived class for reptiles, inheriting from Animal.
+    /// Abstract base class for all reptiles.
+    /// Implements category-specific properties and required abstract/virtual methods.
     /// </summary>
-    public class Reptile : Animal
+    public abstract class Reptile : Animal
     {
         private double _bodyLength;
         private bool _livesInWater;
@@ -18,23 +16,21 @@ namespace EAMS
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public Reptile() : base()
+        protected Reptile() : base()
         {
             _bodyLength = 0.0;
             _livesInWater = false;
             _aggressivenessLevel = 0;
         }
+
         /// <summary>
         /// Parameterized constructor.
         /// </summary>
-        /// <param name="bodyLength">Body length in cm</param>
-        /// <param name="livesInWater">Indicates if the reptile lives in water</param>
-        /// <param name="aggressivenessLevel">Aggressiveness level from 0 to 10</param>
-        public Reptile(double bodyLength, bool livesInWater, int aggressivenessLevel) : base()
+        protected Reptile(double bodyLength, bool livesInWater, int aggressivenessLevel) : base()
         {
-            _bodyLength = bodyLength >= 0 ? bodyLength : 0.0;
-            _livesInWater = livesInWater;
-            _aggressivenessLevel = (aggressivenessLevel >= 0 && aggressivenessLevel <= 10) ? aggressivenessLevel : 0;
+            BodyLength = bodyLength;
+            LivesInWater = livesInWater;
+            AggressivenessLevel = aggressivenessLevel;
         }
         /// <summary>
         /// Gets or sets the body length of the reptile in centimeters.
@@ -42,42 +38,63 @@ namespace EAMS
         public double BodyLength
         {
             get => _bodyLength;
-            set
-            {
-                if (value >= 0)
-                    _bodyLength = value;
-            }
+            set => _bodyLength = value >= 0 ? value : 0.0;
         }
+        
         /// <summary>
-        /// Gets or sets whether the reptile lives in water. 
-        /// This is a boolean property that indicates if the reptile is aquatic or not.
+        /// Gets or sets a value indicating whether the reptile lives in water.
         /// </summary>
         public bool LivesInWater
         {
             get => _livesInWater;
             set => _livesInWater = value;
         }
+        
         /// <summary>
-        /// Gets or sets the aggressiveness level of the reptile. 
-        /// The aggressiveness level is represented as an integer, 
-        /// where 0 means not aggressive at all and 10 means extremely aggressive.
+        /// Gets or sets the aggressiveness level of the reptile (0-10).
         /// </summary>
         public int AggressivenessLevel
         {
             get => _aggressivenessLevel;
-            set
-            {
-                if (value >= 0 && value <= 10)
-                    _aggressivenessLevel = value;
-            }
+            set => _aggressivenessLevel = (value >= 0 && value <= 10) ? value : 0;
         }
+
         /// <summary>
-        /// Return a string representation including base and reptile.
+        /// Virtual method - Grade C+ requirement (can be overridden).
         /// </summary>
-        /// <returns>String with reptile data</returns>
+        public virtual void SetSleepTime()
+        {
+            // Default for reptiles: basking/resting periods
+            Console.WriteLine($"{GetType().Name} rests/basks 10-14 hours per day.");
+        }
+
+        /// <summary>
+        /// Abstract method - must be implemented by each species (Grade C+).
+        /// </summary>
+        public abstract int GetAverageLifeSpan();
+
+        /// <summary>
+        /// Abstract method - daily food requirement (Grade B+).
+        /// </summary>
+        public abstract Dictionary<string, string> DailyFoodRequirement();
+
+        /// <summary>
+        /// Summary for ListBox display (Assignment 2 requirement).
+        /// </summary>
+        public virtual string ToStringSummary()
+        {
+            return $"{Id,-8} {Name,-12} {Age,6} {Weight,6:F1} {Gender} | Length: {BodyLength}cm, Agg: {AggressivenessLevel}";
+        }
+
+        /// <summary>
+        /// Full ToString with hierarchy.
+        /// </summary>
         public override string ToString()
         {
-            return base.ToString() + $"\nBody Length: {BodyLength}\nLives in Water: {LivesInWater}\nAggressiveness Level: {AggressivenessLevel}";
+            return base.ToString() +
+                   $"\nBody Length: {BodyLength} cm" +
+                   $"\nLives in Water: {LivesInWater}" +
+                   $"\nAggressiveness Level: {AggressivenessLevel}/10";
         }
     }
 }
