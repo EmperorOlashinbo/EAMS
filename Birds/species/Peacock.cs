@@ -12,23 +12,21 @@ namespace EAMS.Birds.species
     public class Peacock : Bird
     {
         private string _plumeColor;
-
         /// <summary>
-        /// Default constructor.
+        /// Default constructor. Initializes a peacock with default values.
         /// </summary>
-        public Peacock() : base()
-        {
-            _plumeColor = string.Empty;
-        }
+        public Peacock() : base() { _plumeColor = string.Empty; }
 
         /// <summary>
         /// Parameterized constructor for peacock specific data.
         /// </summary>
+        /// <param name="wingspan">The wingspan of the peacock.</param>
+        /// <param name="tailLength">The tail length of the peacock.</param>
         public Peacock(double wingspan, double tailLength) : base(wingspan, tailLength)
         {
             _plumeColor = string.Empty;
         }
-
+        
         /// <summary>
         /// Gets or sets the plume color of the peacock.
         /// </summary>
@@ -37,10 +35,28 @@ namespace EAMS.Birds.species
             get => _plumeColor;
             set => _plumeColor = value ?? string.Empty;
         }
-
+        
         /// <summary>
-        /// Returns a string representation including base bird data and plume color.
+        /// Gets the average lifespan of the peacock in years.
         /// </summary>
+        /// <returns>The average lifespan of the peacock in years.</returns>
+        public override int GetAverageLifeSpan() => 20;
+        
+        /// <summary>
+        /// Gets the daily food requirements of the peacock.
+        /// </summary>
+        /// <returns>A dictionary containing the daily food requirements of the peacock.</returns>
+        public override Dictionary<string, string> DailyFoodRequirement() =>
+            new Dictionary<string, string>
+            {
+                ["Morning"] = "Seeds and grains",
+                ["Evening"] = "Insects and small fruits"
+            };
+        
+        /// <summary>
+        /// Returns a string representation of the peacock, including plume color.
+        /// </summary>
+        /// <returns>A string representation of the peacock.</returns>
         public override string ToString()
         {
             return base.ToString() + $"\nPlume Color: {PlumeColor}";
