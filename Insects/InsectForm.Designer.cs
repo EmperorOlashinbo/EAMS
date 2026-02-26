@@ -1,4 +1,4 @@
-﻿namespace EAMS.Insects
+﻿namespace EAMS
 {
     partial class InsectForm
     {
@@ -45,5 +45,13 @@
         }
 
         #endregion
+
+        /// <summary>
+        /// Handles the Load event of the InsectForm control.
+        /// </summary>
+        private void InsectForm_Load(object sender, System.EventArgs e)
+        {
+
+        }
     }
 }

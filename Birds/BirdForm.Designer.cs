@@ -1,4 +1,4 @@
-﻿namespace EAMS.Birds
+﻿namespace EAMS
 {
     partial class BirdForm
     {
@@ -50,7 +50,7 @@
         /// </summary>
         private void BirdForm_Load(object sender, System.EventArgs e)
         {
-            
+
         }
     }
 }
