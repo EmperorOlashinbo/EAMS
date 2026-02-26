@@ -1,9 +1,10 @@
-﻿using EAMS.Insects.Species;
+﻿using EAMS.Insects;
+using EAMS.Insects.Species;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace EAMS.Insects
+namespace EAMS
 {
     /// <summary>
     /// Represents a Windows Form for entering and editing data for an insect, including general, category specific, and
@@ -157,6 +158,40 @@ namespace EAMS.Insects
             this.AcceptButton = btnOK;
             this.CancelButton = btnCancel;
         }
+
+        /// <summary>
+        /// Initializes a new instance of the InsectForm class with existing insect data, populating input controls with the
+        /// properties of the given insect.
+        /// </summary>
+        /// <param name="existing">The existing insect whose data will be used to populate the form.</param>
+        public InsectForm(Insect existing) : this(
+            existing is Insects.Species.Butterfly ? InsectSpecies.Butterfly :
+            existing is Insects.Species.Bee ? InsectSpecies.Bee :
+            existing is Insects.Species.Ant ? InsectSpecies.Ant :
+            existing is Insects.Species.Dragonfly ? InsectSpecies.Dragonfly :
+            InsectSpecies.Ladybug)
+        {
+            if (existing == null) return;
+
+            txtName.Text = existing.Name ?? string.Empty;
+            numAge.Value = Math.Max(0, Math.Min((int)numAge.Maximum, existing.Age));
+            numWeight.Value = (decimal)Math.Max(0.0, Math.Min((double)numWeight.Maximum, existing.Weight));
+            cmbGender.SelectedItem = existing.Gender;
+            txtImagePath.Text = existing.ImagePath ?? string.Empty;
+            numWings.Value = Math.Max(0, Math.Min((int)numWings.Maximum, existing.NumberOfWings));
+            numAntennaLength.Value = (decimal)Math.Max(0.0, Math.Min((double)numAntennaLength.Maximum, existing.AntennaLength));
+
+            if (existing is Insects.Species.Butterfly bf && txtWingPattern != null) txtWingPattern.Text = bf.WingPattern ?? string.Empty;
+            else if (existing is Insects.Species.Bee be && chkCanSting != null && numHoneyProd != null)
+            {
+                chkCanSting.Checked = be.CanSting;
+                numHoneyProd.Value = (decimal)Math.Max(0.0, Math.Min((double)numHoneyProd.Maximum, be.HoneyProductionPerDay));
+            }
+            else if (existing is Insects.Species.Ant an && chkIsWorker != null) chkIsWorker.Checked = an.IsWorker;
+            else if (existing is Insects.Species.Dragonfly dr && numFlightSpeed != null) numFlightSpeed.Value = (decimal)Math.Max(0.0, Math.Min((double)numFlightSpeed.Maximum, dr.FlightSpeed));
+            else if (existing is Insects.Species.Ladybug ld && numSpotCount != null) numSpotCount.Value = Math.Max(0, Math.Min((int)numSpotCount.Maximum, ld.SpotCount));
+        }
+
         /// <summary>
         /// Handles the click event to open an image file dialog, display the selected image in a picture box, and
         /// update the image path text box.
@@ -229,14 +264,6 @@ namespace EAMS.Insects
             }
 
             Animal = insect;
-        }
-        /// <summary>
-        /// Handles the form's Load event.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">Event data.</param>
-        private void InsectForm_Load(object sender, EventArgs e)
-        {
         }
     }
 }
