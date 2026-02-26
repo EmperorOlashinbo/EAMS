@@ -1,9 +1,10 @@
-﻿using EAMS.Birds.species;
+﻿using EAMS.Birds;
+using EAMS.Birds.species;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace EAMS.Birds
+namespace EAMS
 {
     public partial class BirdForm : Form
     {
@@ -143,6 +144,32 @@ namespace EAMS.Birds
 
             this.AcceptButton = btnOK;
             this.CancelButton = btnCancel;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the BirdForm class with the properties of an existing Bird.
+        /// </summary>
+        /// <param name="existing">The Bird instance whose properties are used to populate the form.</param>
+        public BirdForm(Bird existing) : this(
+            existing is Eagle ? BirdSpecies.Eagle :
+            existing is Dove ? BirdSpecies.Dove :
+            existing is Falcon ? BirdSpecies.Falcon :
+            BirdSpecies.Peacock)
+        {
+            if (existing == null) return;
+
+            txtName.Text = existing.Name ?? string.Empty;
+            numAge.Value = Math.Max(0, Math.Min((int)numAge.Maximum, existing.Age));
+            numWeight.Value = (decimal)Math.Max(0.0, Math.Min((double)numWeight.Maximum, existing.Weight));
+            cmbGender.SelectedItem = existing.Gender;
+            txtImagePath.Text = existing.ImagePath ?? string.Empty;
+            numWingspan.Value = (decimal)Math.Max(0.0, Math.Min((double)numWingspan.Maximum, existing.Wingspan));
+            numTailLength.Value = (decimal)Math.Max(0.0, Math.Min((double)numTailLength.Maximum, existing.TailLength));
+
+            if (existing is Eagle e && chkIsBald != null) chkIsBald.Checked = e.IsBald;
+            else if (existing is Dove d && txtFeatherColor != null) txtFeatherColor.Text = d.FeatherColor ?? string.Empty;
+            else if (existing is Falcon f && numBeakLength != null) numBeakLength.Value = (decimal)Math.Max(0.0, Math.Min((double)numBeakLength.Maximum, f.BeakLength));
+            else if (existing is Peacock p && txtPlumeColor != null) txtPlumeColor.Text = p.PlumeColor ?? string.Empty;
         }
 
         /// <summary>
