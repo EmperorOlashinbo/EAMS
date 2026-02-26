@@ -5,7 +5,7 @@ namespace EAMS
 {
     /// <summary>
     /// Abstract base class for all reptiles.
-    /// Implements category-specific properties and required abstract/virtual methods.
+    /// Implements category specific properties and required abstract/virtual methods.
     /// </summary>
     public abstract class Reptile : Animal
     {
@@ -60,7 +60,7 @@ namespace EAMS
         }
 
         /// <summary>
-        /// Virtual method - Grade C+ requirement (can be overridden).
+        /// Virtual method for sleep time. Can be overridden by specific reptile species if needed.
         /// </summary>
         public virtual void SetSleepTime()
         {
@@ -69,17 +69,18 @@ namespace EAMS
         }
 
         /// <summary>
-        /// Abstract method - must be implemented by each species (Grade C+).
+        /// Abstract method for average lifespan in years.
         /// </summary>
         public abstract int GetAverageLifeSpan();
 
         /// <summary>
-        /// Abstract method - daily food requirement (Grade B+).
+        /// Abstract method for daily food requirement.
+        /// </summary>
         /// </summary>
         public abstract Dictionary<string, string> DailyFoodRequirement();
 
         /// <summary>
-        /// Summary for ListBox display (Assignment 2 requirement).
+        /// Summary ToString for tabular display.
         /// </summary>
         public virtual string ToStringSummary()
         {
