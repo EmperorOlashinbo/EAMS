@@ -158,6 +158,49 @@ namespace EAMS
             this.AcceptButton = btnOK;
             this.CancelButton = btnCancel;
         }
+
+        /// <summary>
+        /// Initializes a new instance of the MammalForm class with values populated from an existing Mammal object.
+        /// </summary>
+        /// <param name="existing">The Mammal instance whose values are used to populate the form fields.</param>
+        public MammalForm(Mammal existing) : this(
+            existing is Dog ? MammalSpecies.Dog :
+            existing is Cat ? MammalSpecies.Cat :
+            existing is Cow ? MammalSpecies.Cow :
+            MammalSpecies.Horse)
+        {
+            if (existing == null) return;
+
+            txtName.Text = existing.Name ?? string.Empty;
+            numAge.Value = Math.Max(0, Math.Min((int)numAge.Maximum, existing.Age));
+            numWeight.Value = (decimal)Math.Max(0.0, Math.Min((double)numWeight.Maximum, existing.Weight));
+            cmbGender.SelectedItem = existing.Gender;
+            txtImagePath.Text = existing.ImagePath ?? string.Empty;
+            numTeeth.Value = Math.Max(0, Math.Min((int)numTeeth.Maximum, existing.NumberOfTeeth));
+            numTailLength.Value = (decimal)Math.Max(0.0, Math.Min((double)numTailLength.Maximum, existing.TailLength));
+
+            // species-specific values
+            if (existing is Dog d && txtSpeciesText != null)
+            {
+                txtSpeciesText.Text = d.Breed ?? string.Empty;
+                if (chkSpeciesBool != null) chkSpeciesBool.Checked = d.IsTrained;
+            }
+            else if (existing is Cat c && txtSpeciesText != null)
+            {
+                txtSpeciesText.Text = c.FurColor ?? string.Empty;
+                if (chkSpeciesBool != null) chkSpeciesBool.Checked = c.IsIndoor;
+            }
+            else if (existing is Cow cow && numSpeciesNumeric != null)
+            {
+                numSpeciesNumeric.Value = (decimal)Math.Max(0.0, Math.Min((double)numSpeciesNumeric.Maximum, cow.MilkProduction));
+            }
+            else if (existing is Horse h && txtSpeciesText != null)
+            {
+                txtSpeciesText.Text = h.Breed ?? string.Empty;
+                if (chkSpeciesBool != null) chkSpeciesBool.Checked = h.IsRacing;
+            }
+        }
+
         /// <summary>
         /// Handles the image loading process by opening a file dialog, updating the image path textbox, and displaying
         /// the selected image in the picture box.
