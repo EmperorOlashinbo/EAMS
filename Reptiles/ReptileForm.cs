@@ -178,6 +178,55 @@ namespace EAMS
             this.AcceptButton = btnOK;
             this.CancelButton = btnCancel;
         }
+
+        /// <summary>
+        /// Initializes a new instance of the ReptileForm class with existing reptile data, populating input fields with
+        /// the values from the provided Reptile instance.
+        /// </summary>
+        /// <param name="existing">The existing Reptile instance to populate the form with.</param>
+        public ReptileForm(Reptile existing) : this(
+            existing is Turtle ? ReptileSpecies.Turtle :
+            existing is Lizard ? ReptileSpecies.Lizard :
+            existing is Reptiles.Species.Snake ? ReptileSpecies.Snake :
+            ReptileSpecies.Crocodile)
+        {
+            if (existing == null) return;
+
+            txtName.Text = existing.Name ?? string.Empty;
+            numAge.Value = Math.Max(0, Math.Min((int)numAge.Maximum, existing.Age));
+            numWeight.Value = (decimal)Math.Max(0.0, Math.Min((double)numWeight.Maximum, existing.Weight));
+            cmbGender.SelectedItem = existing.Gender;
+            txtImagePath.Text = existing.ImagePath ?? string.Empty;
+            numBodyLength.Value = (decimal)Math.Max(0.0, Math.Min((double)numBodyLength.Maximum, existing.BodyLength));
+            if (rdoLivesYes != null && rdoLivesNo != null)
+            {
+                rdoLivesYes.Checked = existing.LivesInWater;
+                rdoLivesNo.Checked = !existing.LivesInWater;
+            }
+            numAggressiveness.Value = Math.Max(0, Math.Min((int)numAggressiveness.Maximum, existing.AggressivenessLevel));
+
+            if (existing is Turtle t && numSpeciesNumeric1 != null && numSpeciesNumeric2 != null)
+            {
+                numSpeciesNumeric1.Value = Math.Max(0, Math.Min((int)numSpeciesNumeric1.Maximum, t.ShellHardness));
+                numSpeciesNumeric2.Value = (decimal)Math.Max(0.0, Math.Min((double)numSpeciesNumeric2.Maximum, t.ShellWidth));
+            }
+            else if (existing is Lizard l && txtSpeciesText != null && chkSpeciesBool != null)
+            {
+                txtSpeciesText.Text = l.Color ?? string.Empty;
+                chkSpeciesBool.Checked = l.CanClimb;
+            }
+            else if (existing is Reptiles.Species.Snake s && numSpeciesNumeric1 != null && chkSpeciesBool != null)
+            {
+                numSpeciesNumeric1.Value = (decimal)Math.Max(0.0, Math.Min((double)numSpeciesNumeric1.Maximum, s.Length));
+                chkSpeciesBool.Checked = s.IsVenomous;
+            }
+            else if (existing is Reptiles.Species.Crocodile c && numSpeciesNumeric1 != null && chkSpeciesBool != null)
+            {
+                numSpeciesNumeric1.Value = Math.Max(0, Math.Min((int)numSpeciesNumeric1.Maximum, c.JawStrength));
+                chkSpeciesBool.Checked = c.IsSaltwater;
+            }
+        }
+
         /// <summary>
         /// Handles the image loading process by opening a file dialog, updating the image path textbox, and displaying
         /// the selected image in the picture box.
