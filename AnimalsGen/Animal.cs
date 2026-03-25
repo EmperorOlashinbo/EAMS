@@ -48,5 +48,15 @@ namespace EAMS
         {
             return $"ID: {Id}\nName: {Name}\nGender: {Gender}\nAge: {Age}\nWeight: {Weight}\nImage Path: {ImagePath}";
         }
+
+        /// <summary>
+        /// Returns a queue of upcoming events for the animal.
+        /// Default implementation returns an empty queue; species may override.
+        /// Declared virtual so subclasses may provide relevant events.
+        /// </summary>
+        public virtual Queue<string> GetUpcomingEvents()
+        {
+            return new Queue<string>();
+        }
     }
 }
