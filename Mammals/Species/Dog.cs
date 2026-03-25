@@ -55,5 +55,17 @@ namespace EAMS
         {
             return base.ToString() + $"\nBreed: {Breed}\nIs Trained: {IsTrained}";
         }
+
+        /// <summary>
+        /// Returns a queue of upcoming events for the dog, such as vet appointments, grooming sessions, and training sessions.
+        /// </summary>
+        public override Queue<string> GetUpcomingEvents()
+        {
+            var q = new Queue<string>();
+            q.Enqueue("Vet appointment - 2026-04-10 09:00");
+            q.Enqueue("Grooming - 2026-04-17 14:00");
+            q.Enqueue("Training session - 2026-04-20 18:00");
+            return q;
+        }
     }
 }
