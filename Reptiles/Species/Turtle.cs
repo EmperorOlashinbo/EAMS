@@ -64,5 +64,16 @@ namespace EAMS
         {
             return base.ToString() + $"\nShell Hardness: {ShellHardness}\nShell Width: {ShellWidth} cm";
         }
+        /// <summary>
+        /// Return queue of an upcoming events.
+        /// </summary>
+        /// <returns></returns>
+        public override Queue<string> GetUpcomingEvents()
+        {
+            var q = new Queue<string>();
+            q.Enqueue($"Tank cleaning - {DateTime.Now.AddDays(10):yyyy-MM-dd}");
+            q.Enqueue($"Vet check - {DateTime.Now.AddDays(180):yyyy-MM-dd}");
+            return q;
+        }
     }
 }
