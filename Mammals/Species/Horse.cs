@@ -55,5 +55,16 @@ namespace EAMS.Mammals.Species
         {
             return base.ToString() + $"\nBreed: {Breed}\nIs Racing: {IsRacing}";
         }
+        /// <summary>
+        /// Return queue of upcoming events.
+        /// </summary>
+        /// <returns></returns>
+        public override Queue<string> GetUpcomingEvents()
+        {
+            var q = new Queue<string>();
+            q.Enqueue($"Farrier (hoof trim) - {DateTime.Now.AddDays(14):yyyy-MM-dd}");
+            q.Enqueue($"Vet check - {DateTime.Now.AddDays(60):yyyy-MM-dd}");
+            return q;
+        }
     }
 }
