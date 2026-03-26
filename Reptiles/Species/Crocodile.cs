@@ -64,5 +64,18 @@ namespace EAMS.Reptiles.Species
         {
             return base.ToString() + $"\nJaw Strength: {JawStrength}\nIs Saltwater: {IsSaltwater}";
         }
+
+        /// <summary>
+        /// Overrides the GetUpcomingEvents method to provide specific events related to crocodiles, such as habitat inspections.
+        /// </summary>
+        /// <returns>A queue of upcoming events for the crocodile species.</returns>
+        public override Queue<string> GetUpcomingEvents()
+        {
+            var q = new Queue<string>();
+            q.Enqueue($"Habitat inspection - {DateTime.Now.AddDays(14):yyyy-MM-dd}");
+            q.Enqueue($"Enclosure safety check - {DateTime.Now.AddDays(14):yyyy-MM-dd}");
+            q.Enqueue($"Vet inspection - {DateTime.Now.AddDays(90):yyyy-MM-dd}");
+            return q;
+        }
     }
 }
