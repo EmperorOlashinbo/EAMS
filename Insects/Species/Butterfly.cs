@@ -58,5 +58,17 @@ namespace EAMS.Insects.Species
         {
             return base.ToString() + $"\nWing Pattern: {WingPattern}";
         }
+        
+        /// <summary>
+        /// Gets a queue of upcoming events related to the butterfly species.
+        /// </summary>
+        /// <returns>A queue of upcoming events for the butterfly species.</returns>
+        public override Queue<string> GetUpcomingEvents()
+        {
+            var q = new Queue<string>();
+            q.Enqueue($"Release (butterfly garden) - {DateTime.Now.AddDays(7):yyyy-MM-dd}");
+            q.Enqueue($"Migration monitoring - {DateTime.Now.AddDays(90):yyyy-MM-dd}");
+            return q;
+        }
     }
 }
