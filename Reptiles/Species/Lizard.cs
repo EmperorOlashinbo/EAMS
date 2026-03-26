@@ -60,5 +60,16 @@ namespace EAMS
         {
             return base.ToString() + $"\nColor: {Color}\nCan Climb: {CanClimb}";
         }
+        
+        /// <summary>
+        /// Overrides the GetUpcomingEvents method to provide specific events related to lizards, such as habitat humidity checks.
+        /// </summary>
+        /// <returns>A queue of upcoming events for the lizard species.</returns>
+        public override Queue<string> GetUpcomingEvents()
+        {
+            var q = new Queue<string>();
+            q.Enqueue($"Habitat humidity check - {DateTime.Now.AddDays(7):yyyy-MM-dd}");
+            return q;
+        }
     }
 }
