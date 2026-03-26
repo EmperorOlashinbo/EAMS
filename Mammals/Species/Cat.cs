@@ -55,5 +55,16 @@ namespace EAMS
         {
             return base.ToString() + $"\nFur Color: {FurColor}\nIs Indoor: {IsIndoor}";
         }
+        /// <summary>
+        /// Return queue of upcomin events.
+        /// </summary>
+        /// <returns></returns>
+        public override Queue<string> GetUpcomingEvents()
+        {
+            var q = new Queue<string>();
+            q.Enqueue($"Vaccination - {DateTime.Now.AddDays(30):yyyy-MM-dd} 10:00");
+            q.Enqueue($"Flea treatment - {DateTime.Now.AddDays(90):yyyy-MM-dd}");
+            return q;
+        }
     }
 }
