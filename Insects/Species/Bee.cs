@@ -77,5 +77,16 @@ namespace EAMS.Insects.Species
                    $"\nCan Sting: {CanSting}" +
                    $"\nHoney Production (g/day): {HoneyProductionPerDay}";
         }
+        /// <summary>
+        /// Return queue of an upcoming events.
+        /// </summary>
+        /// <returns></returns>
+        public override Queue<string> GetUpcomingEvents()
+        {
+            var q = new Queue<string>();
+            q.Enqueue($"Hive inspection - {DateTime.Now.AddDays(21):yyyy-MM-dd}");
+            q.Enqueue($"Honey harvest - {DateTime.Now.AddDays(56):yyyy-MM-dd}");
+            return q;
+        }
     }
 }
