@@ -56,5 +56,16 @@ namespace EAMS.Birds.species
         {
             return base.ToString() + $"\nIs Bald Eagle: {IsBald}";
         }
+        /// <summary>
+        /// Overrides the GetUpcomingEvents method to provide specific events related to eagles, such as nesting area inspections and banding operations.
+        /// </summary>
+        /// <returns>A queue of upcoming events for the eagle species.</returns>
+        public override Queue<string> GetUpcomingEvents()
+        {
+            var q = new Queue<string>();
+            q.Enqueue($"Nesting area inspection - {DateTime.Now.AddDays(30):yyyy-MM-dd}");
+            q.Enqueue($"Banding operation - {DateTime.Now.AddDays(120):yyyy-MM-dd}");
+            return q;
+        }
     }
 }
