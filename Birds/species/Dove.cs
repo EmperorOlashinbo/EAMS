@@ -56,5 +56,15 @@ namespace EAMS.Birds.species
         {
             return base.ToString() + $"\nFeather Color: {FeatherColor}";
         }
+        /// <summary>
+        /// Overrides the GetUpcomingEvents method to provide specific events related to doves, such as nesting checks.
+        /// </summary>
+        /// <returns>A queue of upcoming events for the dove species.</returns>
+        public override Queue<string> GetUpcomingEvents()
+        {
+            var q = new Queue<string>();
+            q.Enqueue($"Nesting check - {DateTime.Now.AddDays(21):yyyy-MM-dd}");
+            return q;
+        }
     }
 }
