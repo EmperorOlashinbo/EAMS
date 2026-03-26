@@ -34,10 +34,6 @@ namespace EAMS
         private PictureBox picPreview;
         private Button btnLoadImage;
 
-        /// Events UI
-        private Label lblEvents;
-        private ListBox lstEvents;
-
         // General data controls
         private GroupBox grpGeneral;
         private Label lblName;
@@ -49,6 +45,10 @@ namespace EAMS
         private Label lblGender;
         private ComboBox cmbGender;
         private Button btnAdd;
+
+        /// Events UI
+        private Label lblEvents;
+        private ListBox lstEvents;
 
         // ListView for all animals
         private ListView lstAnimals;
@@ -202,8 +202,8 @@ namespace EAMS
             Controls.Add(txtHabitat);
 
             // Events label and list
-            lblEvents = new Label { Text = "Upcoming Events", Location = new Point(590, 455), AutoSize = true };
-            lstEvents = new ListBox { Location = new Point(590, 475), Size = new Size(240, 80) };
+            lblEvents = new Label { Text = "Upcoming Events", Location = new Point(380, 455), AutoSize = true };
+            lstEvents = new ListBox { Location = new Point(380, 475), Size = new Size(200, 80) };
             Controls.Add(lblEvents);
             Controls.Add(lstEvents);
 
