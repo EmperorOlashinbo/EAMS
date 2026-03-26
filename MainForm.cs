@@ -34,6 +34,10 @@ namespace EAMS
         private PictureBox picPreview;
         private Button btnLoadImage;
 
+        /// Events UI
+        private Label lblEvents;
+        private ListBox lstEvents;
+
         // General data controls
         private GroupBox grpGeneral;
         private Label lblName;
@@ -197,6 +201,12 @@ namespace EAMS
             };
             Controls.Add(txtHabitat);
 
+            // Events label and list
+            lblEvents = new Label { Text = "Upcoming Events", Location = new Point(590, 455), AutoSize = true };
+            lstEvents = new ListBox { Location = new Point(590, 475), Size = new Size(240, 80) };
+            Controls.Add(lblEvents);
+            Controls.Add(lstEvents);
+
             // Bottom buttons
             btnAbout = new Button { Text = "About", Location = new Point(10, 520), Width = 100 };
             btnAbout.Click += BtnAbout_Click;
@@ -307,6 +317,7 @@ namespace EAMS
                 {
                     txtSpecInfo.Clear();
                     txtHabitat.Clear();
+                    lstEvents.Items.Clear();
                     picPreview.Image?.Dispose();
                     picPreview.Image = null;
                     return;
@@ -318,6 +329,7 @@ namespace EAMS
                 {
                     txtSpecInfo.Clear();
                     txtHabitat.Clear();
+                    lstEvents.Items.Clear();
                     return;
                 }
 
@@ -327,6 +339,25 @@ namespace EAMS
                 // Build and show detailed species info and habitat/food info using project originals
                 txtSpecInfo.Text = BuildSpeciesInfo(selectedAnimal);
                 txtHabitat.Text = BuildHabitatInfo(selectedAnimal);
+
+                // Populate events list (uses IAnimal.GetUpcomingEvents)
+                lstEvents.Items.Clear();
+                try
+                {
+                    var events = selectedAnimal.GetUpcomingEvents();
+                    if (events != null && events.Count > 0)
+                    {
+                        foreach (var ev in events) lstEvents.Items.Add(ev);
+                    }
+                    else
+                    {
+                        lstEvents.Items.Add("(no scheduled events)");
+                    }
+                }
+                catch
+                {
+                    lstEvents.Items.Add("(events unavailable)");
+                }
 
                 if (!string.IsNullOrEmpty(selectedAnimal.ImagePath) && File.Exists(selectedAnimal.ImagePath))
                 {
@@ -859,6 +890,7 @@ namespace EAMS
         {
             txtSpecInfo.Clear();
             txtHabitat.Clear();
+            lstEvents.Items.Clear();
             currentAnimal = null;
             btnAdd.Enabled = false;
             txtName.Clear();
