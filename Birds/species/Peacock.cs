@@ -61,5 +61,16 @@ namespace EAMS.Birds.species
         {
             return base.ToString() + $"\nPlume Color: {PlumeColor}";
         }
+        /// <summary>
+        /// Return queue of an upcoming events.
+        /// </summary>
+        /// <returns></returns>
+        public override Queue<string> GetUpcomingEvents()
+        {
+            var q = new Queue<string>();
+            q.Enqueue($"Molting inspection - {DateTime.Now.AddDays(30):yyyy-MM-dd}");
+            q.Enqueue($"Behavioral check - {DateTime.Now.AddDays(75):yyyy-MM-dd}");
+            return q;
+        }
     }
 }
