@@ -49,5 +49,16 @@ namespace EAMS.Mammals.Species
         {
             return base.ToString() + $"\nMilk Production: {MilkProduction} L/day";
         }
+        /// <summary>
+        /// Return queue of an upcoming events.
+        /// </summary>
+        /// <returns></returns>
+        public override Queue<string> GetUpcomingEvents()
+        {
+            var q = new Queue<string>();
+            q.Enqueue($"Milk quality test - {DateTime.Now.AddDays(7):yyyy-MM-dd}");
+            q.Enqueue($"Hoof trimming - {DateTime.Now.AddDays(45):yyyy-MM-dd}");
+            return q;
+        }
     }
 }
