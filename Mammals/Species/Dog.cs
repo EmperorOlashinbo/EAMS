@@ -63,9 +63,9 @@ namespace EAMS
         public override Queue<string> GetUpcomingEvents()
         {
             var q = new Queue<string>();
-            q.Enqueue("Vet appointment - 2026-04-10 09:00");
-            q.Enqueue("Grooming - 2026-04-17 14:00");
-            q.Enqueue("Training session - 2026-04-20 18:00");
+            q.Enqueue($"Vet appointment  - {DateTime.Now.AddDays(7):yyyy-MM-dd}");
+            q.Enqueue($"Grooming - {DateTime.Now.AddDays(21):yyyy-MM-dd}");
+            q.Enqueue($"Training session - {DateTime.Now.AddDays(45):yyyy-MM-dd}");
             return q;
         }
     }
