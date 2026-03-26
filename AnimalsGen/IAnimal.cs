@@ -19,5 +19,7 @@ namespace EAMS
         string ImagePath { get; set; }
 
         string ToString();
+
+        Queue<string> GetUpcomingEvents();
     }
 }
