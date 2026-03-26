@@ -63,7 +63,7 @@ namespace EAMS.Insects.Species
             return base.ToString() + $"\nIs Worker: {IsWorker}";
         }
         /// <summary>
-        /// Gets a queue of upcoming events related to the ant species.
+        /// Overrides the GetUpcomingEvents method to provide specific events related to ants, such as colony inspections and foraging studies.
         /// </summary>
         /// <returns>A queue of upcoming events for the ant species.</returns>
         public override Queue<string> GetUpcomingEvents()

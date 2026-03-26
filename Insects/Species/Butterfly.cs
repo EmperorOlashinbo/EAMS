@@ -60,7 +60,7 @@ namespace EAMS.Insects.Species
         }
         
         /// <summary>
-        /// Gets a queue of upcoming events related to the butterfly species.
+        /// Overrides the GetUpcomingEvents method to provide specific events related to butterflies, such as release and migration monitoring.
         /// </summary>
         /// <returns>A queue of upcoming events for the butterfly species.</returns>
         public override Queue<string> GetUpcomingEvents()

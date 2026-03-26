@@ -56,9 +56,9 @@ namespace EAMS
             return base.ToString() + $"\nFur Color: {FurColor}\nIs Indoor: {IsIndoor}";
         }
         /// <summary>
-        /// Return queue of upcomin events.
+        /// Overrides the GetUpcomingEvents method to provide specific events related to cats, such as vaccination and flea treatment schedules.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A queue of upcoming events for the cat species.</returns>
         public override Queue<string> GetUpcomingEvents()
         {
             var q = new Queue<string>();

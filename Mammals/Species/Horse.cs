@@ -56,9 +56,9 @@ namespace EAMS.Mammals.Species
             return base.ToString() + $"\nBreed: {Breed}\nIs Racing: {IsRacing}";
         }
         /// <summary>
-        /// Return queue of upcoming events.
+        /// Overrides the GetUpcomingEvents method to provide specific events related to horses, such as farrier visits and vet checks.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A queue of upcoming events for the horse species.</returns>
         public override Queue<string> GetUpcomingEvents()
         {
             var q = new Queue<string>();

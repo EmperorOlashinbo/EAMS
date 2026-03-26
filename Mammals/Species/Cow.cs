@@ -50,9 +50,9 @@ namespace EAMS.Mammals.Species
             return base.ToString() + $"\nMilk Production: {MilkProduction} L/day";
         }
         /// <summary>
-        /// Return queue of an upcoming events.
+        /// Overrides the GetUpcomingEvents method to provide specific events related to cows, such as milk quality tests and hoof trimming.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A queue of upcoming events for the cow species.</returns>
         public override Queue<string> GetUpcomingEvents()
         {
             var q = new Queue<string>();

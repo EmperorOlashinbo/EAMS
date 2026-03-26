@@ -20,6 +20,12 @@ namespace EAMS
 
         string ToString();
 
+        /// <summary>
+        /// Returns a queue of upcoming events for the animal.
+        /// Species can override this method to provide specific events relevant to them, 
+        /// such as feeding times, medical checkups, or enrichment activities.
+        /// </summary>
+        /// <returns>A queue of upcoming events for the animal.</returns>
         Queue<string> GetUpcomingEvents();
     }
 }

@@ -78,9 +78,9 @@ namespace EAMS.Insects.Species
                    $"\nHoney Production (g/day): {HoneyProductionPerDay}";
         }
         /// <summary>
-        /// Return queue of an upcoming events.
+        /// Overrides the GetUpcomingEvents method to provide specific events related to bees, such as hive inspections and honey harvests.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A queue of upcoming events for the bee species.</returns>
         public override Queue<string> GetUpcomingEvents()
         {
             var q = new Queue<string>();

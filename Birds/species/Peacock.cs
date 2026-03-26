@@ -62,9 +62,9 @@ namespace EAMS.Birds.species
             return base.ToString() + $"\nPlume Color: {PlumeColor}";
         }
         /// <summary>
-        /// Return queue of an upcoming events.
+        /// Overrides the GetUpcomingEvents method to provide specific events related to peacocks, such as molting inspections and behavioral checks.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A queue of upcoming events for the peacock species.</returns>
         public override Queue<string> GetUpcomingEvents()
         {
             var q = new Queue<string>();

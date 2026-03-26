@@ -57,8 +57,9 @@ namespace EAMS
         }
 
         /// <summary>
-        /// Returns a queue of upcoming events for the dog, such as vet appointments, grooming sessions, and training sessions.
+        /// Overrides the GetUpcomingEvents method to provide specific events related to dogs, such as vet appointments, grooming sessions, and training sessions.
         /// </summary>
+        /// <returns>A queue of upcoming events for the dog species.</returns>
         public override Queue<string> GetUpcomingEvents()
         {
             var q = new Queue<string>();

@@ -60,7 +60,7 @@ namespace EAMS.Insects.Species
             return base.ToString() + $"\nFlight Speed: {FlightSpeed} km/h";
         }
         /// <summary>
-        /// Gets a queue of upcoming events related to the dragonfly species.
+        /// Overrides the GetUpcomingEvents method to provide specific events related to dragonflies, such as flight performance checks and habitat surveys.
         /// </summary>
         /// <returns>A queue of upcoming events for the dragonfly species.</returns>
         public override Queue<string> GetUpcomingEvents()
