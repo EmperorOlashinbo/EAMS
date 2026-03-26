@@ -62,5 +62,16 @@ namespace EAMS.Insects.Species
         {
             return base.ToString() + $"\nIs Worker: {IsWorker}";
         }
+        /// <summary>
+        /// Gets a queue of upcoming events related to the ant species.
+        /// </summary>
+        /// <returns>A queue of upcoming events for the ant species.</returns>
+        public override Queue<string> GetUpcomingEvents()
+        {
+            var q = new Queue<string>();
+            q.Enqueue($"Colony inspection - {DateTime.Now.AddDays(30):yyyy-MM-dd}");
+            q.Enqueue($"Foraging study - {DateTime.Now.AddDays(60):yyyy-MM-dd}");
+            return q;
+        }
     }
 }
