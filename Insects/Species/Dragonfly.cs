@@ -59,5 +59,16 @@ namespace EAMS.Insects.Species
         {
             return base.ToString() + $"\nFlight Speed: {FlightSpeed} km/h";
         }
+        /// <summary>
+        /// Gets a queue of upcoming events related to the dragonfly species.
+        /// </summary>
+        /// <returns>A queue of upcoming events for the dragonfly species.</returns>
+        public override Queue<string> GetUpcomingEvents()
+        {
+            var q = new Queue<string>();
+            q.Enqueue($"Flight performance check - {DateTime.Now.AddDays(10):yyyy-MM-dd}");
+            q.Enqueue($"Habitat survey - {DateTime.Now.AddDays(40):yyyy-MM-dd}");
+            return q;
+        }
     }
 }
