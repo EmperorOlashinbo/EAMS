@@ -57,5 +57,16 @@ namespace EAMS.Reptiles.Species
         {
             return base.ToString() + $"\nLength: {Length} cm\nIs Venomous: {IsVenomous}";
         }
+        
+        /// <summary>
+        /// Overrides the GetUpcomingEvents method to provide specific events related to snakes, such as feeding schedule reviews.
+        /// </summary>
+        /// <returns>A queue of upcoming events for the snake species.</returns>
+        public override Queue<string> GetUpcomingEvents()
+        {
+            var q = new Queue<string>();
+            q.Enqueue($"Feeding schedule review - {DateTime.Now.AddDays(3):yyyy-MM-dd}");
+            return q;
+        }
     }
 }
