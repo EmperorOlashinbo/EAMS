@@ -61,5 +61,17 @@ namespace EAMS.Birds.species
         {
             return base.ToString() + $"\nBeak Length: {BeakLength} cm";
         }
+
+        /// <summary>
+        /// Overrides the GetUpcomingEvents method to provide specific events related to falcons, such as hunting practice and migration tracking.
+        /// </summary>
+        /// <returns>A queue of upcoming events for the falcon species.</returns>
+        public override Queue<string> GetUpcomingEvents()
+        {
+            var q = new Queue<string>();
+            q.Enqueue($"Hunting practice - {DateTime.Now.AddDays(14):yyyy-MM-dd}");
+            q.Enqueue($"Migration tracking - {DateTime.Now.AddDays(60):yyyy-MM-dd}");
+            return q;
+        }
     }
 }
