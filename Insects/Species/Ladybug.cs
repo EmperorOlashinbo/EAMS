@@ -60,5 +60,16 @@ namespace EAMS.Insects.Species
         {
             return base.ToString() + $"\nSpot Count: {SpotCount}";
         }
+        /// <summary>
+        /// Gets a queue of upcoming events related to the ladybug species. 
+        /// For demonstration purposes, it includes a population survey scheduled 14 days from now.
+        /// </summary>
+        /// <returns>A queue of upcoming events for the ladybug species.</returns>
+        public override Queue<string> GetUpcomingEvents()
+        {
+            var q = new Queue<string>();
+            q.Enqueue($"Population survey - {DateTime.Now.AddDays(14):yyyy-MM-dd}");
+            return q;
+        }
     }
 }
