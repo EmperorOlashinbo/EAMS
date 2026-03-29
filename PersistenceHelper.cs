@@ -121,5 +121,47 @@ namespace EAMS.Serialization
                 doc.WriteTo(writer);
             }
         }
+        /// <summary>
+        /// Loads animal data from an XML file and returns a list of Animal objects.
+        /// </summary>
+        /// <param name="fileName">The path to the XML file containing animal data.</param>
+        /// <returns>A list of Animal objects parsed from the XML file, or an empty list if no animals are found.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when fileName is null, empty, or consists only of white-space characters.</exception>
+        public static List<Animal> LoadXml(string fileName)
+        {
+            if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentNullException(nameof(fileName));
+
+            var doc = new XmlDocument();
+            doc.Load(fileName);
+
+            // Convert XML to JSON
+            string json = JsonConvert.SerializeXmlNode(doc.DocumentElement, Formatting.None, true);
+
+            var rootObj = JsonConvert.DeserializeObject<JObject>(json);
+            JToken animalsToken = null;
+
+            // Try multiple probable paths
+            if (rootObj.TryGetValue("AnimalList", out animalsToken) == false)
+            {
+                // look under Root
+                var rootNode = rootObj.Properties().FirstOrDefault()?.Value as JObject;
+                if (rootNode != null)
+                {
+                    rootNode.TryGetValue("AnimalList", out animalsToken);
+                }
+            }
+
+            if (animalsToken == null)
+            {
+                // attempt to find first array token
+                animalsToken = rootObj.Descendants().OfType<JArray>().FirstOrDefault();
+            }
+
+            if (animalsToken == null) return new List<Animal>();
+
+            var animalsJson = animalsToken.ToString();
+            var list = JsonConvert.DeserializeObject<List<Animal>>(animalsJson, JsonSettings);
+            return list ?? new List<Animal>();
+        }
     }
 }
