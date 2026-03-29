@@ -49,5 +49,24 @@ namespace EAMS.Serialization
                 throw new DuplicateAnimalException(msg);
             }
         }
+        /// <summary>
+        /// Saves the list of animals to a JSON file. Validates for duplicates before saving.
+        /// </summary>
+        /// <param name="animals">The list of animals to save.</param>
+        /// <param name="fileName">The file path to save the JSON data.</param>
+        /// <exception cref="ArgumentNullException">Thrown if animals or fileName is null.</exception>
+        public static void SaveJson(IEnumerable<Animal> animals, string fileName)
+        {
+            if (animals == null) throw new ArgumentNullException(nameof(animals));
+            if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentNullException(nameof(fileName));
+
+            ValidateNoDuplicates(animals);
+
+            var json = JsonConvert.SerializeObject(animals, JsonSettings);
+            using (var sw = new StreamWriter(fileName, false, Encoding.UTF8))
+            {
+                sw.Write(json);
+            }
+        }
     }
 }
