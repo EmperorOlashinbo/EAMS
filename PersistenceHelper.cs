@@ -68,5 +68,22 @@ namespace EAMS.Serialization
                 sw.Write(json);
             }
         }
+        /// <summary>
+        /// Deserializes a JSON file into a list of Animal objects.
+        /// </summary>
+        /// <param name="fileName">The path to the JSON file to load.</param>
+        /// <returns>A list of Animal objects deserialized from the specified file, or an empty list if the file is empty or
+        /// null.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when fileName is null, empty, or consists only of white-space characters.</exception>
+        public static List<Animal> LoadJson(string fileName)
+        {
+            if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentNullException(nameof(fileName));
+            using (var sr = new StreamReader(fileName, Encoding.UTF8))
+            {
+                var json = sr.ReadToEnd();
+                var list = JsonConvert.DeserializeObject<List<Animal>>(json, JsonSettings);
+                return list ?? new List<Animal>();
+            }
+        }
     }
 }
