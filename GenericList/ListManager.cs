@@ -134,6 +134,20 @@ namespace EAMS.GenericList
             foreach (var it in _items) animals.Add(it as Animal);
             PersistenceHelper.SaveXml(animals, fileName);
             return true;
+        }
+        /// <summary>
+        /// Deserializes a list of Animal objects from an XML file and populates the collection.
+        /// </summary>
+        /// <param name="fileName">The path to the XML file to deserialize.</param>
+        /// <returns>true if deserialization is successful.</returns>
+        /// <exception cref="NotSupportedException">Thrown if the generic type parameter T is not Animal.</exception>
+        public bool XmlDeserialize(string fileName)
+        {
+            if (typeof(T) != typeof(Animal)) throw new NotSupportedException("XmlDeserialize supported only for ListManager<Animal>.");
+            var loaded = PersistenceHelper.LoadXml(fileName);
+            _items.Clear();
+            foreach (var a in loaded) _items.Add((T)(object)a);
+            return true;
         }        
     }
 }
