@@ -148,6 +148,20 @@ namespace EAMS.GenericList
             _items.Clear();
             foreach (var a in loaded) _items.Add((T)(object)a);
             return true;
-        }        
+        }
+        /// <summary>
+        /// Serializes the list of Animal objects to a text file in JSON format.
+        /// </summary>
+        /// <param name="fileName">The path of the file to which the data will be saved.</param>
+        /// <returns>true if the serialization succeeds.</returns>
+        /// <exception cref="NotSupportedException">Thrown if the generic type parameter is not Animal.</exception>
+        public bool TextSerialize(string fileName)
+        {
+            if (typeof(T) != typeof(Animal)) throw new NotSupportedException("TextSerialize supported only for ListManager<Animal>.");
+            var animals = new List<Animal>();
+            foreach (var it in _items) animals.Add(it as Animal);
+            PersistenceHelper.SaveTextAsJson(animals, fileName);
+            return true;
+        }         
     }
 }
