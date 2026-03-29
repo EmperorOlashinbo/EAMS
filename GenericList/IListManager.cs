@@ -48,5 +48,44 @@ namespace EAMS.GenericList
         /// Removes all items from the collection.
         /// </summary>
         void Clear();
+
+        // Persistence helpers (implementations may throw; GUI should handle exceptions)
+
+        /// <summary>
+        /// Serializes the object to a JSON file.
+        /// </summary>
+        /// <param name="fileName">The path of the file to which the JSON will be written.</param>
+        /// <returns>True if serialization succeeds; otherwise, false.</returns>
+        bool JsonSerialize(string fileName);
+        /// <summary>
+        /// Deserializes JSON data from the specified file.
+        /// </summary>
+        /// <param name="fileName">The path to the JSON file to deserialize.</param>
+        /// <returns>True if deserialization is successful; otherwise, false.</returns>
+        bool JsonDeserialize(string fileName);
+        /// <summary>
+        /// Serializes the object to an XML file with the specified file name.
+        /// </summary>
+        /// <param name="fileName">The path and name of the XML file to create.</param>
+        /// <returns>true if serialization succeeds; otherwise, false.</returns>
+        bool XmlSerialize(string fileName);
+        /// <summary>
+        /// Deserializes object data from the specified XML file.
+        /// </summary>
+        /// <param name="fileName">The path to the XML file to deserialize.</param>
+        /// <returns>true if deserialization is successful; otherwise, false.</returns>
+        bool XmlDeserialize(string fileName);
+        /// <summary>
+        /// Serializes the object to a text file.
+        /// </summary>
+        /// <param name="fileName">The path of the file to which the object will be serialized.</param>
+        /// <returns>true if serialization succeeds; otherwise, false.</returns>
+        bool TextSerialize(string fileName);
+        /// <summary>
+        /// Deserializes object data from a text file.
+        /// </summary>
+        /// <param name="fileName">The path to the text file containing the serialized data.</param>
+        /// <returns>True if deserialization is successful; otherwise, false.</returns>
+        bool TextDeserialize(string fileName);
     }
 }
