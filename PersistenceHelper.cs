@@ -97,5 +97,29 @@ namespace EAMS.Serialization
         /// <param name="fileName">The path to the JSON file containing animal data.</param>
         /// <returns>A list of Animal objects deserialized from the specified file.</returns>
         public static List<Animal> LoadTextAsJson(string fileName) => LoadJson(fileName);
+
+        /// <summary>
+        /// Saves a collection of Animal objects to an XML file. The XML structure is derived from the JSON representation,
+        /// ensuring a consistent format between JSON and XML outputs.
+        /// </summary>
+        /// <param name="animals">The collection of Animal objects to serialize.</param>
+        /// <param name="fileName">The path of the file to save the XML data to.</param>
+        /// <exception cref="ArgumentNullException">Thrown if animals or fileName is null.</exception>
+        public static void SaveXml(IEnumerable<Animal> animals, string fileName)
+        {
+            if (animals == null) throw new ArgumentNullException(nameof(animals));
+            if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentNullException(nameof(fileName));
+
+            ValidateNoDuplicates(animals);
+
+            // Wrap array into an object to create a root element
+            var json = JsonConvert.SerializeObject(new { AnimalList = animals }, JsonSettings);
+            // Convert JSON to XmlDocument
+            var doc = JsonConvert.DeserializeXmlNode(json, "Root");
+            using (var writer = XmlWriter.Create(fileName, new XmlWriterSettings { Indent = true, Encoding = Encoding.UTF8 }))
+            {
+                doc.WriteTo(writer);
+            }
+        }
     }
 }
