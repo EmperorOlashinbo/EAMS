@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -50,6 +51,22 @@ namespace EAMS
         private Label lblEvents;
         private ListBox lstEvents;
 
+        // Search / Filter UI
+        private Label lblSearch;
+        private TextBox txtSearch;
+        private Button btnSearch;
+        private Button btnClearSearch;
+        private ListBox lstSearchResults;
+
+        private Label lblFilter;
+        private ComboBox cmbFilterCategory;
+        private Label lblMinAge;
+        private TextBox txtMinAge;
+        private Label lblMaxAge;
+        private TextBox txtMaxAge;
+        private Button btnFilter;
+        private Button btnClearFilter;
+
         // ListView for all animals
         private ListView lstAnimals;
 
@@ -60,6 +77,7 @@ namespace EAMS
         // Change / Delete buttons
         private Button btnChange;
         private Button btnDelete;
+
         /// <summary>
         /// Initializes the MainForm with all UI components, event handlers, and layout.
         /// </summary>
@@ -67,7 +85,7 @@ namespace EAMS
         {
             InitializeComponent();
             this.Text = "EcoPark Animal Management System by Ibrahim";
-            this.Size = new Size(920, 620);
+            this.Size = new Size(920, 680);
             this.StartPosition = FormStartPosition.CenterScreen;
 
             // Menu bar
@@ -106,6 +124,48 @@ namespace EAMS
             btnCreate = new Button { Text = "Create Animal", Location = new Point(140, 180), Width = 120 };
             btnCreate.Click += BtnCreate_Click;
             Controls.Add(btnCreate);
+
+            // Search UI (left column, above ListView)
+            lblSearch = new Label { Text = "Search (ID or Name):", Location = new Point(10, 330), AutoSize = true };
+            Controls.Add(lblSearch);
+            txtSearch = new TextBox { Location = new Point(10, 350), Size = new Size(200, 22) };
+            Controls.Add(txtSearch);
+            btnSearch = new Button { Text = "Search", Location = new Point(220, 348), Size = new Size(70, 24) };
+            btnSearch.Click += BtnSearch_Click;
+            Controls.Add(btnSearch);
+            btnClearSearch = new Button { Text = "Clear", Location = new Point(300, 348), Size = new Size(60, 24) };
+            btnClearSearch.Click += BtnClearSearch_Click;
+            Controls.Add(btnClearSearch);
+
+            lstSearchResults = new ListBox { Location = new Point(10, 380), Size = new Size(350, 90) };
+            lstSearchResults.DoubleClick += LstSearchResults_DoubleClick;
+            Controls.Add(lstSearchResults);
+
+            // Filter UI (left column, below search)
+            lblFilter = new Label { Text = "Filter (Category / Age):", Location = new Point(10, 480), AutoSize = true };
+            Controls.Add(lblFilter);
+            cmbFilterCategory = new ComboBox { Location = new Point(10, 500), Size = new Size(120, 22), DropDownStyle = ComboBoxStyle.DropDownList };
+            cmbFilterCategory.Items.AddRange(new[] { "All", "Mammal", "Reptile", "Bird", "Insect" });
+            cmbFilterCategory.SelectedIndex = 0;
+            Controls.Add(cmbFilterCategory);
+
+            lblMinAge = new Label { Text = "Min Age:", Location = new Point(140, 502), AutoSize = true };
+            Controls.Add(lblMinAge);
+            txtMinAge = new TextBox { Location = new Point(190, 500), Size = new Size(50, 22) };
+            Controls.Add(txtMinAge);
+
+            lblMaxAge = new Label { Text = "Max Age:", Location = new Point(250, 502), AutoSize = true };
+            Controls.Add(lblMaxAge);
+            txtMaxAge = new TextBox { Location = new Point(305, 500), Size = new Size(50, 22) };
+            Controls.Add(txtMaxAge);
+
+            btnFilter = new Button { Text = "Apply Filter", Location = new Point(360, 498), Size = new Size(90, 24) };
+            btnFilter.Click += BtnFilter_Click;
+            Controls.Add(btnFilter);
+
+            btnClearFilter = new Button { Text = "Clear Filter", Location = new Point(460, 498), Size = new Size(90, 24) };
+            btnClearFilter.Click += BtnClearFilter_Click;
+            Controls.Add(btnClearFilter);
 
             // General Data group 
             grpGeneral = new GroupBox { Text = "General Data", Location = new Point(280, 50), Size = new Size(280, 150) };
@@ -154,18 +214,18 @@ namespace EAMS
             // ListView for all animals 
             lstAnimals = new ListView
             {
-                Location = new Point(10, 290),
-                Size = new Size(360, 160),
+                Location = new Point(10, 585),
+                Size = new Size(760, 160),
                 View = View.Details,
                 FullRowSelect = true,
                 GridLines = true
             };
-            lstAnimals.Columns.Add("Species", 80);
-            lstAnimals.Columns.Add("Id", 120);
-            lstAnimals.Columns.Add("Name", 80);
-            lstAnimals.Columns.Add("Age", 40);
-            lstAnimals.Columns.Add("Weight", 60);
-            lstAnimals.Columns.Add("Gender", 60);
+            lstAnimals.Columns.Add("Species", 100);
+            lstAnimals.Columns.Add("Id", 200);
+            lstAnimals.Columns.Add("Name", 150);
+            lstAnimals.Columns.Add("Age", 60);
+            lstAnimals.Columns.Add("Weight", 80);
+            lstAnimals.Columns.Add("Gender", 80);
             lstAnimals.SelectedIndexChanged += LstAnimals_SelectedIndexChanged;
             Controls.Add(lstAnimals);
 
@@ -203,16 +263,16 @@ namespace EAMS
 
             // Events label and list
             lblEvents = new Label { Text = "Upcoming Events", Location = new Point(380, 455), AutoSize = true };
-            lstEvents = new ListBox { Location = new Point(380, 475), Size = new Size(200, 80) };
+            lstEvents = new ListBox { Location = new Point(380, 475), Size = new Size(450, 80) };
             Controls.Add(lblEvents);
             Controls.Add(lstEvents);
 
             // Bottom buttons
-            btnAbout = new Button { Text = "About", Location = new Point(10, 520), Width = 100 };
+            btnAbout = new Button { Text = "About", Location = new Point(10, lstAnimals.Bottom + 40), Width = 100 };
             btnAbout.Click += BtnAbout_Click;
             Controls.Add(btnAbout);
 
-            btnClear = new Button { Text = "Clear Output", Location = new Point(600, 520), Width = 240 };
+            btnClear = new Button { Text = "Clear Output", Location = new Point(600, lstAnimals.Bottom + 40), Width = 240 };
             btnClear.Click += BtnClear_Click;
             Controls.Add(btnClear);
         }
@@ -238,12 +298,168 @@ namespace EAMS
                 }
             }
         }
-        
+
         /// <summary>
-        /// Handles the CheckedChanged event of the ChkListAll checkbox. Enables or disables the category and species lists based on the checkbox state.
+        /// Represents a search result with an identifier and label.
+        /// </summary>
+
+        private class SearchResult
+        {
+            public string Id { get; set; }
+            public string Label { get; set; }
+            public override string ToString() => Label;
+        }
+        /// <summary>
+        /// Handles the search button click event by filtering the animal list based on the search term and displaying
+        /// the results.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The event data.</param>
+        private void BtnSearch_Click(object sender, EventArgs e)
+        {
+            string term = (txtSearch.Text ?? "").Trim();
+            lstSearchResults.Items.Clear();
+            if (string.IsNullOrEmpty(term)) return;
+
+            try
+            {
+                // Use LINQ query syntax as required by the assignment
+                var query =
+                    from a in animals
+                    let name = a.Name ?? string.Empty
+                    where a.Id.Equals(term, StringComparison.OrdinalIgnoreCase)
+                          || name.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0
+                    orderby a.Name, a.Age
+                    select a;
+
+                foreach (var a in query)
+                {
+                    lstSearchResults.Items.Add(new SearchResult { Id = a.Id, Label = $"{a.Name} ({a.GetType().Name}) - {a.Id}" });
+                }
+
+                if (lstSearchResults.Items.Count == 0)
+                {
+                    lstSearchResults.Items.Add(new SearchResult { Id = string.Empty, Label = "(no matches)" });
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Search failed:\r\n" + ex.ToString(), "Search Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        /// <summary>
+        /// Clears the search text box and the search results list.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
+        private void BtnClearSearch_Click(object sender, EventArgs e)
+        {
+            txtSearch.Clear();
+            lstSearchResults.Items.Clear();
+        }
+        /// <summary>
+        /// Handles the double-click event on the search results list, selecting and focusing the corresponding item in
+        /// the main animal list.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the search results list.</param>
+        /// <param name="e">An EventArgs object containing the event data.</param>
+        private void LstSearchResults_DoubleClick(object sender, EventArgs e)
+        {
+            if (lstSearchResults.SelectedItem is SearchResult sr && !string.IsNullOrEmpty(sr.Id))
+            {
+                // Select the corresponding item in the main ListView
+                for (int i = 0; i < lstAnimals.Items.Count; i++)
+                {
+                    var it = lstAnimals.Items[i];
+                    if (it.SubItems.Count > 1 && string.Equals(it.SubItems[1].Text, sr.Id, StringComparison.OrdinalIgnoreCase))
+                    {
+                        lstAnimals.Items[i].Selected = true;
+                        lstAnimals.EnsureVisible(i);
+                        break;
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// Handles the filter button click event, applies category and age filters to the animal list, and updates the
+        /// search results.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
+        
+        private void BtnFilter_Click(object sender, EventArgs e)
+        {
+            string cat = cmbFilterCategory.SelectedItem?.ToString() ?? "All";
+            int minAge = 0;
+            int maxAge = int.MaxValue;
+            if (!string.IsNullOrWhiteSpace(txtMinAge.Text) && !int.TryParse(txtMinAge.Text, out minAge))
+            {
+                MessageBox.Show("Invalid min age", "Filter", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (!string.IsNullOrWhiteSpace(txtMaxAge.Text) && !int.TryParse(txtMaxAge.Text, out maxAge))
+            {
+                MessageBox.Show("Invalid max age", "Filter", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                var query =
+                    from a in animals
+                    where (cat == "All" || string.Equals(GetCategoryFromType(a), cat, StringComparison.OrdinalIgnoreCase))
+                          && a.Age >= minAge && a.Age <= maxAge
+                    orderby a.Name, a.Age
+                    select a;
+
+                lstSearchResults.Items.Clear();
+                foreach (var a in query)
+                {
+                    lstSearchResults.Items.Add(new SearchResult { Id = a.Id, Label = $"{a.Name} ({a.GetType().Name}) - Age:{a.Age}" });
+                }
+
+                if (lstSearchResults.Items.Count == 0)
+                    lstSearchResults.Items.Add(new SearchResult { Id = string.Empty, Label = "(no matches)" });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Filter failed:\r\n" + ex.ToString(), "Filter Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        /// <summary>
+        /// Clears all filter inputs and search results in the UI.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
+        private void BtnClearFilter_Click(object sender, EventArgs e)
+        {
+            cmbFilterCategory.SelectedIndex = 0;
+            txtMinAge.Clear();
+            txtMaxAge.Clear();
+            lstSearchResults.Items.Clear();
+        }
+        /// <summary>
+        /// Determines the category name of the specified animal based on its type.
+        /// </summary>
+        /// <param name="a">The animal instance to categorize.</param>
+        /// <returns>A string representing the category of the animal, such as "Mammal", "Reptile", "Bird", "Insect", or
+        /// "Unknown".</returns>
+        private string GetCategoryFromType(Animal a)
+        {
+            if (a is Mammal) return "Mammal";
+            if (a is Reptile) return "Reptile";
+            if (a is Bird) return "Bird";
+            if (a is Insects.Insect) return "Insect";
+            return "Unknown";
+        }
+
+        /// <summary>
+        /// Handles the CheckedChanged event for the chkListAll control, toggling the enabled state and selection of
+        /// related list controls based on the checked state.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An EventArgs object containing the event data.</param>
+
         private void ChkListAll_CheckedChanged(object sender, EventArgs e)
         {
             bool isChecked = chkListAll.Checked;
@@ -264,7 +480,7 @@ namespace EAMS
         /// Updates the species list based on the selected category in the category list.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">Event data.</param>
+        /// <param name="e">The event data.</param>
         private void LstCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
             lstSpecies.Items.Clear();
@@ -286,11 +502,11 @@ namespace EAMS
             }
         }
         /// <summary>
-        /// Handles the SelectedIndexChanged event of the lstAllAnimals ListBox. When a species is selected from the list of all animals, it determines the corresponding category and updates the category and species lists to reflect the selection. 
-        /// This allows users to quickly select a species and have the appropriate category and species lists updated accordingly. Error handling is included to ensure that invalid selections do not cause issues.
+        /// Handles the selection change in the list of all animals by updating the category and species selections
+        /// accordingly.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
         private void LstAllAnimals_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lstAllAnimals.SelectedItem is string sp && !string.IsNullOrEmpty(sp))
@@ -304,11 +520,11 @@ namespace EAMS
             }
         }
         /// <summary>
-        /// Handles the SelectedIndexChanged event of the lstAnimals ListView. When an animal is selected from the list, 
-        /// it retrieves the corresponding Animal object from the internal list based on the selected item's ID.
+        /// Handles the selection change in the animal list, updating species information, habitat details, upcoming
+        /// events, and the preview image based on the selected animal.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">Event data.</param>
+        /// <param name="e">The event data.</param>
         private void LstAnimals_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
@@ -378,13 +594,12 @@ namespace EAMS
                 MessageBox.Show("Error updating selection: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         /// <summary>
         /// Builds a formatted string containing detailed information about the specified animal, including
-        /// species specific attributes.
+        /// species-specific properties.
         /// </summary>
-        /// <param name="a">The animal instance for which to build the information string.</param>
-        /// <returns>A string with formatted details about the animal and its species.</returns>
+        /// <param name="a">The animal for which to build the information string.</param>
+        /// <returns>A formatted string with the animal's details.</returns>
         private string BuildSpeciesInfo(Animal a)
         {
             var sb = new StringBuilder();
@@ -438,12 +653,11 @@ namespace EAMS
 
             return sb.ToString();
         }
-
         /// <summary>
         /// Builds a formatted string containing habitat information, daily food requirements, lifespan, and image path
         /// for the specified animal.
         /// </summary>
-        /// <param name="a">The animal for which habitat information is generated.</param>
+        /// <param name="a">The animal for which to build habitat information.</param>
         /// <returns>A formatted string with habitat details, food requirements, lifespan, and image path.</returns>
         private string BuildHabitatInfo(Animal a)
         {
@@ -539,11 +753,10 @@ namespace EAMS
             return sb.ToString();
         }
         /// <summary>
-        /// Determines the category of an animal based on its species name. 
-        /// This is used to map a selected species from the "List all animal species" list back to its corresponding category (Mammal, Reptile, Bird, Insect) when creating a new animal.
+        /// Returns the animal category corresponding to the specified species.
         /// </summary>
-        /// <param name="species">The species name of the animal.</param>
-        /// <returns>The category of the animal (Mammal, Reptile, Bird, Insect) or an empty string if the species is not recognized.</returns>
+        /// <param name="species">The name of the species to categorize.</param>
+        /// <returns>The category of the animal as a string, or an empty string if the species is not recognized.</returns>
         private string GetCategoryFromSpecies(string species)
         {
             if (species == "Dog" || species == "Cat" || species == "Cow" || species == "Horse")
@@ -557,7 +770,22 @@ namespace EAMS
             return "";
         }
         /// <summary>
-        /// Handles the Click event of the BtnCreate button. This method is responsible for creating a new animal based on the user's selection of category and species.
+        /// Returns the category name corresponding to the type of the specified animal.
+        /// </summary>
+        /// <param name="a">The animal whose category is to be determined.</param>
+        /// <returns>A string representing the animal's category, such as "Mammal", "Reptile", "Bird", or "Insect"; returns an
+        /// empty string if the type is unrecognized.</returns>
+        private string GetCategoryFromType(Animal a)
+        {
+            if (a is Mammal) return "Mammal";
+            if (a is Reptile) return "Reptile";
+            if (a is Bird) return "Bird";
+            if (a is Insects.Insect) return "Insect";
+            return "";
+        }
+        /// <summary>
+        /// Handles the Create button click event, validates user selections, opens the appropriate animal creation
+        /// form, and updates the UI with the new animal's details if creation is successful.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The event data.</param>
@@ -643,8 +871,8 @@ namespace EAMS
             }
         }
         /// <summary>
-        /// Handles the Click event of the BtnAdd button. This method validates the general data input fields, 
-        /// updates the current animal's properties with the entered data, and adds the animal to the internal list and ListView.
+        /// Handles the Add button click event, validates input fields, adds the current animal to the collection,
+        /// updates the UI, and displays relevant messages.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The event data.</param>
@@ -699,12 +927,10 @@ namespace EAMS
             cmbGender.SelectedIndex = 2;
         }
         /// <summary>
-        /// Handles the Click event of the BtnDelete button. 
-        /// This method checks if an animal is selected in the ListView, retrieves the corresponding Animal object from the internal list, and removes it from both the list and the ListView. 
-        /// It also clears the species information and habitat textboxes after deletion.
+        /// Handles the deletion of the selected animal from the list and updates the UI accordingly.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
         private void BtnDelete_Click(object sender, EventArgs e)
         {
             if (lstAnimals.SelectedItems.Count == 0)
@@ -727,12 +953,11 @@ namespace EAMS
             }
         }
         /// <summary>
-        /// Handles the Click event of the BtnChange button. This method allows the user to edit the details of a selected animal. 
-        /// It retrieves the selected animal, opens the appropriate edit form pre-populated with the animal's current data, and if the user saves changes, 
-        /// it updates the animal's properties and refreshes the ListView and information boxes accordingly.
+        /// Handles the event for changing the details of a selected animal, displaying an edit form and updating the
+        /// animal's information upon confirmation.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
         private void BtnChange_Click(object sender, EventArgs e)
         {
             if (lstAnimals.SelectedItems.Count == 0)
@@ -873,16 +1098,16 @@ namespace EAMS
             }
         }
         /// <summary>
-        /// Handles the Click event of the BtnAbout button. This method opens the AboutForm as a modal dialog, allowing users to view information about the application.
+        /// Opens the About dialog as a modal window.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
         private void BtnAbout_Click(object sender, EventArgs e)
         {
             using (var about = new AboutForm()) about.ShowDialog();
         }
         /// <summary>
-        /// Clears all input fields, resets controls, and disposes the preview image in the animal entry form.
+        /// Clears all input fields, resets controls, and removes the current animal selection in the form.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The event data.</param>
@@ -891,6 +1116,7 @@ namespace EAMS
             txtSpecInfo.Clear();
             txtHabitat.Clear();
             lstEvents.Items.Clear();
+            lstSearchResults.Items.Clear();
             currentAnimal = null;
             btnAdd.Enabled = false;
             txtName.Clear();
