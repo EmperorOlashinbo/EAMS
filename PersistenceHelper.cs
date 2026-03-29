@@ -85,5 +85,17 @@ namespace EAMS.Serialization
                 return list ?? new List<Animal>();
             }
         }
+        /// <summary>
+        /// Saves a collection of Animal objects to a file in JSON format.
+        /// </summary>
+        /// <param name="animals">The collection of Animal objects to serialize.</param>
+        /// <param name="fileName">The path of the file to save the JSON data to.</param>
+        public static void SaveTextAsJson(IEnumerable<Animal> animals, string fileName) => SaveJson(animals, fileName);
+        /// <summary>
+        /// Loads a list of Animal objects from a JSON file.
+        /// </summary>
+        /// <param name="fileName">The path to the JSON file containing animal data.</param>
+        /// <returns>A list of Animal objects deserialized from the specified file.</returns>
+        public static List<Animal> LoadTextAsJson(string fileName) => LoadJson(fileName);
     }
 }
