@@ -1,4 +1,5 @@
 ﻿using EAMS.AnimalsGen;
+using EAMS.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -88,6 +89,23 @@ namespace EAMS.GenericList
         public void Clear()
         {
             _items.Clear();
+        }
+        // Persistence implementations:
+        // Supported only when T is Animal (concrete persistence helper works with Animal)
+
+        /// <summary>
+        /// Serializes the list of Animal objects to a JSON file.
+        /// </summary>
+        /// <param name="fileName">The path to the file where the JSON data will be saved.</param>
+        /// <returns>true if serialization succeeds.</returns>
+        /// <exception cref="NotSupportedException">Thrown if T is not Animal.</exception>
+        public bool JsonSerialize(string fileName)
+        {
+            if (typeof(T) != typeof(Animal)) throw new NotSupportedException("JsonSerialize supported only for ListManager<Animal>.");
+            var animals = new List<Animal>();
+            foreach (var it in _items) animals.Add(it as Animal);
+            PersistenceHelper.SaveJson(animals, fileName);
+            return true;
         }
     }
 }
