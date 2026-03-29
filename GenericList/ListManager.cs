@@ -107,5 +107,19 @@ namespace EAMS.GenericList
             PersistenceHelper.SaveJson(animals, fileName);
             return true;
         }
+        /// <summary>
+        /// Deserializes a JSON file and populates the collection with Animal objects.
+        /// </summary>
+        /// <param name="fileName">The path to the JSON file to deserialize.</param>
+        /// <returns>true if deserialization is successful.</returns>
+        /// <exception cref="NotSupportedException">Thrown if the generic type parameter is not Animal.</exception>
+        public bool JsonDeserialize(string fileName)
+        {
+            if (typeof(T) != typeof(Animal)) throw new NotSupportedException("JsonDeserialize supported only for ListManager<Animal>.");
+            var loaded = PersistenceHelper.LoadJson(fileName);
+            _items.Clear();
+            foreach (var a in loaded) _items.Add((T)(object)a);
+            return true;
+        }        
     }
 }
