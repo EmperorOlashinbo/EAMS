@@ -162,6 +162,20 @@ namespace EAMS.GenericList
             foreach (var it in _items) animals.Add(it as Animal);
             PersistenceHelper.SaveTextAsJson(animals, fileName);
             return true;
-        }         
+        }
+        /// <summary>
+        /// Deserializes animal data from a text file and populates the collection. 
+        /// </summary>
+        /// <param name="fileName">The path to the text file containing animal data.</param>
+        /// <returns>True if deserialization is successful.</returns>
+        /// <exception cref="NotSupportedException">Thrown if the generic type is not Animal.</exception>
+        public bool TextDeserialize(string fileName)
+        {
+            if (typeof(T) != typeof(Animal)) throw new NotSupportedException("TextDeserialize supported only for ListManager<Animal>.");
+            var loaded = PersistenceHelper.LoadTextAsJson(fileName);
+            _items.Clear();
+            foreach (var a in loaded) _items.Add((T)(object)a);
+            return true;
+        } 
     }
 }
