@@ -99,8 +99,19 @@ namespace EAMS
             MenuStrip menu = new MenuStrip();
             var mnuFile = new ToolStripMenuItem("File");
             var mnuHelp = new ToolStripMenuItem("Help");
-            var mnuAbout = new ToolStripMenuItem("About");
-            mnuAbout.Click += BtnAbout_Click;
+
+            // File menu items
+            var mnuFileNew = new ToolStripMenuItem("New", null, MnuFileNew_Click) { ShortcutKeys = Keys.Control | Keys.N };
+            var mnuFileOpen = new ToolStripMenuItem("Open...", null, MnuFileOpen_Click);
+            var mnuFileSave = new ToolStripMenuItem("Save", null, MnuFileSave_Click) { ShortcutKeys = Keys.Control | Keys.S };
+            var mnuFileSaveAs = new ToolStripMenuItem("Save As...", null, MnuFileSaveAs_Click);
+            var mnuFileExit = new ToolStripMenuItem("Exit", null, (s, e) => this.Close()) { ShortcutKeys = Keys.Alt | Keys.F4 };
+
+            mnuFile.DropDownItems.AddRange(new ToolStripItem[] { mnuFileNew, mnuFileOpen, new ToolStripSeparator(), mnuFileSave, mnuFileSaveAs, new ToolStripSeparator(), mnuFileExit });
+
+            // Help to About
+            var mnuAbout = new ToolStripMenuItem("About", null, BtnAbout_Click);
+
             mnuHelp.DropDownItems.Add(mnuAbout);
             menu.Items.Add(mnuFile);
             menu.Items.Add(mnuHelp);
