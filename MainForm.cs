@@ -319,6 +319,31 @@ namespace EAMS
             _currentFormat = FileFormat.Unknown;
         }
         /// <summary>
+        /// Handles the click event for the "Open" menu item. It opens a file dialog to select a JSON, text, or XML file, 
+        /// and if a valid file is selected, it attempts to load the animal data from the file.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
+        private void MnuFileOpen_Click(object sender, EventArgs e)
+        {
+            using (var ofd = new OpenFileDialog())
+            {
+                ofd.Filter = "JSON Files (*.json)|*.json|Text Files (*.txt)|*.txt|XML Files (*.xml)|*.xml|All Files (*.*)|*.*";
+                ofd.InitialDirectory = Application.StartupPath;
+                if (ofd.ShowDialog() != DialogResult.OK) return;
+
+                try
+                {
+                    LoadFromFile(ofd.FileName);
+                    _currentFilePath = ofd.FileName;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Failed to open file:\r\n" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+        /// <summary>
         /// Handles the Load Image button click event. Opens a file dialog to select an image file, and if a valid image is selected, it loads the image into the PictureBox for preview. 
         /// It also updates the current animal's ImagePath property if an animal is currently being created or edited. Error handling is included to ignore any issues with loading the image file.
         /// </summary>
