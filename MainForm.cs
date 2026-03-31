@@ -25,6 +25,13 @@ namespace EAMS
         private Animal currentAnimal;
         private readonly List<Animal> animals = new List<Animal>();
 
+        // Persistence state
+        private string _currentFilePath = string.Empty;
+        private FileFormat _currentFormat = FileFormat.Unknown;
+
+        private enum FileFormat { Unknown, Text, Json, Xml }
+
+
         private CheckBox chkListAll;
         private ListBox lstCategory;
         private ListBox lstSpecies;
@@ -70,7 +77,7 @@ namespace EAMS
         // ListView for all animals
         private ListView lstAnimals;
 
-        // Right-side textboxes (species-specific info and preferred habitat)
+        // Right side textboxes (species specific info and preferred habitat)
         private TextBox txtSpecInfo;
         private TextBox txtHabitat;
 
