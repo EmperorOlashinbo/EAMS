@@ -295,6 +295,30 @@ namespace EAMS
             Controls.Add(btnClear);
         }
         /// <summary>
+        /// Handles the click event for the "New" menu item. 
+        /// It prompts the user to confirm resetting to the initial state if there are unsaved animals, 
+        /// and if confirmed, it clears all animal data, resets the UI, and clears the current file path and format state.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
+        private void MnuFileNew_Click(object sender, EventArgs e)
+        {
+            if (animals.Count > 0)
+            {
+                var res = MessageBox.Show("Reset to initial state? Unsaved data will be lost.", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (res != DialogResult.Yes) return;
+            }
+
+            animals.Clear();
+            RefreshListView();
+            txtSpecInfo.Clear();
+            txtHabitat.Clear();
+            lstEvents.Items.Clear();
+            lstSearchResults.Items.Clear();
+            _currentFilePath = string.Empty;
+            _currentFormat = FileFormat.Unknown;
+        }
+        /// <summary>
         /// Handles the Load Image button click event. Opens a file dialog to select an image file, and if a valid image is selected, it loads the image into the PictureBox for preview. 
         /// It also updates the current animal's ImagePath property if an animal is currently being created or edited. Error handling is included to ignore any issues with loading the image file.
         /// </summary>
