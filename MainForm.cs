@@ -372,6 +372,43 @@ namespace EAMS
             }
         }
         /// <summary>
+        /// Handles the 'Save As' menu action, allowing the user to save the current data to a file in JSON, TXT, or XML
+        /// format, with validation and error handling. 
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">Event data.</param>
+        private void MnuFileSaveAs_Click(object sender, EventArgs e)
+        {
+            using (var sfd = new SaveFileDialog())
+            {
+                sfd.Filter = "JSON Files (*.json)|*.json|Text Files (*.txt)|*.txt|XML Files (*.xml)|*.xml";
+                sfd.InitialDirectory = Application.StartupPath;
+                if (sfd.ShowDialog() != DialogResult.OK) return;
+
+                var ext = Path.GetExtension(sfd.FileName)?.ToLowerInvariant();
+                var fmt = FileFormat.Unknown;
+                if (ext == ".json") fmt = FileFormat.Json;
+                else if (ext == ".txt") fmt = FileFormat.Text;
+                else if (ext == ".xml") fmt = FileFormat.Xml;
+
+                try
+                {
+                    SaveToFile(sfd.FileName, fmt);
+                    _currentFilePath = sfd.FileName;
+                    _currentFormat = fmt;
+                    MessageBox.Show("Saved successfully.", "Save As", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (DuplicateAnimalException dex)
+                {
+                    MessageBox.Show("Validation error before save:\r\n" + dex.Message, "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Failed to save file:\r\n" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+        /// <summary>
         /// Handles the Load Image button click event. Opens a file dialog to select an image file, and if a valid image is selected, it loads the image into the PictureBox for preview. 
         /// It also updates the current animal's ImagePath property if an animal is currently being created or edited. Error handling is included to ignore any issues with loading the image file.
         /// </summary>
