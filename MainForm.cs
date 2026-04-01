@@ -1,5 +1,6 @@
 ﻿using EAMS.Birds;
 using EAMS.Birds.species;
+using EAMS.Exceptions;
 using EAMS.Insects;
 using EAMS.Mammals.Species;
 using System;
@@ -341,6 +342,33 @@ namespace EAMS
                 {
                     MessageBox.Show("Failed to open file:\r\n" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+        }
+        /// <summary>
+        /// Handles the File Save menu action by saving the current file or prompting for a file path if none is set.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">Event data associated with the click event.</param>
+        private void MnuFileSave_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(_currentFilePath))
+            {
+                MnuFileSaveAs_Click(sender, e);
+                return;
+            }
+
+            try
+            {
+                SaveToFile(_currentFilePath, _currentFormat);
+                MessageBox.Show("Saved successfully.", "Save", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (DuplicateAnimalException dex)
+            {
+                MessageBox.Show("Validation error before save:\r\n" + dex.Message, "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to save file:\r\n" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         /// <summary>
