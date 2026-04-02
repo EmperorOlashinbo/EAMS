@@ -560,7 +560,7 @@ namespace EAMS
             lstSearchResults.Items.Clear();
         }
         /// <summary>
-        /// Handles the double-click event on the search results list, selecting and focusing the corresponding item in
+        /// Handles the double click event on the search results list, selecting and focusing the corresponding item in
         /// the main animal list.
         /// </summary>
         /// <param name="sender">The source of the event, typically the search results list.</param>
@@ -651,20 +651,6 @@ namespace EAMS
 
             // Restore the main list view to show all animals
             RefreshListView(animals);
-        }
-        /// <summary>
-        /// Determines the category name of the specified animal based on its type.
-        /// </summary>
-        /// <param name="a">The animal instance to categorize.</param>
-        /// <returns>A string representing the category of the animal, such as "Mammal", "Reptile", "Bird", "Insect", or
-        /// "Unknown".</returns>
-        private string GetCategoryFromType(Animal a)
-        {
-            if (a is Mammal) return "Mammal";
-            if (a is Reptile) return "Reptile";
-            if (a is Bird) return "Bird";
-            if (a is Insects.Insect) return "Insect";
-            return "Unknown";
         }
 
         /// <summary>
