@@ -588,12 +588,12 @@ namespace EAMS
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The event data.</param>
-        
         private void BtnFilter_Click(object sender, EventArgs e)
         {
             string cat = cmbFilterCategory.SelectedItem?.ToString() ?? "All";
             int minAge = 0;
             int maxAge = int.MaxValue;
+
             if (!string.IsNullOrWhiteSpace(txtMinAge.Text) && !int.TryParse(txtMinAge.Text, out minAge))
             {
                 MessageBox.Show("Invalid min age", "Filter", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -607,6 +607,7 @@ namespace EAMS
 
             try
             {
+                // LINQ query syntax as required: filter by category and age range
                 var query =
                     from a in animals
                     where (cat == "All" || string.Equals(GetCategoryFromType(a), cat, StringComparison.OrdinalIgnoreCase))
@@ -614,14 +615,22 @@ namespace EAMS
                     orderby a.Name, a.Age
                     select a;
 
+                var results = query.ToList();
+
+                // Update the search results list for user feedback
                 lstSearchResults.Items.Clear();
-                foreach (var a in query)
+                foreach (var a in results)
                 {
                     lstSearchResults.Items.Add(new SearchResult { Id = a.Id, Label = $"{a.Name} ({a.GetType().Name}) - Age:{a.Age}" });
                 }
 
                 if (lstSearchResults.Items.Count == 0)
+                {
                     lstSearchResults.Items.Add(new SearchResult { Id = string.Empty, Label = "(no matches)" });
+                }
+
+                // Also update the main ListView to show the filtered set
+                RefreshListView(results);
             }
             catch (Exception ex)
             {
