@@ -648,6 +648,9 @@ namespace EAMS
             txtMinAge.Clear();
             txtMaxAge.Clear();
             lstSearchResults.Items.Clear();
+
+            // Restore the main list view to show all animals
+            RefreshListView(animals);
         }
         /// <summary>
         /// Determines the category name of the specified animal based on its type.
