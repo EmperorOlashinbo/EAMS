@@ -1300,6 +1300,28 @@ namespace EAMS
             }
         }
         /// <summary>
+        /// Clears and repopulates the animal list view with items from the specified subset.
+        /// </summary>
+        /// <param name="subset">The collection of Animal objects to display in the list view.</param>
+        private void RefreshListView(IEnumerable<Animal> subset)
+        {
+            if (subset == null) return;
+            lstAnimals.Items.Clear();
+            foreach (var animal in subset)
+            {
+                var item = new ListViewItem(new[]
+                {
+                animal.GetType().Name ?? string.Empty,
+                animal.Id ?? string.Empty,
+                animal.Name ?? string.Empty,
+                animal.Age.ToString(),
+                animal.Weight.ToString("F1"),
+                animal.Gender.ToString()
+            });
+                lstAnimals.Items.Add(item);
+            }
+        }
+        /// <summary>
         /// Opens the About dialog as a modal window.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
