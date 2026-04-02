@@ -438,6 +438,47 @@ namespace EAMS
             _currentFormat = fmt;
         }
         /// <summary>
+        /// Loads animal data from a specified file path, determining the format based on the file extension (JSON, Text, or XML),
+        /// and updates the current list of animals and UI elements accordingly.
+        /// </summary>
+        /// <param name="filePath">The path of the file to load.</param>
+        /// <exception cref="ArgumentNullException">Thrown if the file path is null or empty.</exception>
+        /// <exception cref="InvalidOperationException">Thrown if the file format is unsupported.</exception>
+        private void LoadFromFile(string filePath)
+        {
+            if (string.IsNullOrWhiteSpace(filePath)) throw new ArgumentNullException(nameof(filePath));
+            var ext = Path.GetExtension(filePath)?.ToLowerInvariant();
+            List<Animal> loaded;
+            if (ext == ".json")
+            {
+                loaded = PersistenceHelper.LoadJson(filePath);
+                _currentFormat = FileFormat.Json;
+            }
+            else if (ext == ".txt")
+            {
+                loaded = PersistenceHelper.LoadTextAsJson(filePath);
+                _currentFormat = FileFormat.Text;
+            }
+            else if (ext == ".xml")
+            {
+                loaded = PersistenceHelper.LoadXml(filePath);
+                _currentFormat = FileFormat.Xml;
+            }
+            else
+            {
+                throw new InvalidOperationException("Unsupported file type.");
+            }
+
+            animals.Clear();
+            foreach (var a in loaded) animals.Add(a);
+
+            RefreshListView();
+            txtSpecInfo.Clear();
+            txtHabitat.Clear();
+            lstEvents.Items.Clear();
+            lstSearchResults.Items.Clear();
+        }
+        /// <summary>
         /// Handles the Load Image button click event. Opens a file dialog to select an image file, and if a valid image is selected, it loads the image into the PictureBox for preview. 
         /// It also updates the current animal's ImagePath property if an animal is currently being created or edited. Error handling is included to ignore any issues with loading the image file.
         /// </summary>
