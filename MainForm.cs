@@ -3,6 +3,7 @@ using EAMS.Birds.species;
 using EAMS.Exceptions;
 using EAMS.Insects;
 using EAMS.Mammals.Species;
+using EAMS.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -407,6 +408,34 @@ namespace EAMS
                     MessageBox.Show("Failed to save file:\r\n" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+        /// <summary>
+        /// Saves the current list of animals to a specified file path in the given format (JSON, Text, or XML).
+        /// </summary>
+        /// <param name="filePath">The path of the file to save.</param>
+        /// <param name="fmt">The format in which to save the file.</param>
+        /// <exception cref="ArgumentNullException">Thrown if the file path is null or empty.</exception>
+        /// <exception cref="InvalidOperationException">Thrown if the file format is unknown.</exception>
+        private void SaveToFile(string filePath, FileFormat fmt)
+        {
+            if (string.IsNullOrWhiteSpace(filePath)) throw new ArgumentNullException(nameof(filePath));
+            var listToSave = animals.ToList(); // snapshot
+
+            switch (fmt)
+            {
+                case FileFormat.Json:
+                    PersistenceHelper.SaveJson(listToSave, filePath);
+                    break;
+                case FileFormat.Text:
+                    PersistenceHelper.SaveTextAsJson(listToSave, filePath);
+                    break;
+                case FileFormat.Xml:
+                    PersistenceHelper.SaveXml(listToSave, filePath);
+                    break;
+                default:
+                    throw new InvalidOperationException("Unknown file format.");
+            }
+            _currentFormat = fmt;
         }
         /// <summary>
         /// Handles the Load Image button click event. Opens a file dialog to select an image file, and if a valid image is selected, it loads the image into the PictureBox for preview. 
