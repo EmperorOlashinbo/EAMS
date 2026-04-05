@@ -24,7 +24,7 @@ namespace EAMS.Serialization
         private static readonly JsonSerializerSettings JsonSettings = new JsonSerializerSettings
         {
             TypeNameHandling = TypeNameHandling.All,
-            Formatting = Formatting.Indented,
+            Formatting = Newtonsoft.Json.Formatting.Indented,
             NullValueHandling = NullValueHandling.Include
         };
 
@@ -135,7 +135,7 @@ namespace EAMS.Serialization
             doc.Load(fileName);
 
             // Convert XML to JSON
-            string json = JsonConvert.SerializeXmlNode(doc.DocumentElement, Formatting.None, true);
+            string json = JsonConvert.SerializeXmlNode(doc.DocumentElement, Newtonsoft.Json.Formatting.None, true);
 
             var rootObj = JsonConvert.DeserializeObject<JObject>(json);
             JToken animalsToken = null;

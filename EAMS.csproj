@@ -40,6 +40,9 @@
     </StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -75,6 +78,7 @@
     <Compile Include="Birds\Species\Eagle.cs" />
     <Compile Include="Birds\Species\Falcon.cs" />
     <Compile Include="Birds\Species\Peacock.cs" />
+    <Compile Include="DuplicateAnimalException.cs" />
     <Compile Include="GenericList\IListManager.cs" />
     <Compile Include="GenericList\ListManager.cs" />
     <Compile Include="Insects\Insect.cs" />
@@ -97,6 +101,7 @@
     <Compile Include="AnimalsGen\GenderType.cs" />
     <Compile Include="Mammals\Species\Horse.cs" />
     <Compile Include="NumericUtility.cs" />
+    <Compile Include="PersistenceHelper.cs" />
     <Compile Include="Reptiles\Species\Crocodile.cs" />
     <Compile Include="Reptiles\Species\Lizard.cs" />
     <Compile Include="MainForm.cs">
@@ -154,6 +159,7 @@
     <EmbeddedResource Include="Reptiles\ReptileForm.resx">
       <DependentUpon>ReptileForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -179,11 +179,11 @@ namespace EAMS
             txtMaxAge = new TextBox { Location = new Point(305, 500), Size = new Size(50, 22) };
             Controls.Add(txtMaxAge);
 
-            btnFilter = new Button { Text = "Apply Filter", Location = new Point(360, 498), Size = new Size(90, 24) };
+            btnFilter = new Button { Text = "Apply Filter", Location = new Point(190, 528), Size = new Size(70, 24) };
             btnFilter.Click += BtnFilter_Click;
             Controls.Add(btnFilter);
 
-            btnClearFilter = new Button { Text = "Clear Filter", Location = new Point(460, 498), Size = new Size(90, 24) };
+            btnClearFilter = new Button { Text = "Clear Filter", Location = new Point(290, 528), Size = new Size(70, 24) };
             btnClearFilter.Click += BtnClearFilter_Click;
             Controls.Add(btnClearFilter);
 
