@@ -137,7 +137,7 @@ namespace EAMS
             Controls.Add(chkListAll);
 
             lstAllAnimals = new ListBox { Location = new Point(10, 205), Size = new Size(250, 120), Visible = false };
-            lstAllAnimals.Items.AddRange(new[] { "Dog", "Cat", "Cow", "Horse", "Turtle", "Lizard", "Snake", "Eagle", "Dove", "Butterfly", "Bee", "Ant" });
+            lstAllAnimals.Items.AddRange(new[] { "Dog", "Cat", "Cow", "Horse", "Turtle", "Lizard", "Snake", "Crocodile", "Eagle", "Dove", "Falcon", "Peacock", "Butterfly", "Bee", "Ant", "Dragonfly", "Ladybug" });
             lstAllAnimals.SelectedIndexChanged += LstAllAnimals_SelectedIndexChanged;
             Controls.Add(lstAllAnimals);
 
@@ -1052,7 +1052,7 @@ namespace EAMS
                 txtSpecInfo.Text = BuildSpeciesInfo(currentAnimal);
                 txtHabitat.Text = BuildHabitatInfo(currentAnimal);
 
-                // pre-fill the general data fields with the current animal's properties (if any)
+                // prefill the general data fields with the current animal's properties (if any)
                 txtName.Text = currentAnimal.Name ?? string.Empty;
                 txtAge.Text = currentAnimal.Age.ToString();
                 txtWeight.Text = currentAnimal.Weight.ToString("F1");
